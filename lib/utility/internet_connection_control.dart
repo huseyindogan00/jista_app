@@ -101,10 +101,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'dart:async';
-import 'dart:developer' as developer;
 import 'package:flutter/services.dart';
 
-class InternetConnectionStatus {
+class InternetConnectionControl {
   // BAĞLANTIYI KONTROL EDECEK OBJE
   final Connectivity _connectivity = Connectivity();
   // BAĞLANTIYI AÇIP KAPAYACAK OBJE
@@ -138,6 +137,7 @@ class InternetConnectionStatus {
     _connectivitySubscription.onData((data) {
       _connectivityResult = data;
     });
+    _cancelConnection();
     return _connectivityResult;
   }
 

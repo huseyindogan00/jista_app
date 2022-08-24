@@ -3,7 +3,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:jista/constant/font_size.dart';
 import 'package:jista/constant/margin_const.dart';
 import 'package:jista/model/user_model.dart';
-import 'package:jista/utility/internet_connection_status.dart';
+import 'package:jista/utility/internet_connection_control.dart';
 import 'package:jista/utility/show_dialog.dart';
 import 'package:jista/view_model/register_view_model.dart';
 
@@ -139,22 +139,18 @@ class RegisterPage extends StatelessWidget {
             if (formKey.currentState!.validate()) {
               EasyLoading.show();
               bool isConnect = await RegisterViewModel.internetControl();
+              print('************************is connect değeri : $isConnect');
               if (isConnect) {
                 formKey.currentState?.save();
+                /* AŞAĞIDAKİ Do not use BuildContexts across async gaps HATASINI GİDER İLERİDE PROBLEM ÇIKARABİLİR*/
                 bool result =
                     await RegisterViewModel.saveUser(_userModel, context);
                 if (result) {
                   EasyLoading.showSuccess('Kullanıcı kaydetme başarılı');
-                  /* AŞAĞIDAKİ Do not use BuildContexts across async gaps HATASINI GİDER
-                  ignore: use_build_context_synchronously
-                   await ShowDialog.showInfoWithDialog(
-                         context,
-                        'Kullanıcı kaydetme başarılı',
-                      ); 
-                      */
-                } else {
-                  EasyLoading.showError('Kullanıcı kaydetme başarısız.');
                 }
+                /* else {
+                  EasyLoading.showError('Kullanıcı kaydetme başarısız.');
+                } */
               } else {
                 EasyLoading.showError('İnternet bağlantınızı kontrol edin!');
               }
