@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:jista/constant/font_size.dart';
 import 'package:jista/constant/margin_const.dart';
+import 'package:jista/model/service_result.dart';
 import 'package:jista/model/user_model.dart';
 import 'package:jista/utility/internet_connection_control.dart';
 import 'package:jista/utility/show_dialog.dart';
+import 'package:jista/utility/show_snacbar.dart';
 import 'package:jista/view_model/register_view_model.dart';
 
 class RegisterPage extends StatelessWidget {
@@ -22,19 +24,17 @@ class RegisterPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Kayıt Sayfası'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(top: 30, left: 20, right: 20),
-        child: Form(
-          key: formKey,
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                buildNameTextField(),
-                buildEmailTextField(),
-                buildPasswordTextField(),
-                buildRegisterButton(context),
-              ],
-            ),
+      body: Form(
+        key: formKey,
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+          child: Column(
+            children: [
+              buildNameTextField(),
+              buildEmailTextField(),
+              buildPasswordTextField(),
+              buildRegisterButton(context),
+            ],
           ),
         ),
       ),
@@ -131,26 +131,26 @@ class RegisterPage extends StatelessWidget {
   buildRegisterButton(BuildContext context) {
     return Container(
       height: 50,
+      width: MediaQuery.of(context).size.width,
       margin: MarginConst.entryMargin,
       child: ElevatedButton(
-          style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all<Color>(Colors.green)),
+          style: ElevatedButton.styleFrom(primary: Colors.green),
           onPressed: () async {
             if (formKey.currentState!.validate()) {
               EasyLoading.show();
               bool isConnect = await RegisterViewModel.internetControl();
-              print('************************is connect değeri : $isConnect');
               if (isConnect) {
                 formKey.currentState?.save();
                 /* AŞAĞIDAKİ Do not use BuildContexts across async gaps HATASINI GİDER İLERİDE PROBLEM ÇIKARABİLİR*/
-                bool result =
-                    await RegisterViewModel.saveUser(_userModel, context);
-                if (result) {
-                  EasyLoading.showSuccess('Kullanıcı kaydetme başarılı');
+                ServiceResult result =
+                    await RegisterViewModel.saveUser(_userModel);
+                if (result.isSuccess) {
+                  EasyLoading.showSuccess(result.dataInfo.toString());
+                } else {
+                  ShowSnacbar.showInfoWithSnacbar(context, result.dataInfo!);
+
+                  EasyLoading.showInfo(result.dataInfo.toString());
                 }
-                /* else {
-                  EasyLoading.showError('Kullanıcı kaydetme başarısız.');
-                } */
               } else {
                 EasyLoading.showError('İnternet bağlantınızı kontrol edin!');
               }

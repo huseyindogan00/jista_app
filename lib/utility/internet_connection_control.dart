@@ -119,7 +119,6 @@ class InternetConnectionControl {
       //developer.log('Couldn\'t check connectivity status', error: e);
       return;
     }
-    print('***********************result değeri : $result');
     return _updateConnectionStatus(result);
   }
 

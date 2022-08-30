@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ButtonStyleConst {
-  static ButtonStyle entryPageButtonStyle = ButtonStyle(
-    backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
+  static ButtonStyle entryPageButtonStyle = ElevatedButton.styleFrom(
+    primary: Colors.green,
   );
 }

@@ -1,6 +1,6 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:jista/model/service_result.dart';
 import 'package:jista/model/user_model.dart';
 import 'package:jista/service/firebase_service.dart';
 import 'package:jista/utility/internet_connection_control.dart';
@@ -8,9 +8,8 @@ import 'package:jista/utility/internet_connection_control.dart';
 class RegisterViewModel {
   static final FirebaseService _firebaseService = FirebaseService();
 
-  static Future<bool> saveUser(
-      UserModel userModel, BuildContext context) async {
-    return await _firebaseService.save(userModel, context);
+  static Future<ServiceResult> saveUser(UserModel userModel) async {
+    return await _firebaseService.save(userModel);
   }
 
   // CİHAZI İNTERNETE BAĞLAYAN UÇLARI AÇIK OLSA DAHİ İNTERNET
@@ -23,6 +22,7 @@ class RegisterViewModel {
   // BU METHOD CİHAZI İNTERNETE BAĞLAYAN WİFİ, MOBİL VERİ VS OLAN UÇLARINI KONTROL EDER
   static Future<bool> internetControl() async {
     bool hasDeviceConnected = await isDeviceConnected();
+    print('*************************Cihazda internet var ');
     if (hasDeviceConnected) {
       InternetConnectionControl connection = InternetConnectionControl();
       ConnectivityResult status = await connection.connectionStatus();

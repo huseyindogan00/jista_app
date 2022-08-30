@@ -35,7 +35,7 @@ class EntryPage extends StatelessWidget {
             const SizedBox(height: 30),
             buildLoginButton(context),
             const SizedBox(height: 20),
-            buildRegister(context),
+            buildRegisterButton(context),
           ],
         ),
       ),
@@ -53,20 +53,17 @@ class EntryPage extends StatelessWidget {
 
   // USERNAME/EPOSTA TEXTFİELD
   Widget userNameTextField() {
-    return Container(
-      //margin: MarginConst.entryMargin,
-      child: TextFormField(
-        autofocus: false,
-        controller: _pbikController,
-        keyboardType: TextInputType.emailAddress,
-        decoration: InputDecoration(
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          label: Text(
-            'E-posta',
-            style: TextStyle(fontSize: FontSize.textFieldFS),
-          ),
+    return TextFormField(
+      autofocus: false,
+      controller: _pbikController,
+      keyboardType: TextInputType.emailAddress,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        label: Text(
+          'E-posta',
+          style: TextStyle(fontSize: FontSize.textFieldFS),
         ),
       ),
     );
@@ -74,22 +71,19 @@ class EntryPage extends StatelessWidget {
 
   // PASSWORD TEXTFİELD
   Widget passwordTextField(BuildContext context) {
-    return Container(
-      //margin: MarginConst.entryMargin,
-      child: TextFormField(
-        controller: _passwordController,
-        obscureText: true,
-        decoration: InputDecoration(
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          label: Text(
-            'Şifre',
-            style: TextStyle(fontSize: FontSize.textFieldFS),
-          ),
+    return TextFormField(
+      controller: _passwordController,
+      obscureText: true,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
         ),
-        validator: (value) {},
+        label: Text(
+          'Şifre',
+          style: TextStyle(fontSize: FontSize.textFieldFS),
+        ),
       ),
+      validator: (value) {},
     );
   }
 
@@ -111,7 +105,7 @@ class EntryPage extends StatelessWidget {
     );
   }
 
-  buildRegister(BuildContext context) {
+  buildRegisterButton(BuildContext context) {
     return SizedBox(
       width: MediaQuery.of(context).size.width,
       height: 50,
@@ -120,8 +114,6 @@ class EntryPage extends StatelessWidget {
           onPressed: () async {
             var result =
                 await Navigator.pushNamed(context, RouteName.registerPage);
-            print('*******************************************');
-            debugPrint(result.toString());
           },
           child: Text(
             'Kayıt Ol',

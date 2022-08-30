@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:jista/model/service_result.dart';
 import 'package:jista/model/user_model.dart';
 import 'package:jista/service/base/firebase_service_interface.dart';
-import 'package:jista/utility/show_snacbar.dart';
 
 class FirebaseService extends FirebaseServiceInterface {
   static final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -13,34 +13,50 @@ class FirebaseService extends FirebaseServiceInterface {
   }
 
   @override
-  Future<bool> save(UserModel userModel, BuildContext context) async {
+  Future<ServiceResult> save(UserModel userModel) async {
     try {
       // USERCREDENTİAL'e FIREBASEAUTH  ile oluşturduğumuz kimliği atıyoruz.
       // Firebase bizim için bu kullanıcıyı veritabanına kaydediyor.
       // Eğer kayıt daha önce varsa veya şifre yetersizse hata mesajı ile kullanıcıyı bilgilendiriyoruz.
+
       UserCredential userCredential =
           await _firebaseAuth.createUserWithEmailAndPassword(
         email: userModel.email!,
         password: userModel.password!,
       );
-      User? user = userCredential.user!;
-      // Firebase de kullanıcıyı oluştururken sadece email ve şifre ile oluşturabiliriz.
-      // Geri kalan user bilgilerini USER nesnesi üzerinden update ederek atarız.
-      user.updateDisplayName(userModel.name);
-      return true;
+
+      if (userCredential.user != null) {
+        User user = userCredential.user!;
+        // Firebase de kullanıcıyı oluştururken sadece email ve şifre ile oluşturabiliriz.
+        // Geri kalan user bilgilerini USER nesnesi üzerinden update ederek atarız.
+        await user.updateDisplayName(userModel.name);
+        await user.sendEmailVerification();
+
+        return Future.value(ServiceResult.factory(
+            isSuccess: true, dataInfo: 'İşlem başarılı.'));
+      } else {
+        return Future.value(ServiceResult.factory(
+            isSuccess: false, dataInfo: 'İşlem başarısız.'));
+      }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        ShowSnacbar.showInfoWithSnacbar(context, 'Parola çok zayıf.');
-        print('Parola çok zayıf.');
+        //ShowSnacbar.showInfoWithSnacbar(context, 'Parola çok zayıf.');
+        return Future.value(ServiceResult.factory(
+            dataInfo: 'Parola çok zayıf', isSuccess: false));
       } else if (e.code == 'email-already-in-use') {
-        ShowSnacbar.showInfoWithSnacbar(
-            context, 'Bu eposta ile daha önce hesap oluşturulmuş.');
-        print('Bu eposta ile daha önce hesap oluşturulmuş.');
+        //ShowSnacbar.showInfoWithSnacbar(context, 'Bu eposta ile daha önce hesap oluşturulmuş.');
+        return Future.value(ServiceResult.factory(
+          dataInfo: 'Bu eposta ile daha önce hesap oluşturulmuş.',
+          isSuccess: false,
+        ));
       }
     } catch (e) {
-      print('******************************************** $e');
+      return Future.value(
+          ServiceResult.factory(dataInfo: '', isSuccess: false));
     }
-    return false;
+
+    return Future.value(
+        ServiceResult.factory(dataInfo: 'BOŞ', isSuccess: false));
   }
 
   @override
