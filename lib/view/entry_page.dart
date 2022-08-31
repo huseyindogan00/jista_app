@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:jista/constant/assets_file.dart';
 import 'package:jista/constant/button_style_const.dart';
-import 'package:jista/constant/fake_data.dart';
 import 'package:jista/constant/font_size.dart';
-import 'package:jista/constant/margin_const.dart';
 import 'package:jista/constant/route_name.dart';
 import 'package:jista/constant/text_const.dart';
+import 'package:jista/model/service_result.dart';
+import 'package:jista/model/entities/user_model.dart';
+import 'package:jista/utility/validation_utility/validation_controller.dart';
 import 'package:jista/view_model/entry_view_model.dart';
 
 class EntryPage extends StatelessWidget {
   EntryPage({Key? key}) : super(key: key);
 
-  final TextEditingController _pbikController = TextEditingController();
+  final TextEditingController _epostaController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final EntryViewModel entryViewModel = EntryViewModel();
+  final UserModel userModel = UserModel();
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -22,21 +26,24 @@ class EntryPage extends StatelessWidget {
         centerTitle: true,
         title: Text(TextConst.entryPageText),
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            buildLogo(),
-            const SizedBox(height: 20),
-            userNameTextField(),
-            const SizedBox(height: 20),
-            passwordTextField(context),
-            const SizedBox(height: 30),
-            buildLoginButton(context),
-            const SizedBox(height: 20),
-            buildRegisterButton(context),
-          ],
+      body: Form(
+        key: formKey,
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              buildLogo(),
+              const SizedBox(height: 20),
+              emailTextField(),
+              const SizedBox(height: 20),
+              passwordTextField(context),
+              const SizedBox(height: 30),
+              buildLoginButton(context),
+              const SizedBox(height: 20),
+              buildRegisterButton(context),
+            ],
+          ),
         ),
       ),
     );
@@ -52,10 +59,10 @@ class EntryPage extends StatelessWidget {
   }
 
   // USERNAME/EPOSTA TEXTFİELD
-  Widget userNameTextField() {
+  Widget emailTextField() {
     return TextFormField(
-      autofocus: false,
-      controller: _pbikController,
+      autofocus: true,
+      controller: _epostaController,
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
         border: OutlineInputBorder(
@@ -66,6 +73,12 @@ class EntryPage extends StatelessWidget {
           style: TextStyle(fontSize: FontSize.textFieldFS),
         ),
       ),
+      validator: (value) {
+        return ValidationController.emailValidation(value);
+      },
+      onSaved: (newValue) {
+        userModel.email = newValue?.trim() ?? '';
+      },
     );
   }
 
@@ -74,6 +87,7 @@ class EntryPage extends StatelessWidget {
     return TextFormField(
       controller: _passwordController,
       obscureText: true,
+      autofocus: false,
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
@@ -83,7 +97,12 @@ class EntryPage extends StatelessWidget {
           style: TextStyle(fontSize: FontSize.textFieldFS),
         ),
       ),
-      validator: (value) {},
+      validator: (value) {
+        return ValidationController.passwordValidation(value);
+      },
+      onSaved: (newValue) {
+        userModel.password = newValue?.trim() ?? '';
+      },
     );
   }
 
@@ -94,8 +113,18 @@ class EntryPage extends StatelessWidget {
       height: 50,
       child: ElevatedButton(
         style: ButtonStyleConst.entryPageButtonStyle,
-        onPressed: () {
-          // HOME SAYFASINA GEÇİŞ
+        onPressed: () async {
+          if (formKey.currentState!.validate()) {
+            formKey.currentState!.save();
+            ServiceResult result = await EntryViewModel.login(userModel);
+            if (result.isSuccess) {
+              // HOME SAYFASINA GEÇİŞŞŞŞ
+              EasyLoading.showToast(result.dataInfo.toString(),
+                  duration: const Duration(milliseconds: 1000));
+            } else {
+              EasyLoading.showError(result.dataInfo.toString());
+            }
+          }
         },
         child: Text(
           'Giriş',
@@ -112,13 +141,18 @@ class EntryPage extends StatelessWidget {
       child: ElevatedButton(
           style: ButtonStyleConst.entryPageButtonStyle,
           onPressed: () async {
-            var result =
-                await Navigator.pushNamed(context, RouteName.registerPage);
+            await Navigator.pushNamed(context, RouteName.registerPage);
+            _buildTextFieldClear();
           },
           child: Text(
             'Kayıt Ol',
             style: TextStyle(fontSize: FontSize.textButtonFS),
           )),
     );
+  }
+
+  void _buildTextFieldClear() {
+    _epostaController.clear();
+    _passwordController.clear();
   }
 }

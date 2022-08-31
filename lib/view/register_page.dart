@@ -3,10 +3,9 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:jista/constant/font_size.dart';
 import 'package:jista/constant/margin_const.dart';
 import 'package:jista/model/service_result.dart';
-import 'package:jista/model/user_model.dart';
-import 'package:jista/utility/internet_connection_control.dart';
-import 'package:jista/utility/show_dialog.dart';
-import 'package:jista/utility/show_snacbar.dart';
+import 'package:jista/model/entities/user_model.dart';
+import 'package:jista/utility/show_utility/show_snacbar.dart';
+import 'package:jista/utility/validation_utility/validation_controller.dart';
 import 'package:jista/view_model/register_view_model.dart';
 
 class RegisterPage extends StatelessWidget {
@@ -57,11 +56,7 @@ class RegisterPage extends StatelessWidget {
           ),
         ),
         validator: (value) {
-          if (value != null && value.isNotEmpty && value.length > 3) {
-            return null;
-          } else {
-            return 'isim en az 3 karakte olmalıdır';
-          }
+          return ValidationController.nameValidation(value);
         },
         onSaved: (newValue) {
           _userModel.name = newValue!.trim();
@@ -86,11 +81,7 @@ class RegisterPage extends StatelessWidget {
           ),
         ),
         validator: (value) {
-          if (value != null && value.isNotEmpty && value.contains('@')) {
-            return null;
-          } else {
-            return 'email formatını kontrol edin';
-          }
+          return ValidationController.emailValidation(value);
         },
         onSaved: (newValue) {
           _userModel.email = newValue!.trim();
@@ -115,11 +106,7 @@ class RegisterPage extends StatelessWidget {
           ),
         ),
         validator: (value) {
-          if (value != null && value.isNotEmpty && value.length >= 6) {
-            return null;
-          } else {
-            return 'Şifre en az 6 karakter olmalıdır';
-          }
+          ValidationController.passwordValidation(value);
         },
         onSaved: (newValue) {
           _userModel.password = newValue?.trim();
@@ -141,7 +128,8 @@ class RegisterPage extends StatelessWidget {
               bool isConnect = await RegisterViewModel.internetControl();
               if (isConnect) {
                 formKey.currentState?.save();
-                /* AŞAĞIDAKİ Do not use BuildContexts across async gaps HATASINI GİDER İLERİDE PROBLEM ÇIKARABİLİR*/
+                /* AŞAĞIDAKİ Do not use BuildContexts across async gaps 
+                HATASINI GİDER İLERİDE PROBLEM ÇIKARABİLİR*/
                 ServiceResult result =
                     await RegisterViewModel.saveUser(_userModel);
                 if (result.isSuccess) {
@@ -156,7 +144,7 @@ class RegisterPage extends StatelessWidget {
               }
             }
             EasyLoading.dismiss();
-            //Navigator.of(context).pop();
+            Navigator.of(context).pop();
           },
           child: Text(
             'Kaydet',

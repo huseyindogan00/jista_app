@@ -1,11 +1,63 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:jista/model/entities/user_model.dart';
 import 'package:jista/model/service_result.dart';
-import 'package:jista/model/user_model.dart';
 import 'package:jista/service/base/firebase_service_interface.dart';
 
 class FirebaseService extends FirebaseServiceInterface {
   static final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+
+  @override
+  Future<ServiceResult> save(UserModel userModel) async {
+    try {
+      // -> USERCREDENTİAL'e FIREBASEAUTH  ile oluşturduğumuz kimliği atıyoruz.
+      // -> Firebase bizim için bu kullanıcıyı veritabanına kaydediyor.
+      // -> Eğer kayıt daha önce varsa veya şifre yetersizse hata
+      // mesajı ile kullanıcıyı bilgilendiriyoruz.
+
+      // -> KULLANICI KİMLİĞİ oluşturup içindeki KULLANICI bilgisi ile
+      // kullanıcının oluşup oluşmadığını kontol ediyoruz
+      UserCredential userCredential =
+          await _firebaseAuth.createUserWithEmailAndPassword(
+        email: userModel.email!,
+        password: userModel.password!,
+      );
+
+      // -> USER VAR İSE
+      if (userCredential.user != null) {
+        User user = userCredential.user!;
+        // -> Firebase de kullanıcıyı oluştururken sadece email ve şifre ile oluşturabiliriz.
+        // -> Geri kalan user bilgilerini USER nesnesi üzerinden update ederek atarız.
+        await user.updateDisplayName(userModel.name);
+        await user.sendEmailVerification();
+
+        return Future.value(
+          ServiceResult(isSuccess: true, dataInfo: 'Kullanıcı kaydı başarılı.'),
+        );
+      } else {
+        return Future.value(
+          ServiceResult(
+              isSuccess: false, dataInfo: 'Kullanıcı kaydı yapılamadı.'),
+        );
+      }
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        // -> ShowSnacbar.showInfoWithSnacbar(context, 'Parola çok zayıf.');
+        return Future.value(
+            ServiceResult(dataInfo: 'Parola çok zayıf', isSuccess: false));
+      } else if (e.code == 'email-already-in-use') {
+        // -> ShowSnacbar.showInfoWithSnacbar(context, 'Bu eposta ile daha önce hesap oluşturulmuş.');
+        return Future.value(ServiceResult(
+          dataInfo: 'Bu eposta ile daha önce hesap oluşturulmuş.',
+          isSuccess: false,
+        ));
+      }
+    } catch (e) {
+      return Future.value(ServiceResult(dataInfo: '', isSuccess: false));
+    }
+
+    return Future.value(
+        ServiceResult(dataInfo: 'Try Catch dışı', isSuccess: false));
+  }
 
   @override
   delete(UserModel userModel) {
@@ -13,54 +65,47 @@ class FirebaseService extends FirebaseServiceInterface {
   }
 
   @override
-  Future<ServiceResult> save(UserModel userModel) async {
-    try {
-      // USERCREDENTİAL'e FIREBASEAUTH  ile oluşturduğumuz kimliği atıyoruz.
-      // Firebase bizim için bu kullanıcıyı veritabanına kaydediyor.
-      // Eğer kayıt daha önce varsa veya şifre yetersizse hata mesajı ile kullanıcıyı bilgilendiriyoruz.
+  update(UserModel userModel) {
+    throw UnimplementedError();
+  }
 
+  // -> KULLANICI girişi yapma
+  @override
+  Future<ServiceResult> login(UserModel userModel) async {
+    print(userModel.toString());
+    try {
       UserCredential userCredential =
-          await _firebaseAuth.createUserWithEmailAndPassword(
-        email: userModel.email!,
-        password: userModel.password!,
-      );
+          await _firebaseAuth.signInWithEmailAndPassword(
+              email: userModel.email!, password: userModel.password!);
 
       if (userCredential.user != null) {
         User user = userCredential.user!;
-        // Firebase de kullanıcıyı oluştururken sadece email ve şifre ile oluşturabiliriz.
-        // Geri kalan user bilgilerini USER nesnesi üzerinden update ederek atarız.
-        await user.updateDisplayName(userModel.name);
-        await user.sendEmailVerification();
-
-        return Future.value(ServiceResult.factory(
-            isSuccess: true, dataInfo: 'İşlem başarılı.'));
-      } else {
-        return Future.value(ServiceResult.factory(
-            isSuccess: false, dataInfo: 'İşlem başarısız.'));
+        print(user.email);
+        print(user.emailVerified);
+        return ServiceResult(
+            dataInfo:
+                'Giriş Yapıldı\n${user.emailVerified ? 'email doğrulandı' : ' email doğrulanmadı'}',
+            isSuccess: true);
       }
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        //ShowSnacbar.showInfoWithSnacbar(context, 'Parola çok zayıf.');
-        return Future.value(ServiceResult.factory(
-            dataInfo: 'Parola çok zayıf', isSuccess: false));
-      } else if (e.code == 'email-already-in-use') {
-        //ShowSnacbar.showInfoWithSnacbar(context, 'Bu eposta ile daha önce hesap oluşturulmuş.');
-        return Future.value(ServiceResult.factory(
-          dataInfo: 'Bu eposta ile daha önce hesap oluşturulmuş.',
-          isSuccess: false,
-        ));
+      if (e.code == 'user-not-found') {
+        return ServiceResult(
+            dataInfo: 'Kullanıcı bulunamadı!', isSuccess: false);
+      } else if (e.code == 'wrong-password') {
+        return ServiceResult(
+            dataInfo: 'Yanlış şifre girdiniz.', isSuccess: false);
       }
     } catch (e) {
-      return Future.value(
-          ServiceResult.factory(dataInfo: '', isSuccess: false));
+      return ServiceResult(dataInfo: e.toString(), isSuccess: false);
     }
 
-    return Future.value(
-        ServiceResult.factory(dataInfo: 'BOŞ', isSuccess: false));
+    return ServiceResult(dataInfo: 'TryCatch end', isSuccess: false);
   }
 
+  // -> KULLANICI E POSTA ADRESİNE GÖNDERİLEN BAĞLANTIYI ONAYLAMIŞ MI
   @override
-  update(UserModel userModel) {
+  isEmailVerified(User user) {
+    // TODO: implement isEmailVerified
     throw UnimplementedError();
   }
 }
