@@ -27,11 +27,4 @@ class JIsTaApp extends StatelessWidget {
       builder: EasyLoading.init(),
     );
   }
-
-  void easyloadingConfig() {
-    EasyLoading.instance
-      ..dismissOnTap = true
-      ..indicatorType = EasyLoadingIndicatorType.circle
-      ..maskType = EasyLoadingMaskType.black;
-  }
 }
