@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:jista/model/entities/user_model.dart';
 import 'package:jista/model/service_result.dart';
-import 'package:jista/service/base/firebase_service_interface.dart';
+import 'package:jista/services/base/firebase_service_interface.dart';
 
 class FirebaseService extends FirebaseServiceInterface {
   static final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -16,8 +16,7 @@ class FirebaseService extends FirebaseServiceInterface {
 
       // -> KULLANICI KİMLİĞİ oluşturup içindeki KULLANICI bilgisi ile
       // kullanıcının oluşup oluşmadığını kontol ediyoruz
-      UserCredential userCredential =
-          await _firebaseAuth.createUserWithEmailAndPassword(
+      UserCredential userCredential = await _firebaseAuth.createUserWithEmailAndPassword(
         email: userModel.email!,
         password: userModel.password!,
       );
@@ -35,15 +34,13 @@ class FirebaseService extends FirebaseServiceInterface {
         );
       } else {
         return Future.value(
-          ServiceResult(
-              isSuccess: false, dataInfo: 'Kullanıcı kaydı yapılamadı.'),
+          ServiceResult(isSuccess: false, dataInfo: 'Kullanıcı kaydı yapılamadı.'),
         );
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         // -> ShowSnacbar.showInfoWithSnacbar(context, 'Parola çok zayıf.');
-        return Future.value(
-            ServiceResult(dataInfo: 'Parola çok zayıf', isSuccess: false));
+        return Future.value(ServiceResult(dataInfo: 'Parola çok zayıf', isSuccess: false));
       } else if (e.code == 'email-already-in-use') {
         // -> ShowSnacbar.showInfoWithSnacbar(context, 'Bu eposta ile daha önce hesap oluşturulmuş.');
         return Future.value(ServiceResult(
@@ -55,8 +52,7 @@ class FirebaseService extends FirebaseServiceInterface {
       return Future.value(ServiceResult(dataInfo: '', isSuccess: false));
     }
 
-    return Future.value(
-        ServiceResult(dataInfo: 'Try Catch dışı', isSuccess: false));
+    return Future.value(ServiceResult(dataInfo: 'Try Catch dışı', isSuccess: false));
   }
 
   @override
@@ -72,33 +68,25 @@ class FirebaseService extends FirebaseServiceInterface {
   // -> KULLANICI girişi yapma
   @override
   Future<ServiceResult> login(UserModel userModel) async {
-    print(userModel.toString());
     try {
       UserCredential userCredential =
-          await _firebaseAuth.signInWithEmailAndPassword(
-              email: userModel.email!, password: userModel.password!);
+          await _firebaseAuth.signInWithEmailAndPassword(email: userModel.email!, password: userModel.password!);
 
       if (userCredential.user != null) {
         User user = userCredential.user!;
-        print(user.email);
-        print(user.emailVerified);
         return ServiceResult(
-            dataInfo:
-                'Giriş Yapıldı\n${user.emailVerified ? 'email doğrulandı' : ' email doğrulanmadı'}',
+            dataInfo: 'Giriş Yapıldı\n${user.emailVerified ? 'email doğrulandı' : ' email doğrulanmadı'}',
             isSuccess: true);
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        return ServiceResult(
-            dataInfo: 'Kullanıcı bulunamadı!', isSuccess: false);
+        return ServiceResult(dataInfo: 'Kullanıcı bulunamadı!', isSuccess: false);
       } else if (e.code == 'wrong-password') {
-        return ServiceResult(
-            dataInfo: 'Yanlış şifre girdiniz.', isSuccess: false);
+        return ServiceResult(dataInfo: 'Yanlış şifre girdiniz.', isSuccess: false);
       }
     } catch (e) {
       return ServiceResult(dataInfo: e.toString(), isSuccess: false);
     }
-
     return ServiceResult(dataInfo: 'TryCatch end', isSuccess: false);
   }
 

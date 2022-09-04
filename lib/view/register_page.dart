@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:jista/constant/button_style_const.dart';
 import 'package:jista/constant/font_size.dart';
 import 'package:jista/constant/margin_const.dart';
 import 'package:jista/model/service_result.dart';
@@ -106,7 +107,7 @@ class RegisterPage extends StatelessWidget {
           ),
         ),
         validator: (value) {
-          ValidationController.passwordValidation(value);
+          return ValidationController.passwordValidation(value);
         },
         onSaved: (newValue) {
           _userModel.password = newValue?.trim();
@@ -121,7 +122,7 @@ class RegisterPage extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       margin: MarginConst.entryMargin,
       child: ElevatedButton(
-          style: ElevatedButton.styleFrom(primary: Colors.green),
+          style: ButtonStyleConst.entryPageButtonStyle(context),
           onPressed: () async {
             if (formKey.currentState!.validate()) {
               EasyLoading.show();
@@ -130,8 +131,7 @@ class RegisterPage extends StatelessWidget {
                 formKey.currentState?.save();
                 /* AŞAĞIDAKİ Do not use BuildContexts across async gaps 
                 HATASINI GİDER İLERİDE PROBLEM ÇIKARABİLİR*/
-                ServiceResult result =
-                    await RegisterViewModel.saveUser(_userModel);
+                ServiceResult result = await RegisterViewModel.saveUser(_userModel);
                 if (result.isSuccess) {
                   EasyLoading.showSuccess(result.dataInfo.toString());
                 } else {

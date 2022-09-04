@@ -8,6 +8,7 @@ class RouteGenerator {
   static Route<dynamic>? routeGenerator(RouteSettings settings) {
     switch (settings.name) {
       case '/':
+        print('açılış sayfasına geldi');
         return _createRoute(EntryPage());
       case '/homePage':
         return _createRoute(const HomePage());

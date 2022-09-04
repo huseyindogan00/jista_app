@@ -1,8 +1,7 @@
 import 'package:jista/global/global_variable.dart';
-import 'package:jista/main.dart';
 import 'package:jista/model/service_result.dart';
 import 'package:jista/model/entities/user_model.dart';
-import 'package:jista/service/firebase_service.dart';
+import 'package:jista/services/firebase_service.dart';
 
 class EntryViewModel {
   static final _firebaseService = locator<FirebaseService>();

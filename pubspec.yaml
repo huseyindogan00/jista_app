@@ -30,24 +30,34 @@ dependencies:
   flutter:
     sdk: flutter 
 
-  # DATABASE PACKAGE
-  hive: ^2.2.3 
-
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-
+  
+  # DATABASE PACKAGE
+  hive: ^2.2.3 
+ 
   # FIREBASE PACKAGE
   firebase_core: ^1.21.0
   firebase_auth: ^3.6.4
+
+  # STATE MENAGEMENT
+  provider: ^6.0.3
 
   # YÜKLEME ANİMASYONU
   flutter_easyloading: ^3.0.5
 
   # İNTERNET BAĞLANTISI KONTROL 
-  connectivity_plus: ^2.3.6+1
+  connectivity_plus: ^2.3.6+1  
   internet_connection_checker: ^0.0.1+4
+
+  # SİNGLE OBJECT CREATE 
   get_it: ^7.2.0
+
+  # AÇILIŞ EKRANI EKLENTİSİ
+  flutter_native_splash: ^2.2.8
+  
+  badges: ^2.0.3
 
 dev_dependencies:
   flutter_test:
@@ -59,6 +69,13 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
+  
+  
+
+flutter_native_splash:
+  background_image: assets/images/splash_logo.png 
+  android: true
+  ios: true
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

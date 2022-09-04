@@ -26,23 +26,27 @@ class EntryPage extends StatelessWidget {
         centerTitle: true,
         title: Text(TextConst.entryPageText),
       ),
-      body: Form(
-        key: formKey,
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              buildLogo(),
-              const SizedBox(height: 20),
-              emailTextField(),
-              const SizedBox(height: 20),
-              passwordTextField(context),
-              const SizedBox(height: 30),
-              buildLoginButton(context),
-              const SizedBox(height: 20),
-              buildRegisterButton(context),
-            ],
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        color: Theme.of(context).backgroundColor,
+        child: Form(
+          key: formKey,
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                buildLogo(),
+                const SizedBox(height: 20),
+                emailTextField(),
+                const SizedBox(height: 20),
+                passwordTextField(context),
+                const SizedBox(height: 30),
+                buildLoginButton(context),
+                const SizedBox(height: 20),
+                buildRegisterButton(context),
+              ],
+            ),
           ),
         ),
       ),
@@ -58,10 +62,10 @@ class EntryPage extends StatelessWidget {
     );
   }
 
-  // USERNAME/EPOSTA TEXTFİELD
+  // Username|Eposta|Pbik TEXTFİELD
   Widget emailTextField() {
     return TextFormField(
-      autofocus: true,
+      autofocus: false,
       controller: _epostaController,
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
@@ -69,7 +73,7 @@ class EntryPage extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
         ),
         label: Text(
-          'E-posta',
+          'E posta',
           style: TextStyle(fontSize: FontSize.textFieldFS),
         ),
       ),
@@ -112,15 +116,15 @@ class EntryPage extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       height: 50,
       child: ElevatedButton(
-        style: ButtonStyleConst.entryPageButtonStyle,
+        style: ButtonStyleConst.entryPageButtonStyle(context),
         onPressed: () async {
           if (formKey.currentState!.validate()) {
             formKey.currentState!.save();
             ServiceResult result = await EntryViewModel.login(userModel);
             if (result.isSuccess) {
               // HOME SAYFASINA GEÇİŞŞŞŞ
-              EasyLoading.showToast(result.dataInfo.toString(),
-                  duration: const Duration(milliseconds: 1000));
+              Navigator.pushReplacementNamed(context, '/homePage');
+              //EasyLoading.showToast(result.dataInfo.toString(), duration: const Duration(milliseconds: 2000));
             } else {
               EasyLoading.showError(result.dataInfo.toString());
             }
@@ -139,7 +143,7 @@ class EntryPage extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       height: 50,
       child: ElevatedButton(
-          style: ButtonStyleConst.entryPageButtonStyle,
+          style: ButtonStyleConst.entryPageButtonStyle(context),
           onPressed: () async {
             await Navigator.pushNamed(context, RouteName.registerPage);
             _buildTextFieldClear();

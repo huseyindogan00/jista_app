@@ -5,10 +5,8 @@ class ErrorPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        child: const Text('Hata Oluştu'),
-      ),
+    return const Center(
+      child: Text('Hata Oluştu'),
     );
   }
 }
