@@ -66,13 +66,33 @@ Widget buildMenuItem(BuildContext context) {
           onTap: () {},
         ),
         ListTile(
-          leading: const Icon(Icons.info_outlined),
-          title: const Text('Kargo Bilgileri'),
+          leading: const Icon(Icons.square_foot_outlined),
+          title: const Text('Ölçü Bilgileri'),
           onTap: () {},
         ),
         ListTile(
-          leading: const Icon(Icons.add_shopping_cart_sharp),
-          title: const Text('Sepet'),
+          leading: const Icon(Icons.local_shipping_outlined),
+          title: const Text('Kargo Adresim'),
+          onTap: () {},
+        ),
+        ListTile(
+          leading: const Icon(Icons.supervised_user_circle),
+          title: const Text('Mutemet İşlemlerim'),
+          onTap: () {},
+        ),
+        ListTile(
+          leading: const Icon(Icons.calendar_month_outlined),
+          title: const Text('İstihkak İstek Dönemi'),
+          onTap: () {},
+        ),
+        ListTile(
+          leading: const Icon(Icons.boy_outlined),
+          title: const Text('Beden Ölçüleri Tespit Broşürü'),
+          onTap: () {},
+        ),
+        ListTile(
+          leading: const Icon(Icons.plagiarism),
+          title: const Text('İstihkak Kargo İhalesi Fiyat Cetveli'),
           onTap: () {},
         ),
       ],
