@@ -5,7 +5,7 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:jista/constant/theme/theme_app.dart';
 import 'package:jista/global/global_functions.dart';
 import 'package:jista/utility/route_generator.dart';
-import 'package:jista/view/entry_page.dart';
+import 'package:jista/view/entry_view.dart';
 
 void main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,7 +29,7 @@ class JIsTaApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Jandarma İstihkak Talep',
       onGenerateRoute: RouteGenerator.routeGenerator,
-      home: EntryPage(),
+      //home: EntryPage(),
       builder: EasyLoading.init(),
     );
   }
