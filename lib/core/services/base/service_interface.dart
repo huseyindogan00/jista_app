@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:jista/model/entities/user_model.dart';
+import 'package:jista/models/entities_model/user_model.dart';
 
-abstract class FirebaseServiceInterface {
+abstract class ServiceInterface {
   save(UserModel userModel);
   update(UserModel userModel);
   delete(UserModel userModel);

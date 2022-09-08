@@ -1,13 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:jista/model/entities/user_model.dart';
-import 'package:jista/model/service_result.dart';
-import 'package:jista/services/base/firebase_service_interface.dart';
+import 'package:jista/models/entities_model/user_model.dart';
+import 'package:jista/models/service_result_model/firebase_service_result_model.dart';
+import 'package:jista/core/services/base/service_interface.dart';
 
-class FirebaseService extends FirebaseServiceInterface {
+class FirebaseService extends ServiceInterface {
   static final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   @override
-  Future<ServiceResult> save(UserModel userModel) async {
+  Future<FirebaseServiceResultModel> save(UserModel userModel) async {
     try {
       // -> USERCREDENTİAL'e FIREBASEAUTH  ile oluşturduğumuz kimliği atıyoruz.
       // -> Firebase bizim için bu kullanıcıyı veritabanına kaydediyor.
@@ -30,29 +30,29 @@ class FirebaseService extends FirebaseServiceInterface {
         await user.sendEmailVerification();
 
         return Future.value(
-          ServiceResult(isSuccess: true, dataInfo: 'Kullanıcı kaydı başarılı.'),
+          FirebaseServiceResultModel(isSuccess: true, dataInfo: 'Kullanıcı kaydı başarılı.'),
         );
       } else {
         return Future.value(
-          ServiceResult(isSuccess: false, dataInfo: 'Kullanıcı kaydı yapılamadı.'),
+          FirebaseServiceResultModel(isSuccess: false, dataInfo: 'Kullanıcı kaydı yapılamadı.'),
         );
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         // -> ShowSnacbar.showInfoWithSnacbar(context, 'Parola çok zayıf.');
-        return Future.value(ServiceResult(dataInfo: 'Parola çok zayıf', isSuccess: false));
+        return Future.value(FirebaseServiceResultModel(dataInfo: 'Parola çok zayıf', isSuccess: false));
       } else if (e.code == 'email-already-in-use') {
         // -> ShowSnacbar.showInfoWithSnacbar(context, 'Bu eposta ile daha önce hesap oluşturulmuş.');
-        return Future.value(ServiceResult(
+        return Future.value(FirebaseServiceResultModel(
           dataInfo: 'Bu eposta ile daha önce hesap oluşturulmuş.',
           isSuccess: false,
         ));
       }
     } catch (e) {
-      return Future.value(ServiceResult(dataInfo: '', isSuccess: false));
+      return Future.value(FirebaseServiceResultModel(dataInfo: '', isSuccess: false));
     }
 
-    return Future.value(ServiceResult(dataInfo: 'Try Catch dışı', isSuccess: false));
+    return Future.value(FirebaseServiceResultModel(dataInfo: 'Try Catch dışı', isSuccess: false));
   }
 
   @override
@@ -67,27 +67,27 @@ class FirebaseService extends FirebaseServiceInterface {
 
   // -> KULLANICI girişi yapma
   @override
-  Future<ServiceResult> login(UserModel userModel) async {
+  Future<FirebaseServiceResultModel> login(UserModel userModel) async {
     try {
       UserCredential userCredential =
           await _firebaseAuth.signInWithEmailAndPassword(email: userModel.email!, password: userModel.password!);
 
       if (userCredential.user != null) {
         User user = userCredential.user!;
-        return ServiceResult(
+        return FirebaseServiceResultModel(
             dataInfo: 'Giriş Yapıldı\n${user.emailVerified ? 'email doğrulandı' : ' email doğrulanmadı'}',
             isSuccess: true);
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        return ServiceResult(dataInfo: 'Kullanıcı bulunamadı!', isSuccess: false);
+        return FirebaseServiceResultModel(dataInfo: 'Kullanıcı bulunamadı!', isSuccess: false);
       } else if (e.code == 'wrong-password') {
-        return ServiceResult(dataInfo: 'Yanlış şifre girdiniz.', isSuccess: false);
+        return FirebaseServiceResultModel(dataInfo: 'Yanlış şifre girdiniz.', isSuccess: false);
       }
     } catch (e) {
-      return ServiceResult(dataInfo: e.toString(), isSuccess: false);
+      return FirebaseServiceResultModel(dataInfo: e.toString(), isSuccess: false);
     }
-    return ServiceResult(dataInfo: 'TryCatch end', isSuccess: false);
+    return FirebaseServiceResultModel(dataInfo: 'TryCatch end', isSuccess: false);
   }
 
   // -> KULLANICI E POSTA ADRESİNE GÖNDERİLEN BAĞLANTIYI ONAYLAMIŞ MI

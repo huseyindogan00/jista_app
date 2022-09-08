@@ -1,7 +1,7 @@
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:jista/global/global_variable.dart';
-import 'package:jista/model/data_entities/cities.dart';
-import 'package:jista/services/firebase_service.dart';
+import 'package:jista/data/entities/cities.dart';
+import 'package:jista/core/services/firebase_service.dart';
 
 setupLocator() {
   locator.registerLazySingleton(() => FirebaseService());

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:jista/view/entry_view.dart';
-import 'package:jista/view/error_view.dart';
-import 'package:jista/view/home_view.dart';
-import 'package:jista/view/register_view.dart';
+import 'package:jista/ui/view/error_view.dart';
+import 'package:jista/ui/view/home_view.dart';
+import 'package:jista/ui/view/register_view.dart';
 
 class RouteGenerator {
   static Route<dynamic>? routeGenerator(RouteSettings settings) {

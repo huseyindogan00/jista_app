@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:jista/constant/assets_file.dart';
-import 'package:jista/constant/button_style_const.dart';
-import 'package:jista/constant/font_size.dart';
-import 'package:jista/constant/route_name.dart';
-import 'package:jista/constant/text_const.dart';
-import 'package:jista/model/service_result.dart';
-import 'package:jista/model/entities/user_model.dart';
-import 'package:jista/utility/validation_utility/validation_controller.dart';
-import 'package:jista/view_model/entry_view_model.dart';
+import 'package:jista/data/constant/assets_file.dart';
+import 'package:jista/data/constant/button_style_const.dart';
+import 'package:jista/data/constant/font_size.dart';
+import 'package:jista/data/constant/route_name.dart';
+import 'package:jista/data/constant/text_const.dart';
+import 'package:jista/models/service_result_model/firebase_service_result_model.dart';
+import 'package:jista/models/entities_model/user_model.dart';
+import 'package:jista/core/utility/validation_utility/validation_controller.dart';
+import 'package:jista/ui/view_model/entry_view_model.dart';
 
 class EntryPage extends StatelessWidget {
   EntryPage({Key? key}) : super(key: key);
@@ -58,7 +58,7 @@ class EntryPage extends StatelessWidget {
     return SizedBox(
       width: 350,
       height: 200,
-      child: AssetsFile.logoPath,
+      child: AssetsImages.logoPath,
     );
   }
 
@@ -120,7 +120,7 @@ class EntryPage extends StatelessWidget {
         onPressed: () async {
           if (formKey.currentState!.validate()) {
             formKey.currentState!.save();
-            ServiceResult result = await EntryViewModel.login(userModel);
+            FirebaseServiceResultModel result = await EntryViewModel.login(userModel);
             if (result.isSuccess) {
               // HOME SAYFASINA GEÇİŞŞŞŞ
               Navigator.pushReplacementNamed(context, '/homePage');

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:jista/constant/button_style_const.dart';
-import 'package:jista/constant/font_size.dart';
-import 'package:jista/constant/margin_const.dart';
-import 'package:jista/model/service_result.dart';
-import 'package:jista/model/entities/user_model.dart';
-import 'package:jista/utility/show_utility/show_snacbar.dart';
-import 'package:jista/utility/validation_utility/validation_controller.dart';
-import 'package:jista/view_model/register_view_model.dart';
+import 'package:jista/data/constant/button_style_const.dart';
+import 'package:jista/data/constant/font_size.dart';
+import 'package:jista/data/constant/margin_const.dart';
+import 'package:jista/models/service_result_model/firebase_service_result_model.dart';
+import 'package:jista/models/entities_model/user_model.dart';
+import 'package:jista/core/utility/show_utility/show_snacbar.dart';
+import 'package:jista/core/utility/validation_utility/validation_controller.dart';
+import 'package:jista/ui/view_model/register_view_model.dart';
 
 class RegisterPage extends StatelessWidget {
   RegisterPage({Key? key}) : super(key: key);
@@ -131,7 +131,7 @@ class RegisterPage extends StatelessWidget {
                 formKey.currentState?.save();
                 /* AŞAĞIDAKİ Do not use BuildContexts across async gaps 
                 HATASINI GİDER İLERİDE PROBLEM ÇIKARABİLİR*/
-                ServiceResult result = await RegisterViewModel.saveUser(_userModel);
+                FirebaseServiceResultModel result = await RegisterViewModel.saveUser(_userModel);
                 if (result.isSuccess) {
                   EasyLoading.showSuccess(result.dataInfo.toString());
                 } else {

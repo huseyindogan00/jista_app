@@ -1,15 +1,15 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:jista/global/global_variable.dart';
-import 'package:jista/model/service_result.dart';
-import 'package:jista/model/entities/user_model.dart';
-import 'package:jista/services/firebase_service.dart';
-import 'package:jista/utility/internet_connection_control.dart';
+import 'package:jista/models/service_result_model/firebase_service_result_model.dart';
+import 'package:jista/models/entities_model/user_model.dart';
+import 'package:jista/core/services/firebase_service.dart';
+import 'package:jista/core/utility/internet_connection_control.dart';
 
 class RegisterViewModel {
   static final _firebaseService = locator<FirebaseService>();
 
-  static Future<ServiceResult> saveUser(UserModel userModel) async {
+  static Future<FirebaseServiceResultModel> saveUser(UserModel userModel) async {
     return await _firebaseService.save(userModel);
   }
 

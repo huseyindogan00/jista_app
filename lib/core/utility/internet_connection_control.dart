@@ -124,14 +124,11 @@ class InternetConnectionControl {
 
   void _updateConnectionStatus(ConnectivityResult result) {
     _connectivityResult = result;
-    print(
-        '***********************_updateConnectionStatus değeri : $_connectivityResult');
   }
 
   Future<ConnectivityResult> connectionStatus() async {
     await _initConnectivity();
-    _connectivitySubscription =
-        _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
+    _connectivitySubscription = _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
 
     _connectivitySubscription.onData((data) {
       _connectivityResult = data;
