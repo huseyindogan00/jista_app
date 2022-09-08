@@ -12,18 +12,23 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
+class _HomePageState extends State<HomePage>
+    with SingleTickerProviderStateMixin {
   @override
   void initState() {
+    initializationAnimate();
     super.initState();
   }
 
   // FAB da kullanılan bubble paketi için gerekli animasyon sınıfları başlatılıyor
   //love u
+  // bende seni LOVE U
 
   initializationAnimate() {
-    animationController = AnimationController(vsync: this, duration: const Duration(milliseconds: 500));
-    final curverAnimation = CurvedAnimation(parent: animationController, curve: Curves.easeInOut);
+    animationController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 500));
+    final curverAnimation =
+        CurvedAnimation(parent: animationController, curve: Curves.easeInOut);
     animation = Tween<double>(begin: 0, end: 1).animate(curverAnimation);
   }
 
@@ -39,10 +44,37 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
         floatingActionButton: categoriesFAB(animation, animationController),
         drawer: const NavigationDrawer(),
-        body: Container(
-          width: MediaQuery.of(context).size.width * 0.95,
-          height: 100,
-          color: Colors.cyan,
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              // image eklemede hata var
+              /* Container(
+                margin: EdgeInsets.all(10),
+                width: double.infinity,
+                height: 100,
+                decoration: const BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage(
+                            'assets/images/categories/egitim_kiyafeti.jpg')),
+                    borderRadius: BorderRadius.all(Radius.circular(10))),
+                    
+              ), */
+              Container(
+                margin: EdgeInsets.all(10),
+                width: double.infinity,
+                height: 100,
+                color: Colors.cyan,
+              ),
+              Container(
+                margin: EdgeInsets.all(10),
+                width: double.infinity,
+                height: 100,
+                color: Colors.cyan,
+              ),
+            ],
+          ),
         ),
       ),
     );
