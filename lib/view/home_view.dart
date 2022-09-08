@@ -15,11 +15,12 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
   @override
   void initState() {
-    initializationAnimate();
     super.initState();
   }
 
   // FAB da kullanılan bubble paketi için gerekli animasyon sınıfları başlatılıyor
+  //love u
+
   initializationAnimate() {
     animationController = AnimationController(vsync: this, duration: const Duration(milliseconds: 500));
     final curverAnimation = CurvedAnimation(parent: animationController, curve: Curves.easeInOut);
