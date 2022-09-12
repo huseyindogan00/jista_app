@@ -7,18 +7,18 @@ import '../address/address_model.dart';
 
 class PersonModel {
   dynamic id;
-  String userId;
+  String password;
   String name;
   String lastName;
   String rank;
   String? gender;
-  AddressModel address;
+  AddressModel? address;
   double totalPoint;
   String duty;
   OrderModel? order;
   PersonModel({
     this.id,
-    required this.userId,
+    required this.password,
     required this.name,
     required this.lastName,
     required this.rank,
@@ -31,7 +31,7 @@ class PersonModel {
 
   PersonModel copyWith({
     String? id,
-    String? userId,
+    String? password,
     String? name,
     String? lastName,
     String? rank,
@@ -43,7 +43,7 @@ class PersonModel {
   }) {
     return PersonModel(
       id: id ?? this.id,
-      userId: userId ?? this.userId,
+      password: password ?? this.password,
       name: name ?? this.name,
       lastName: lastName ?? this.lastName,
       rank: rank ?? this.rank,
@@ -58,12 +58,12 @@ class PersonModel {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       //'id': id,
-      'userId': userId,
+      'password': password,
       'name': name,
       'lastName': lastName,
       'rank': rank,
       'gender': gender,
-      'address': address.toMap(),
+      'address': address?.toMap(),
       'totalPoint': totalPoint,
       'duty': duty,
       'order': order?.toMap(),
@@ -73,7 +73,7 @@ class PersonModel {
   factory PersonModel.fromMap(Map<String, dynamic> map) {
     return PersonModel(
       id: map['id'] != null ? map['id'] as String : null,
-      userId: map['userId'] as String,
+      password: map['password'] as String,
       name: map['name'] as String,
       lastName: map['lastName'] as String,
       rank: map['rank'] as String,
@@ -81,17 +81,20 @@ class PersonModel {
       address: AddressModel.fromMap(map['address'] as Map<String, dynamic>),
       totalPoint: map['totalPoint'] as double,
       duty: map['duty'] as String,
-      order: map['order'] != null ? OrderModel.fromMap(map['order'] as Map<String, dynamic>) : null,
+      order: map['order'] != null
+          ? OrderModel.fromMap(map['order'] as Map<String, dynamic>)
+          : null,
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory PersonModel.fromJson(String source) => PersonModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory PersonModel.fromJson(String source) =>
+      PersonModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {
-    return 'PersonModel(id: $id, userId: $userId, name: $name, lastName: $lastName, rank: $rank, gender: $gender, address: $address, totalPoint: $totalPoint, duty: $duty, order: $order)';
+    return 'PersonModel(id: $id, password: $password, name: $name, lastName: $lastName, rank: $rank, gender: $gender, address: $address, totalPoint: $totalPoint, duty: $duty, order: $order)';
   }
 
   @override
@@ -99,7 +102,7 @@ class PersonModel {
     if (identical(this, other)) return true;
 
     return other.id == id &&
-        other.userId == userId &&
+        other.password == password &&
         other.name == name &&
         other.lastName == lastName &&
         other.rank == rank &&
@@ -113,7 +116,7 @@ class PersonModel {
   @override
   int get hashCode {
     return id.hashCode ^
-        userId.hashCode ^
+        password.hashCode ^
         name.hashCode ^
         lastName.hashCode ^
         rank.hashCode ^

@@ -14,7 +14,10 @@ import 'package:jista/views/splash/view/splash_view.dart';
 
 import 'common/theme/theme_app.dart';
 
+// SİNGLE OBJECT OLUŞTURUCU
 GetIt locator = GetIt.instance;
+
+// TEMA BİLGİSİ
 bool darkTheme = false;
 
 // FLOATİN ACTIN BUTTON - BUBBLE ANIMATION
@@ -26,14 +29,13 @@ void main(List<String> args) async {
   await Firebase.initializeApp();
   setupLocator();
   await setupHive();
+  easyloadingConfig();
   //FlutterNativeSplash.remove();
   runApp(JIsTaApp());
 }
 
 class JIsTaApp extends StatelessWidget {
-  JIsTaApp({Key? key}) : super(key: key) {
-    easyloadingConfig();
-  }
+  JIsTaApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

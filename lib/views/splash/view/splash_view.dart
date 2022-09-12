@@ -12,23 +12,21 @@ class SplashView extends StatelessWidget {
     SplashViewModel.route(context);
     return Scaffold(
       body: Center(
-        child: Container(
-          color: Colors.red,
-          child: Stack(
-            children: [
-              Image(
-                width: widthDevice,
-                height: MediaQuery.of(context).size.height,
-                image: const AssetImage(ConstAssetsImages.splashString),
-                fit: BoxFit.cover,
-              ),
-              Positioned(
-                top: heightDevice / 2,
-                right: widthDevice / 2,
-                child: const CircularProgressIndicator(semanticsLabel: 'Yükleniyor..'),
-              )
-            ],
-          ),
+        child: Stack(
+          children: [
+            Image(
+              width: widthDevice,
+              height: MediaQuery.of(context).size.height,
+              image: const AssetImage(ConstAssetsImages.splashString),
+              fit: BoxFit.cover,
+            ),
+            Positioned(
+              top: heightDevice / 2,
+              right: widthDevice / 2,
+              child: const CircularProgressIndicator(
+                  semanticsLabel: 'Yükleniyor..'),
+            )
+          ],
         ),
       ),
     );

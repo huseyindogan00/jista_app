@@ -42,7 +42,7 @@ class EntryView extends StatelessWidget {
               children: [
                 buildLogo(),
                 const SizedBox(height: 20),
-                emailTextField(),
+                pbikTextField(),
                 const SizedBox(height: 20),
                 passwordTextField(context),
                 const SizedBox(height: 30),
@@ -67,7 +67,7 @@ class EntryView extends StatelessWidget {
   }
 
   // Username|Eposta|Pbik TEXTFİELD
-  Widget emailTextField() {
+  Widget pbikTextField() {
     return TextFormField(
       autofocus: false,
       controller: _epostaController,
@@ -82,10 +82,10 @@ class EntryView extends StatelessWidget {
         ),
       ),
       validator: (value) {
-        return ValidationController.emailValidation(value);
+        return ValidationController.pbikValidation(value);
       },
       onSaved: (newValue) {
-        userModel.email = newValue?.trim() ?? '';
+        userModel.pbik = newValue?.trim() ?? '';
       },
     );
   }

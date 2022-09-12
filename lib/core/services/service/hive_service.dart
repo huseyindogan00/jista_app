@@ -10,6 +10,8 @@ class HiveService {
     box = Hive.box<UserModel>(_boxName);
   }
 
+  getBox(String boxName) {}
+
   saveUser(UserModel userModel) async {
     await box.put('user', userModel);
     print(box.get('user'));

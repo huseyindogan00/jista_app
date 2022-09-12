@@ -8,6 +8,14 @@ class ValidationController {
     }
   }
 
+  static String? pbikValidation(String? pbik) {
+    if (pbik != null && pbik.isNotEmpty) {
+      return null;
+    } else {
+      return 'Pbik numaranızı kontrol ediniz';
+    }
+  }
+
   static String? passwordValidation(String? password) {
     if (password != null && password.isNotEmpty && password.length >= 6) {
       return null;

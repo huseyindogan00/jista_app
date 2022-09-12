@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:jista/core/services/service_result/base/service_result.dart';
 
-class FirebaseServiceResultModel<T> implements ServiceResult {
+class FirebaseServiceResultModel<T> implements ServiceResult<T> {
   @override
   String? dataInfo;
 
@@ -13,5 +13,6 @@ class FirebaseServiceResultModel<T> implements ServiceResult {
 
   String? userId;
 
-  FirebaseServiceResultModel({this.dataInfo, required this.isSuccess, this.userId, this.data});
+  FirebaseServiceResultModel(
+      {this.dataInfo, required this.isSuccess, this.userId, this.data});
 }
