@@ -5,23 +5,26 @@ class AddressModel {
   dynamic id;
   String city;
   String town;
-  String location;
+  String telephoneNumber;
+  String mobileTelephoneNumber;
   String fullAddress;
   String postCode;
   AddressModel({
     required this.id,
     required this.city,
     required this.town,
-    required this.location,
+    required this.telephoneNumber,
+    required this.mobileTelephoneNumber,
     required this.fullAddress,
     required this.postCode,
   });
 
   AddressModel copyWith({
-    String? id,
+    dynamic id,
     String? city,
     String? town,
-    String? location,
+    String? telephoneNumber,
+    String? mobileTelephoneNumber,
     String? fullAddress,
     String? postCode,
   }) {
@@ -29,7 +32,8 @@ class AddressModel {
       id: id ?? this.id,
       city: city ?? this.city,
       town: town ?? this.town,
-      location: location ?? this.location,
+      telephoneNumber: telephoneNumber ?? this.telephoneNumber,
+      mobileTelephoneNumber: mobileTelephoneNumber ?? this.mobileTelephoneNumber,
       fullAddress: fullAddress ?? this.fullAddress,
       postCode: postCode ?? this.postCode,
     );
@@ -40,7 +44,8 @@ class AddressModel {
       //'id': id,
       'city': city,
       'town': town,
-      'location': location,
+      'telephoneNumber': telephoneNumber,
+      'mobileTelephoneNumber': mobileTelephoneNumber,
       'fullAddress': fullAddress,
       'postCode': postCode,
     };
@@ -48,10 +53,11 @@ class AddressModel {
 
   factory AddressModel.fromMap(Map<String, dynamic> map) {
     return AddressModel(
-      id: map['id'] as String,
+      id: map['id'] as dynamic,
       city: map['city'] as String,
       town: map['town'] as String,
-      location: map['location'] as String,
+      telephoneNumber: map['telephoneNumber'] as String,
+      mobileTelephoneNumber: map['mobileTelephoneNumber'] as String,
       fullAddress: map['fullAddress'] as String,
       postCode: map['postCode'] as String,
     );
@@ -63,7 +69,7 @@ class AddressModel {
 
   @override
   String toString() {
-    return 'AddressModel(id: $id, city: $city, town: $town, location: $location, fullAddress: $fullAddress, postCode: $postCode)';
+    return 'AddressModel(id: $id, city: $city, town: $town, telephoneNumber: $telephoneNumber, mobileTelephoneNumber: $mobileTelephoneNumber, fullAddress: $fullAddress, postCode: $postCode)';
   }
 
   @override
@@ -73,13 +79,20 @@ class AddressModel {
     return other.id == id &&
         other.city == city &&
         other.town == town &&
-        other.location == location &&
+        other.telephoneNumber == telephoneNumber &&
+        other.mobileTelephoneNumber == mobileTelephoneNumber &&
         other.fullAddress == fullAddress &&
         other.postCode == postCode;
   }
 
   @override
   int get hashCode {
-    return id.hashCode ^ city.hashCode ^ town.hashCode ^ location.hashCode ^ fullAddress.hashCode ^ postCode.hashCode;
+    return id.hashCode ^
+        city.hashCode ^
+        town.hashCode ^
+        telephoneNumber.hashCode ^
+        mobileTelephoneNumber.hashCode ^
+        fullAddress.hashCode ^
+        postCode.hashCode;
   }
 }

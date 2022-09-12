@@ -1,20 +1,21 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:jista/models/person/person_model.dart';
 import 'package:jista/models/user/user_model.dart';
 
 class HiveService {
-  static String _boxName = 'userBox';
-  late Box<UserModel> box;
+  static String _boxName = 'personBox';
+  late Box<PersonModel> box;
 
   HiveService() {
-    box = Hive.box<UserModel>(_boxName);
+    box = Hive.box<PersonModel>(_boxName);
   }
 
   getBox(String boxName) {}
 
-  saveUser(UserModel userModel) async {
-    await box.put('user', userModel);
-    print(box.get('user'));
+  saveUser(PersonModel personModel) async {
+    await box.put('person', personModel);
+    print(box.get('person'));
   }
 
   deleteUserBox(String boxName) async {
@@ -22,10 +23,10 @@ class HiveService {
   }
 
   bool isUserBox() {
-    var userBox = Hive.box<UserModel>('userBox');
-    var userModel = userBox.get('user');
-    print(userModel);
+    var personBox = Hive.box<PersonModel>('personBox');
+    var personModel = personBox.get('personBox');
+    print(personModel);
 
-    return userModel == null ? false : true;
+    return personModel == null ? false : true;
   }
 }

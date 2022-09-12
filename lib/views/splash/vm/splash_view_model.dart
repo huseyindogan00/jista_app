@@ -15,10 +15,8 @@ class SplashViewModel {
       // Varsa Home sayfasın yoksa Entry sayfasına yönlendirme yapıcaz.
       bool isUser = box.isUserBox();
       if (isUser) {
-        print('home page girdi');
         Navigator.pushReplacementNamed(context, RouteName.homeView);
       } else {
-        print('entry page girdi');
         Navigator.pushReplacementNamed(context, RouteName.entryView);
       }
     });

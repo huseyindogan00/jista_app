@@ -7,24 +7,26 @@ class SplashView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double widthDevice = MediaQuery.of(context).size.width;
-    double heightDevice = MediaQuery.of(context).size.height;
     SplashViewModel.route(context);
+
     return Scaffold(
       body: Center(
         child: Stack(
+          alignment: AlignmentDirectional.bottomCenter,
           children: [
             Image(
-              width: widthDevice,
               height: MediaQuery.of(context).size.height,
-              image: const AssetImage(ConstAssetsImages.splashString),
+              image: const AssetImage(
+                ConstAssetsImages.splashString,
+              ),
               fit: BoxFit.cover,
             ),
-            Positioned(
-              top: heightDevice / 2,
-              right: widthDevice / 2,
+            Container(
+              alignment: const Alignment(0, 0.8),
               child: const CircularProgressIndicator(
-                  semanticsLabel: 'Yükleniyor..'),
+                color: Color.fromARGB(255, 228, 71, 60),
+                backgroundColor: Color.fromARGB(255, 24, 97, 156),
+              ),
             )
           ],
         ),

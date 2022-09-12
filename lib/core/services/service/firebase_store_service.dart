@@ -16,12 +16,10 @@ class FirebaseStoreService implements IFirebaseStoreService {
   delete(model) {}
 
   @override
-  Future<FirebaseServiceResultModel<List<ProductModel>>> read(
-      String collectionName) async {
+  Future<FirebaseServiceResultModel<List<ProductModel>>> read(String collectionName) async {
     List<ProductModel> productList = [];
     try {
-      QuerySnapshot<Map<String, dynamic>> snapshot =
-          await _firebaseFirestore.collection(collectionName).get();
+      QuerySnapshot<Map<String, dynamic>> snapshot = await _firebaseFirestore.collection(collectionName).get();
       if (snapshot.docs.isNotEmpty) {
         for (QueryDocumentSnapshot<Map<String, dynamic>> doc in snapshot.docs) {
           Map<String, dynamic> product = doc.data();
@@ -33,8 +31,7 @@ class FirebaseStoreService implements IFirebaseStoreService {
       }
     } on FirebaseException catch (_) {}
 
-    return FirebaseServiceResultModel(
-        isSuccess: false, dataInfo: 'Product çekilemedi');
+    return FirebaseServiceResultModel(isSuccess: false, dataInfo: 'Product çekilemedi');
   }
 
   @override
@@ -48,33 +45,35 @@ class FirebaseStoreService implements IFirebaseStoreService {
     List<PersonModel> personModelList = [];
 
     try {
-      QuerySnapshot<Map<String, dynamic>> snapshot = await _firebaseFirestore
-          .collection('person')
-          .where('pbik', isEqualTo: userModel.pbik)
-          .get();
+      QuerySnapshot<Map<String, dynamic>> snapshot =
+          await _firebaseFirestore.collection('person').where('pbik', isEqualTo: userModel.pbik).get();
 
       if (snapshot.docs.isNotEmpty) {
         DocumentSnapshot<Map<String, dynamic>> doc = snapshot.docs.first;
         if (doc.exists) {
           Map<String, dynamic>? personMap = doc.data();
+
+          QuerySnapshot<Map<String, dynamic>> addressSnapshot =
+              await _firebaseFirestore.collection('person').doc(doc.id).collection('address').get();
+          Map<String, dynamic> address = addressSnapshot.docs.first.data();
+
           personMap?['id'] = doc.id;
+          address['id'] = addressSnapshot.docs.first.id;
+
           if (personMap != null) {
+            personMap['address'] = address;
             personModelList.add(PersonModel.fromMap(personMap));
-            return FirebaseServiceResultModel(
-                isSuccess: true, data: personModelList);
+            return FirebaseServiceResultModel(isSuccess: true, data: personModelList);
           }
         }
       }
       return FirebaseServiceResultModel(
-          isSuccess: false,
-          data: personModelList,
-          dataInfo: 'personel listesi boş geldi');
+          isSuccess: false, data: personModelList, dataInfo: 'Pbik numarası veritabınında yok');
     } catch (_) {
       print('FİRESERVİCE DE hata oluştu');
     }
 
-    return FirebaseServiceResultModel(
-        isSuccess: false, dataInfo: 'Giriş işlemi başarısız');
+    return FirebaseServiceResultModel(isSuccess: false, dataInfo: 'Giriş işlemi başarısız');
 
     // PERSON LİSTESİNİ GETİRME
     /* QuerySnapshot<Map<String, dynamic>> snapshot = await _firebaseFirestore.collection('person').get();  

@@ -2,17 +2,10 @@ import 'dart:convert';
 
 import 'package:hive_flutter/hive_flutter.dart';
 
-part 'user_model.g.dart';
-
-@HiveType(typeId: 0)
 class UserModel extends HiveObject {
-  @HiveField(0)
   String? id;
-  @HiveField(1)
   String? pbik;
-  @HiveField(2)
   String? userName;
-  @HiveField(3)
   String? email;
   String? password;
 

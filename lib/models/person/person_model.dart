@@ -1,20 +1,34 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
+import 'package:hive_flutter/adapters.dart';
 import 'package:jista/models/order/order_model.dart';
 
 import '../address/address_model.dart';
 
+part 'person_model.g.dart';
+
+@HiveType(typeId: 1)
 class PersonModel {
+  @HiveField(0)
   dynamic id;
+  @HiveField(1)
   String password;
+  @HiveField(2)
   String name;
+  @HiveField(3)
   String lastName;
+  @HiveField(4)
   String rank;
+  @HiveField(5)
   String? gender;
+  @HiveField(6)
   AddressModel? address;
-  double totalPoint;
+  @HiveField(7)
+  int totalPoint;
+  @HiveField(8)
   String duty;
+  @HiveField(9)
   OrderModel? order;
   PersonModel({
     this.id,
@@ -37,7 +51,7 @@ class PersonModel {
     String? rank,
     String? gender,
     AddressModel? address,
-    double? totalPoint,
+    int? totalPoint,
     String? duty,
     OrderModel? order,
   }) {
@@ -79,18 +93,15 @@ class PersonModel {
       rank: map['rank'] as String,
       gender: map['gender'] != null ? map['gender'] as String : null,
       address: AddressModel.fromMap(map['address'] as Map<String, dynamic>),
-      totalPoint: map['totalPoint'] as double,
+      totalPoint: map['totalPoint'] as int,
       duty: map['duty'] as String,
-      order: map['order'] != null
-          ? OrderModel.fromMap(map['order'] as Map<String, dynamic>)
-          : null,
+      order: map['order'] != null ? OrderModel.fromMap(map['order'] as Map<String, dynamic>) : null,
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory PersonModel.fromJson(String source) =>
-      PersonModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory PersonModel.fromJson(String source) => PersonModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {
