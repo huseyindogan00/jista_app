@@ -13,7 +13,7 @@ class HiveService {
 
   getBox(String boxName) {}
 
-  saveUser(PersonModel personModel) async {
+  savePerson(PersonModel personModel) async {
     await box.put('person', personModel);
     print(box.get('person'));
   }
@@ -22,7 +22,7 @@ class HiveService {
     await Hive.deleteBoxFromDisk(boxName);
   }
 
-  bool isUserBox() {
+  bool isPersonBox() {
     var personBox = Hive.box<PersonModel>('personBox');
     var personModel = personBox.get('personBox');
     print(personModel);

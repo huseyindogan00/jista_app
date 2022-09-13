@@ -13,8 +13,8 @@ class SplashViewModel {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       // userBox kutusunun daha önce olup olmadığını sorguluyoruz.
       // Varsa Home sayfasın yoksa Entry sayfasına yönlendirme yapıcaz.
-      bool isUser = box.isUserBox();
-      if (isUser) {
+      bool isPerson = box.isPersonBox();
+      if (isPerson) {
         Navigator.pushReplacementNamed(context, RouteName.homeView);
       } else {
         Navigator.pushReplacementNamed(context, RouteName.entryView);

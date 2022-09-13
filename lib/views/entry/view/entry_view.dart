@@ -6,6 +6,7 @@ import 'package:jista/constant/const_text.dart';
 import 'package:jista/core/services/service_result/base/service_result.dart';
 import 'package:jista/core/services/service_result/firebase_service_result_model.dart';
 import 'package:jista/core/utility/validation_utility/validation_controller.dart';
+import 'package:jista/models/person/person_model.dart';
 import 'package:jista/models/user/user_model.dart';
 
 import '../../../constant/const_assets_images.dart';
@@ -20,7 +21,7 @@ class EntryView extends StatelessWidget {
   final TextEditingController _epostaController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final EntryViewModel entryViewModel = EntryViewModel();
-  final UserModel userModel = UserModel();
+  final PersonModel personModel = PersonModel();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
@@ -77,7 +78,7 @@ class EntryView extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
         ),
         label: Text(
-          'E posta',
+          'Pbik',
           style: TextStyle(fontSize: ConstFontSize.textFieldFS),
         ),
       ),
@@ -85,7 +86,7 @@ class EntryView extends StatelessWidget {
         return ValidationController.pbikValidation(value);
       },
       onSaved: (newValue) {
-        userModel.pbik = newValue?.trim() ?? '';
+        personModel.pbik = newValue?.trim() ?? '';
       },
     );
   }
@@ -109,7 +110,7 @@ class EntryView extends StatelessWidget {
         return ValidationController.passwordValidation(value);
       },
       onSaved: (newValue) {
-        userModel.password = newValue?.trim() ?? '';
+        personModel.password = newValue?.trim() ?? '';
       },
     );
   }
@@ -124,7 +125,7 @@ class EntryView extends StatelessWidget {
         onPressed: () async {
           if (formKey.currentState!.validate()) {
             formKey.currentState!.save();
-            ServiceResult result = await EntryViewModel.login(userModel);
+            ServiceResult result = await EntryViewModel.login(personModel);
             if (result.isSuccess) {
               // HOME SAYFASINA GEÇİŞŞŞŞ
               Navigator.pushReplacementNamed(context, RouteName.homeView);

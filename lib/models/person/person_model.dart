@@ -3,7 +3,6 @@ import 'dart:convert';
 
 import 'package:hive_flutter/adapters.dart';
 import 'package:jista/models/order/order_model.dart';
-
 import '../address/address_model.dart';
 
 part 'person_model.g.dart';
@@ -13,39 +12,47 @@ class PersonModel {
   @HiveField(0)
   dynamic id;
   @HiveField(1)
-  String password;
+  String? password;
   @HiveField(2)
-  String name;
+  String? pbik;
   @HiveField(3)
-  String lastName;
+  String? email;
   @HiveField(4)
-  String rank;
+  String? name;
   @HiveField(5)
-  String? gender;
+  String? lastName;
   @HiveField(6)
-  AddressModel? address;
+  String? rank;
   @HiveField(7)
-  int totalPoint;
+  String? gender;
   @HiveField(8)
-  String duty;
+  AddressModel? address;
   @HiveField(9)
+  int? totalPoint;
+  @HiveField(10)
+  String? duty;
+  @HiveField(11)
   OrderModel? order;
   PersonModel({
     this.id,
-    required this.password,
-    required this.name,
-    required this.lastName,
-    required this.rank,
+    this.password,
+    this.pbik,
+    this.email,
+    this.name,
+    this.lastName,
+    this.rank,
     this.gender,
-    required this.address,
-    required this.totalPoint,
-    required this.duty,
+    this.address,
+    this.totalPoint,
+    this.duty,
     this.order,
   });
 
   PersonModel copyWith({
-    String? id,
+    dynamic id,
     String? password,
+    String? pbik,
+    String? email,
     String? name,
     String? lastName,
     String? rank,
@@ -58,6 +65,8 @@ class PersonModel {
     return PersonModel(
       id: id ?? this.id,
       password: password ?? this.password,
+      pbik: pbik ?? this.pbik,
+      email: email ?? this.email,
       name: name ?? this.name,
       lastName: lastName ?? this.lastName,
       rank: rank ?? this.rank,
@@ -71,8 +80,10 @@ class PersonModel {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      //'id': id,
+      'id': id,
       'password': password,
+      'pbik': pbik,
+      'email': email,
       'name': name,
       'lastName': lastName,
       'rank': rank,
@@ -86,26 +97,33 @@ class PersonModel {
 
   factory PersonModel.fromMap(Map<String, dynamic> map) {
     return PersonModel(
-      id: map['id'] != null ? map['id'] as String : null,
-      password: map['password'] as String,
-      name: map['name'] as String,
-      lastName: map['lastName'] as String,
-      rank: map['rank'] as String,
+      id: map['id'] as dynamic,
+      password: map['password'] != null ? map['password'] as String : null,
+      pbik: map['pbik'] != null ? map['pbik'] as String : null,
+      email: map['email'] != null ? map['email'] as String : null,
+      name: map['name'] != null ? map['name'] as String : null,
+      lastName: map['lastName'] != null ? map['lastName'] as String : null,
+      rank: map['rank'] != null ? map['rank'] as String : null,
       gender: map['gender'] != null ? map['gender'] as String : null,
-      address: AddressModel.fromMap(map['address'] as Map<String, dynamic>),
-      totalPoint: map['totalPoint'] as int,
-      duty: map['duty'] as String,
-      order: map['order'] != null ? OrderModel.fromMap(map['order'] as Map<String, dynamic>) : null,
+      address: map['address'] != null
+          ? AddressModel.fromMap(map['address'] as Map<String, dynamic>)
+          : null,
+      totalPoint: map['totalPoint'] != null ? map['totalPoint'] as int : null,
+      duty: map['duty'] != null ? map['duty'] as String : null,
+      order: map['order'] != null
+          ? OrderModel.fromMap(map['order'] as Map<String, dynamic>)
+          : null,
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory PersonModel.fromJson(String source) => PersonModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory PersonModel.fromJson(String source) =>
+      PersonModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {
-    return 'PersonModel(id: $id, password: $password, name: $name, lastName: $lastName, rank: $rank, gender: $gender, address: $address, totalPoint: $totalPoint, duty: $duty, order: $order)';
+    return 'PersonModel(id: $id, password: $password, pbik: $pbik, email: $email, name: $name, lastName: $lastName, rank: $rank, gender: $gender, address: $address, totalPoint: $totalPoint, duty: $duty, order: $order)';
   }
 
   @override
@@ -114,6 +132,8 @@ class PersonModel {
 
     return other.id == id &&
         other.password == password &&
+        other.pbik == pbik &&
+        other.email == email &&
         other.name == name &&
         other.lastName == lastName &&
         other.rank == rank &&
@@ -128,6 +148,8 @@ class PersonModel {
   int get hashCode {
     return id.hashCode ^
         password.hashCode ^
+        pbik.hashCode ^
+        email.hashCode ^
         name.hashCode ^
         lastName.hashCode ^
         rank.hashCode ^

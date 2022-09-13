@@ -3,11 +3,11 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:jista/core/services/service_result/firebase_service_result_model.dart';
 import 'package:jista/core/utility/show_utility/show_snacbar.dart';
 import 'package:jista/core/utility/validation_utility/validation_controller.dart';
+import 'package:jista/models/person/person_model.dart';
 
 import '../../../constant/const_button_style.dart';
 import '../../../constant/const_font_size.dart';
 import '../../../constant/const_margin.dart';
-import '../../../models/user/user_model.dart';
 import '../vm/register_view_model.dart';
 
 class RegisterView extends StatelessWidget {
@@ -17,7 +17,7 @@ class RegisterView extends StatelessWidget {
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
   var formKey = GlobalKey<FormState>();
-  final UserModel _userModel = UserModel();
+  final PersonModel personModel = PersonModel();
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +61,7 @@ class RegisterView extends StatelessWidget {
           return ValidationController.nameValidation(value);
         },
         onSaved: (newValue) {
-          _userModel.userName = newValue!.trim();
+          personModel.name = newValue!.trim();
         },
       ),
     );
@@ -86,7 +86,7 @@ class RegisterView extends StatelessWidget {
           return ValidationController.emailValidation(value);
         },
         onSaved: (newValue) {
-          _userModel.email = newValue!.trim();
+          personModel.email = newValue!.trim();
         },
       ),
     );
@@ -111,7 +111,7 @@ class RegisterView extends StatelessWidget {
           return ValidationController.passwordValidation(value);
         },
         onSaved: (newValue) {
-          _userModel.password = newValue?.trim();
+          personModel.password = newValue?.trim();
         },
       ),
     );
@@ -132,7 +132,8 @@ class RegisterView extends StatelessWidget {
                 formKey.currentState?.save();
                 /* AŞAĞIDAKİ Do not use BuildContexts across async gaps 
                 HATASINI GİDER İLERİDE PROBLEM ÇIKARABİLİR*/
-                FirebaseServiceResultModel result = await RegisterViewModel.saveUser(_userModel);
+                FirebaseServiceResultModel result =
+                    await RegisterViewModel.savePerson(personModel);
                 if (result.isSuccess) {
                   EasyLoading.showSuccess(result.dataInfo.toString());
                 } else {

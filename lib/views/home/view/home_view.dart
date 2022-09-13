@@ -18,33 +18,38 @@ class HomeView extends StatefulWidget {
   State<HomeView> createState() => _HomeViewState();
 }
 
-class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin {
+class _HomeViewState extends State<HomeView>
+    with SingleTickerProviderStateMixin {
   List<ProductModel>? productList = [];
 
   @override
   void initState() {
-    initializationAnimate();
+    method geç bittiği için ürünler sayfaya yansımıyor
     getAllProduct();
+    initializationAnimate();
     super.initState();
   }
 
   getAllProduct() async {
-    FirebaseServiceResultModel<List<ProductModel>> result = await HomeViewModel.getAllProduct();
+    FirebaseServiceResultModel<List<ProductModel>> result =
+        await HomeViewModel.getAllProduct();
     productList = result.data;
     print('getAllProduct girdi sorgu sonucu : ${result.data}');
   }
 
   // FAB da kullanılan bubble paketi için gerekli animasyon sınıfları başlatılıyor
   initializationAnimate() {
-    animationController = AnimationController(vsync: this, duration: const Duration(milliseconds: 500));
-    final curverAnimation = CurvedAnimation(parent: animationController, curve: Curves.easeInOut);
+    animationController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 500));
+    final curverAnimation =
+        CurvedAnimation(parent: animationController, curve: Curves.easeInOut);
     animation = Tween<double>(begin: 0, end: 1).animate(curverAnimation);
   }
 
   @override
   Widget build(BuildContext context) {
     //getAllProduct();
-    print(productList!.length.toString() + '************************************');
+    print(productList!.length.toString());
     return WillPopScope(
       //PROGRAMDAN TAMAMEN ÇIKIP ÇIKMAMAYI KONTROL EDİLİYOR
       onWillPop: () async {
@@ -84,7 +89,10 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
           backgroundColor: Colors.amber,
           items: const [
             BottomNavigationBarItem(
-                backgroundColor: Colors.white, icon: Icon(Icons.add), label: 'Ekle', tooltip: 'ipucu'),
+                backgroundColor: Colors.white,
+                icon: Icon(Icons.add),
+                label: 'Ekle',
+                tooltip: 'ipucu'),
             BottomNavigationBarItem(icon: Icon(Icons.add), label: 'Sil'),
           ],
         ),
@@ -98,8 +106,10 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
                     child: ListTile(
                       title: Text(product.type),
                       trailing: product.cargoStatus
-                          ? const Icon(Icons.local_shipping_rounded, color: Colors.yellow)
-                          : const Icon(Icons.local_shipping_outlined, color: Colors.red),
+                          ? const Icon(Icons.local_shipping_rounded,
+                              color: Colors.yellow)
+                          : const Icon(Icons.local_shipping_outlined,
+                              color: Colors.red),
                       subtitle: Text(product.title),
                     ),
                   );
@@ -119,15 +129,19 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _buildCategory(context, ConstAssetsImages.serviceWear, 'Hizmet Kıyafeti'),
-          _buildCategory(context, ConstAssetsImages.trainingClothing, 'Eğitim Kıyafeti'),
-          _buildCategory(context, ConstAssetsImages.stafTaskClothing, 'Kadro Görev Kıyafeti'),
+          _buildCategory(
+              context, ConstAssetsImages.serviceWear, 'Hizmet Kıyafeti'),
+          _buildCategory(
+              context, ConstAssetsImages.trainingClothing, 'Eğitim Kıyafeti'),
+          _buildCategory(context, ConstAssetsImages.stafTaskClothing,
+              'Kadro Görev Kıyafeti'),
         ],
       ),
     );
   }
 
-  Widget _buildCategory(BuildContext context, AssetImage assetsImages, String title) {
+  Widget _buildCategory(
+      BuildContext context, AssetImage assetsImages, String title) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 25),
       child: InkWell(
