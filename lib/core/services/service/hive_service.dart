@@ -23,9 +23,8 @@ class HiveService {
   }
 
   bool isPersonBox() {
-    var personBox = Hive.box<PersonModel>('personBox');
-    var personModel = personBox.get('personBox');
-    print(personModel);
+    Box<PersonModel> personBox = Hive.box<PersonModel>('personBox');
+    PersonModel? personModel = personBox.get('person');
 
     return personModel == null ? false : true;
   }
