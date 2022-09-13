@@ -9,7 +9,10 @@ import 'package:jista/core/services/service/firebase_store_service.dart';
 import 'package:jista/core/services/service/hive_service.dart';
 import 'package:jista/data/data_model/entities/cities.dart';
 import 'package:jista/core/router/route_generator.dart';
+import 'package:jista/models/address/address_model.dart';
+import 'package:jista/models/order/order_model.dart';
 import 'package:jista/models/person/person_model.dart';
+import 'package:jista/models/product/product_model.dart';
 import 'package:jista/views/splash/view/splash_view.dart';
 
 import 'common/theme/theme_app.dart';
@@ -70,6 +73,10 @@ void easyloadingConfig() {
 // Hive oluşturuluyor
 Future<void> setupHive() async {
   await Hive.initFlutter();
-  Hive.registerAdapter(PersonModelAdapter());
+  Hive.registerAdapter<PersonModel>(PersonModelAdapter());
+  Hive.registerAdapter<AddressModel>(AddressModelAdapter());
+  Hive.registerAdapter<OrderModel>(OrderModelAdapter());
+  Hive.registerAdapter<ProductModel>(ProductModelAdapter());
+
   await Hive.openBox<PersonModel>('personBox');
 }

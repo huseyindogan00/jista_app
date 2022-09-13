@@ -4,6 +4,7 @@ import 'package:jista/core/services/service_result/base/service_result.dart';
 import 'package:jista/core/services/service_result/firebase_service_result_model.dart';
 import 'package:jista/models/product/product_model.dart';
 import 'package:jista/views/home/vm/home_view_model.dart';
+import 'package:jista/views/widget/bottom_navi_bar.dart';
 
 import '../../../constant/const_assets_images.dart';
 import '../../../main.dart';
@@ -18,38 +19,31 @@ class HomeView extends StatefulWidget {
   State<HomeView> createState() => _HomeViewState();
 }
 
-class _HomeViewState extends State<HomeView>
-    with SingleTickerProviderStateMixin {
+class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin {
   List<ProductModel>? productList = [];
 
   @override
   void initState() {
-    method geç bittiği için ürünler sayfaya yansımıyor
     getAllProduct();
     initializationAnimate();
     super.initState();
   }
 
   getAllProduct() async {
-    FirebaseServiceResultModel<List<ProductModel>> result =
-        await HomeViewModel.getAllProduct();
+    FirebaseServiceResultModel<List<ProductModel>> result = await HomeViewModel.getAllProduct();
     productList = result.data;
     print('getAllProduct girdi sorgu sonucu : ${result.data}');
   }
 
   // FAB da kullanılan bubble paketi için gerekli animasyon sınıfları başlatılıyor
   initializationAnimate() {
-    animationController = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 500));
-    final curverAnimation =
-        CurvedAnimation(parent: animationController, curve: Curves.easeInOut);
+    animationController = AnimationController(vsync: this, duration: const Duration(milliseconds: 500));
+    final curverAnimation = CurvedAnimation(parent: animationController, curve: Curves.easeInOut);
     animation = Tween<double>(begin: 0, end: 1).animate(curverAnimation);
   }
 
   @override
   Widget build(BuildContext context) {
-    //getAllProduct();
-    print(productList!.length.toString());
     return WillPopScope(
       //PROGRAMDAN TAMAMEN ÇIKIP ÇIKMAMAYI KONTROL EDİLİYOR
       onWillPop: () async {
@@ -85,17 +79,7 @@ class _HomeViewState extends State<HomeView>
         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
         floatingActionButton: categoriesFAB(animation, animationController),
         drawer: const NavigationDrawer(),
-        bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: Colors.amber,
-          items: const [
-            BottomNavigationBarItem(
-                backgroundColor: Colors.white,
-                icon: Icon(Icons.add),
-                label: 'Ekle',
-                tooltip: 'ipucu'),
-            BottomNavigationBarItem(icon: Icon(Icons.add), label: 'Sil'),
-          ],
-        ),
+        bottomNavigationBar: BottomNaviBar(),
         body: productList!.isNotEmpty
             ? ListView.builder(
                 itemCount: productList!.length,
@@ -106,10 +90,8 @@ class _HomeViewState extends State<HomeView>
                     child: ListTile(
                       title: Text(product.type),
                       trailing: product.cargoStatus
-                          ? const Icon(Icons.local_shipping_rounded,
-                              color: Colors.yellow)
-                          : const Icon(Icons.local_shipping_outlined,
-                              color: Colors.red),
+                          ? const Icon(Icons.local_shipping_rounded, color: Colors.yellow)
+                          : const Icon(Icons.local_shipping_outlined, color: Colors.red),
                       subtitle: Text(product.title),
                     ),
                   );
@@ -129,19 +111,15 @@ class _HomeViewState extends State<HomeView>
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _buildCategory(
-              context, ConstAssetsImages.serviceWear, 'Hizmet Kıyafeti'),
-          _buildCategory(
-              context, ConstAssetsImages.trainingClothing, 'Eğitim Kıyafeti'),
-          _buildCategory(context, ConstAssetsImages.stafTaskClothing,
-              'Kadro Görev Kıyafeti'),
+          _buildCategory(context, ConstAssetsImages.serviceWear, 'Hizmet Kıyafeti'),
+          _buildCategory(context, ConstAssetsImages.trainingClothing, 'Eğitim Kıyafeti'),
+          _buildCategory(context, ConstAssetsImages.stafTaskClothing, 'Kadro Görev Kıyafeti'),
         ],
       ),
     );
   }
 
-  Widget _buildCategory(
-      BuildContext context, AssetImage assetsImages, String title) {
+  Widget _buildCategory(BuildContext context, AssetImage assetsImages, String title) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 25),
       child: InkWell(

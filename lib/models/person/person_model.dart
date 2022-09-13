@@ -105,21 +105,16 @@ class PersonModel {
       lastName: map['lastName'] != null ? map['lastName'] as String : null,
       rank: map['rank'] != null ? map['rank'] as String : null,
       gender: map['gender'] != null ? map['gender'] as String : null,
-      address: map['address'] != null
-          ? AddressModel.fromMap(map['address'] as Map<String, dynamic>)
-          : null,
+      address: map['address'] != null ? AddressModel.fromMap(map['address'] as Map<String, dynamic>) : null,
       totalPoint: map['totalPoint'] != null ? map['totalPoint'] as int : null,
       duty: map['duty'] != null ? map['duty'] as String : null,
-      order: map['order'] != null
-          ? OrderModel.fromMap(map['order'] as Map<String, dynamic>)
-          : null,
+      order: map['order'] != null ? OrderModel.fromMap(map['order'] as Map<String, dynamic>) : null,
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory PersonModel.fromJson(String source) =>
-      PersonModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory PersonModel.fromJson(String source) => PersonModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {

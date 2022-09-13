@@ -2,35 +2,35 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:hive_flutter/adapters.dart';
+
 import 'package:jista/models/person/person_model.dart';
 
 import '../product/product_model.dart';
 
+part 'order_model.g.dart';
+
+@HiveType(typeId: 3)
 class OrderModel {
+  @HiveField(0)
   dynamic id;
-  String year;
-  PersonModel personModel;
+  @HiveField(1)
   ProductModel productModel;
+  @HiveField(2)
   DateTime dateTime;
   OrderModel({
-    this.id,
-    required this.year,
-    required this.personModel,
+    required this.id,
     required this.productModel,
     required this.dateTime,
   });
 
   OrderModel copyWith({
-    String? id,
-    String? year,
-    PersonModel? personModel,
+    dynamic? id,
     ProductModel? productModel,
     DateTime? dateTime,
   }) {
     return OrderModel(
       id: id ?? this.id,
-      year: year ?? this.year,
-      personModel: personModel ?? this.personModel,
       productModel: productModel ?? this.productModel,
       dateTime: dateTime ?? this.dateTime,
     );
@@ -38,21 +38,17 @@ class OrderModel {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      //'id': id,
-      'year': year,
-      'personModel': personModel.toMap(),
+      'id': id,
       'productModel': productModel.toMap(),
-      'dateTime': FieldValue.serverTimestamp(),
+      'dateTime': dateTime.millisecondsSinceEpoch,
     };
   }
 
   factory OrderModel.fromMap(Map<String, dynamic> map) {
     return OrderModel(
-      id: map['id'] != null ? map['id'] as String : null,
-      year: map['year'] as String,
-      personModel: PersonModel.fromMap(map['personModel'] as Map<String, dynamic>),
+      id: map['id'] as dynamic,
       productModel: ProductModel.fromMap(map['productModel'] as Map<String, dynamic>),
-      dateTime: (map['dateTime'] as Timestamp).toDate(),
+      dateTime: DateTime.fromMillisecondsSinceEpoch(map['dateTime'] as int),
     );
   }
 
@@ -61,23 +57,15 @@ class OrderModel {
   factory OrderModel.fromJson(String source) => OrderModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
-  String toString() {
-    return 'OrderModel(id: $id, year: $year, personModel: $personModel, productModel: $productModel, dateTime: $dateTime)';
-  }
+  String toString() => 'OrderModel(id: $id, productModel: $productModel, dateTime: $dateTime)';
 
   @override
   bool operator ==(covariant OrderModel other) {
     if (identical(this, other)) return true;
 
-    return other.id == id &&
-        other.year == year &&
-        other.personModel == personModel &&
-        other.productModel == productModel &&
-        other.dateTime == dateTime;
+    return other.id == id && other.productModel == productModel && other.dateTime == dateTime;
   }
 
   @override
-  int get hashCode {
-    return id.hashCode ^ year.hashCode ^ personModel.hashCode ^ productModel.hashCode ^ dateTime.hashCode;
-  }
+  int get hashCode => id.hashCode ^ productModel.hashCode ^ dateTime.hashCode;
 }

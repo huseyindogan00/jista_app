@@ -18,15 +18,9 @@ AppBar appbar() {
         child: InkWell(
           child: const Icon(Icons.add_shopping_cart_sharp, color: Colors.grey),
           onTap: () {
-            print('Cart tıklandı');
+            // CARTTA TIKLANINCA
           },
         ),
-        /* child: (GestureDetector(
-          child: const Icon(Icons.add_shopping_cart_sharp),
-          onTap: () {
-            // Cart iconuna tıklandığında carta ekleme yapar
-          },
-        )), */
       ),
       const SizedBox(width: 30),
     ],

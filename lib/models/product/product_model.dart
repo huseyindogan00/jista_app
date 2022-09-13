@@ -1,15 +1,29 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
+import 'package:hive_flutter/adapters.dart';
+
+part 'product_model.g.dart';
+
+@HiveType(typeId: 2)
 class ProductModel {
+  @HiveField(0)
   dynamic id;
+  @HiveField(1)
   String type;
+  @HiveField(2)
   String title;
+  @HiveField(3)
   String rank;
+  @HiveField(4)
   String season;
+  @HiveField(5)
   String gender;
+  @HiveField(6)
   bool cargoStatus;
+  @HiveField(7)
   int quantity;
+  @HiveField(8)
   int point;
   ProductModel({
     required this.id,

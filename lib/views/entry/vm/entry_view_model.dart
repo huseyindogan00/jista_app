@@ -13,14 +13,15 @@ class EntryViewModel {
   //static final _firebaseAuthService = locator<FirebaseAuthService>();
 
   static Future<ServiceResult> login(PersonModel personModel) async {
-    ServiceResult<List<PersonModel>> result =
-        await _firebaseStorageService.login(personModel);
+    ServiceResult<List<PersonModel>> result = await _firebaseStorageService.login(personModel);
 
     PersonModel person = result.data!.first;
+    print('PERSON datası -> $person');
 
     /* KULLANICI GİRİŞ YAPTIYSA, KULLANICIYI TELEFONUNA KAYDEDİYOR
          BİR SONRAKİ GİRİŞİNDE DİREK HOME SAYFASINA YÖNLENDİRECEK. */
     if (result.isSuccess && person.id != null) {
+      print('Hive kaydede girdi ********************************');
       HiveService().savePerson(person);
     }
 

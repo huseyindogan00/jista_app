@@ -16,19 +16,20 @@ class PersonModelAdapter extends TypeAdapter<PersonModel> {
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return PersonModel()
-      ..id = fields[0] as dynamic
-      ..password = fields[1] as String?
-      ..pbik = fields[2] as String?
-      ..email = fields[3] as String?
-      ..name = fields[4] as String?
-      ..lastName = fields[5] as String?
-      ..rank = fields[6] as String?
-      ..gender = fields[7] as String?
-      ..address = fields[8] as AddressModel?
-      ..totalPoint = fields[9] as int?
-      ..duty = fields[10] as String?
-      ..order = fields[11] as OrderModel?;
+    return PersonModel(
+      id: fields[0] as dynamic,
+      password: fields[1] as String?,
+      pbik: fields[2] as String?,
+      email: fields[3] as String?,
+      name: fields[4] as String?,
+      lastName: fields[5] as String?,
+      rank: fields[6] as String?,
+      gender: fields[7] as String?,
+      address: fields[8] as AddressModel?,
+      totalPoint: fields[9] as int?,
+      duty: fields[10] as String?,
+      order: fields[11] as OrderModel?,
+    );
   }
 
   @override
