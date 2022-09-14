@@ -4,13 +4,13 @@ import 'package:jista/core/services/service_result/base/service_result.dart';
 import 'package:jista/core/services/service_result/firebase_service_result_model.dart';
 import 'package:jista/models/product/product_model.dart';
 import 'package:jista/views/home/vm/home_view_model.dart';
-import 'package:jista/views/widget/bottom_navi_bar.dart';
+import 'package:jista/product/widget/bottom_navi_bar.dart';
 
 import '../../../constant/const_assets_images.dart';
 import '../../../main.dart';
-import '../../components/appbar.dart';
-import '../../components/categories_fab.dart';
-import '../../widget/navigation_drawer_widget.dart';
+import '../../../product/components/appbar.dart';
+import '../../../product/components/categories_fab.dart';
+import '../../../product/widget/navigation_drawer_widget.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -19,7 +19,8 @@ class HomeView extends StatefulWidget {
   State<HomeView> createState() => _HomeViewState();
 }
 
-class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin {
+class _HomeViewState extends State<HomeView>
+    with SingleTickerProviderStateMixin {
   List<ProductModel>? productList = [];
 
   @override
@@ -30,15 +31,18 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
   }
 
   getAllProduct() async {
-    FirebaseServiceResultModel<List<ProductModel>> result = await HomeViewModel.getAllProduct();
+    FirebaseServiceResultModel<List<ProductModel>> result =
+        await HomeViewModel.getAllProduct();
     productList = result.data;
     print('getAllProduct girdi sorgu sonucu : ${result.data}');
   }
 
   // FAB da kullanılan bubble paketi için gerekli animasyon sınıfları başlatılıyor
   initializationAnimate() {
-    animationController = AnimationController(vsync: this, duration: const Duration(milliseconds: 500));
-    final curverAnimation = CurvedAnimation(parent: animationController, curve: Curves.easeInOut);
+    animationController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 500));
+    final curverAnimation =
+        CurvedAnimation(parent: animationController, curve: Curves.easeInOut);
     animation = Tween<double>(begin: 0, end: 1).animate(curverAnimation);
   }
 
@@ -90,8 +94,10 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
                     child: ListTile(
                       title: Text(product.type),
                       trailing: product.cargoStatus
-                          ? const Icon(Icons.local_shipping_rounded, color: Colors.yellow)
-                          : const Icon(Icons.local_shipping_outlined, color: Colors.red),
+                          ? const Icon(Icons.local_shipping_rounded,
+                              color: Colors.yellow)
+                          : const Icon(Icons.local_shipping_outlined,
+                              color: Colors.red),
                       subtitle: Text(product.title),
                     ),
                   );
@@ -111,15 +117,19 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _buildCategory(context, ConstAssetsImages.serviceWear, 'Hizmet Kıyafeti'),
-          _buildCategory(context, ConstAssetsImages.trainingClothing, 'Eğitim Kıyafeti'),
-          _buildCategory(context, ConstAssetsImages.stafTaskClothing, 'Kadro Görev Kıyafeti'),
+          _buildCategory(
+              context, ConstAssetsImages.serviceWear, 'Hizmet Kıyafeti'),
+          _buildCategory(
+              context, ConstAssetsImages.trainingClothing, 'Eğitim Kıyafeti'),
+          _buildCategory(context, ConstAssetsImages.stafTaskClothing,
+              'Kadro Görev Kıyafeti'),
         ],
       ),
     );
   }
 
-  Widget _buildCategory(BuildContext context, AssetImage assetsImages, String title) {
+  Widget _buildCategory(
+      BuildContext context, AssetImage assetsImages, String title) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 25),
       child: InkWell(
