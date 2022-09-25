@@ -2,8 +2,8 @@
 import 'dart:convert';
 
 import 'package:hive_flutter/adapters.dart';
-import 'package:jista/models/order/order_model.dart';
 import '../address/address_model.dart';
+import '../order/order_model.dart';
 
 part 'person_model.g.dart';
 

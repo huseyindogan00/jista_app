@@ -3,8 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:jista/core/services/service/base/i_firebase_store_service.dart';
 import 'package:jista/core/services/service_result/firebase_service_result_model.dart';
 import 'package:jista/core/services/service_result/base/service_result.dart';
-import 'package:jista/models/person/person_model.dart';
-import 'package:jista/models/product/product_model.dart';
+import '../../../product/models/person/person_model.dart';
+import '../../../product/models/product/product_model.dart';
 
 class FirebaseStoreService implements IFirebaseStoreService {
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
@@ -15,12 +15,10 @@ class FirebaseStoreService implements IFirebaseStoreService {
   delete(PersonModel personModel) {}
 
   @override
-  Future<FirebaseServiceResultModel<List<ProductModel>>> read(
-      String collectionName) async {
+  Future<FirebaseServiceResultModel<List<ProductModel>>> read(String collectionName) async {
     List<ProductModel> productList = [];
     try {
-      QuerySnapshot<Map<String, dynamic>> snapshot =
-          await _firebaseFirestore.collection(collectionName).get();
+      QuerySnapshot<Map<String, dynamic>> snapshot = await _firebaseFirestore.collection(collectionName).get();
       if (snapshot.docs.isNotEmpty) {
         for (QueryDocumentSnapshot<Map<String, dynamic>> doc in snapshot.docs) {
           Map<String, dynamic> product = doc.data();
@@ -32,8 +30,7 @@ class FirebaseStoreService implements IFirebaseStoreService {
       }
     } on FirebaseException catch (_) {}
 
-    return FirebaseServiceResultModel(
-        isSuccess: false, dataInfo: 'Product çekilemedi');
+    return FirebaseServiceResultModel(isSuccess: false, dataInfo: 'Product çekilemedi');
   }
 
   @override
@@ -42,16 +39,13 @@ class FirebaseStoreService implements IFirebaseStoreService {
   }
 
   @override
-  Future<ServiceResult<List<PersonModel>>> login(
-      PersonModel personModel) async {
+  Future<ServiceResult<List<PersonModel>>> login(PersonModel personModel) async {
     //QuerySnapshot<Map<String, dynamic>> snapshot = await _firebaseFirestore.collection('person').where('pbik',isEqualTo: userModel.pbik).get();
     List<PersonModel> personModelList = [];
 
     try {
-      QuerySnapshot<Map<String, dynamic>> snapshot = await _firebaseFirestore
-          .collection('person')
-          .where('pbik', isEqualTo: personModel.pbik)
-          .get();
+      QuerySnapshot<Map<String, dynamic>> snapshot =
+          await _firebaseFirestore.collection('person').where('pbik', isEqualTo: personModel.pbik).get();
 
       if (snapshot.docs.isNotEmpty) {
         DocumentSnapshot<Map<String, dynamic>> doc = snapshot.docs.first;
@@ -59,11 +53,7 @@ class FirebaseStoreService implements IFirebaseStoreService {
           Map<String, dynamic>? personMap = doc.data();
 
           QuerySnapshot<Map<String, dynamic>> addressSnapshot =
-              await _firebaseFirestore
-                  .collection('person')
-                  .doc(doc.id)
-                  .collection('address')
-                  .get();
+              await _firebaseFirestore.collection('person').doc(doc.id).collection('address').get();
           Map<String, dynamic> address = addressSnapshot.docs.first.data();
 
           personMap?['id'] = doc.id;
@@ -72,21 +62,17 @@ class FirebaseStoreService implements IFirebaseStoreService {
           if (personMap != null) {
             personMap['address'] = address;
             personModelList.add(PersonModel.fromMap(personMap));
-            return FirebaseServiceResultModel(
-                isSuccess: true, data: personModelList);
+            return FirebaseServiceResultModel(isSuccess: true, data: personModelList);
           }
         }
       }
       return FirebaseServiceResultModel(
-          isSuccess: false,
-          data: personModelList,
-          dataInfo: 'Pbik numarası veritabınında yok');
+          isSuccess: false, data: personModelList, dataInfo: 'Pbik numarası veritabınında yok');
     } catch (_) {
       print('FİRESERVİCE DE hata oluştu');
     }
 
-    return FirebaseServiceResultModel(
-        isSuccess: false, dataInfo: 'Giriş işlemi başarısız');
+    return FirebaseServiceResultModel(isSuccess: false, dataInfo: 'Giriş işlemi başarısız');
 
     // PERSON LİSTESİNİ GETİRME
     /* QuerySnapshot<Map<String, dynamic>> snapshot = await _firebaseFirestore.collection('person').get();  

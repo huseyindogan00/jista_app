@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:jista/models/person/person_model.dart';
-import 'package:jista/models/user/user_model.dart';
+
+import '../../../product/models/person/person_model.dart';
 
 class HiveService {
   static String _boxName = 'personBox';
@@ -11,11 +11,12 @@ class HiveService {
     box = Hive.box<PersonModel>(_boxName);
   }
 
-  getBox(String boxName) {}
+  PersonModel? getBox(String boxName) {
+    return box.get(boxName);
+  }
 
   savePerson(PersonModel personModel) async {
     await box.put('person', personModel);
-    print(box.get('person'));
   }
 
   deleteUserBox(String boxName) async {

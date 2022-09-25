@@ -1,7 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:jista/models/person/person_model.dart';
-
-import '../../../../models/user/user_model.dart';
+import '../../../../product/models/person/person_model.dart';
 
 abstract class IService {
   update(PersonModel personModel);

@@ -1,145 +1,68 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
-import 'package:jista/constant/font/const_text_style.dart';
-import 'package:jista/core/services/service_result/base/service_result.dart';
-import 'package:jista/core/services/service_result/firebase_service_result_model.dart';
-import 'package:jista/models/product/product_model.dart';
+import 'package:get/get.dart';
+import 'package:jista/data/constant/font/const_text_style.dart';
+import 'package:jista/views/category_module/service_page/view/service_wear_view.dart';
+import 'package:jista/views/category_module/staff_page/view/staff_task_clothing_view.dart';
+import 'package:jista/views/category_module/training_page/view/training_clothing_view.dart';
 import 'package:jista/views/home/vm/home_view_model.dart';
-import 'package:jista/product/widget/bottom_navi_bar.dart';
+import 'package:jista/views/main/vm/main_view_model.dart';
 
-import '../../../constant/const_assets_images.dart';
-import '../../../main.dart';
-import '../../../product/components/appbar.dart';
-import '../../../product/components/categories_fab.dart';
-import '../../../product/widget/navigation_drawer_widget.dart';
+import '../../../data/constant/const_assets_images.dart';
 
-class HomeView extends StatefulWidget {
-  const HomeView({Key? key}) : super(key: key);
+class HomeView extends StatelessWidget {
+  HomeView({super.key});
 
-  @override
-  State<HomeView> createState() => _HomeViewState();
-}
+  Key key1 = const Key('hizmet_giyecegi');
+  Key key2 = const Key('egitim_giyecegi');
+  Key key3 = const Key('kadro_gorev_giyecegi');
 
-class _HomeViewState extends State<HomeView>
-    with SingleTickerProviderStateMixin {
-  List<ProductModel>? productList = [];
-
-  @override
-  void initState() {
-    getAllProduct();
-    initializationAnimate();
-    super.initState();
-  }
-
-  getAllProduct() async {
-    FirebaseServiceResultModel<List<ProductModel>> result =
-        await HomeViewModel.getAllProduct();
-    productList = result.data;
-    print('getAllProduct girdi sorgu sonucu : ${result.data}');
-  }
-
-  // FAB da kullanılan bubble paketi için gerekli animasyon sınıfları başlatılıyor
-  initializationAnimate() {
-    animationController = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 500));
-    final curverAnimation =
-        CurvedAnimation(parent: animationController, curve: Curves.easeInOut);
-    animation = Tween<double>(begin: 0, end: 1).animate(curverAnimation);
-  }
+  HomeViewModel homeController = Get.put(HomeViewModel());
+  MainViewModel mainController = Get.find<MainViewModel>();
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      //PROGRAMDAN TAMAMEN ÇIKIP ÇIKMAMAYI KONTROL EDİLİYOR
-      onWillPop: () async {
-        if (animationController.isCompleted) {
-          animationController.reverse();
-          return false;
-        } else {
-          final result = await showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                title: const Text('Çıkmak istediğinizden emin misiniz?'),
-                actions: [
-                  TextButton(
-                      onPressed: () {
-                        Navigator.maybePop(context, true);
-                      },
-                      child: const Text('Evet')),
-                  TextButton(
-                      onPressed: () {
-                        Navigator.pop(context, false);
-                      },
-                      child: const Text('Geri'))
+    return Obx(
+      () {
+        switch (homeController.categoryIndex.value) {
+          case 0:
+            return SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 25),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  _buildCategory(ConstAssetsImages.serviceWear, 'Hizmet Kıyafeti', key1),
+                  _buildCategory(ConstAssetsImages.trainingClothing, 'Eğitim Kıyafeti', key2),
+                  _buildCategory(ConstAssetsImages.stafTaskClothing, 'Kadro Görev Kıyafeti', key3),
                 ],
-              );
-            },
-          );
-          return result;
+              ),
+            );
+          case 1:
+            return ServiceWearView();
+          case 2:
+            return TrainingClothingView();
+          case 3:
+            return StaffTaskClothingView();
+          default:
+            return Text(homeController.categoryIndex.value.toString());
         }
       },
-      child: Scaffold(
-        appBar: appbar(),
-        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-        floatingActionButton: categoriesFAB(animation, animationController),
-        drawer: const NavigationDrawer(),
-        bottomNavigationBar: BottomNaviBar(),
-        body: productList!.isNotEmpty
-            ? ListView.builder(
-                itemCount: productList!.length,
-                itemBuilder: (context, index) {
-                  ProductModel product = productList![index];
-                  return Card(
-                    color: Colors.grey.shade300,
-                    child: ListTile(
-                      title: Text(product.type),
-                      trailing: product.cargoStatus
-                          ? const Icon(Icons.local_shipping_rounded,
-                              color: Colors.yellow)
-                          : const Icon(Icons.local_shipping_outlined,
-                              color: Colors.red),
-                      subtitle: Text(product.title),
-                    ),
-                  );
-                },
-              )
-            : Center(
-                child: Container(
-                child: Text('Ürünler veri tabanından çekilemedi'),
-              )),
-      ),
     );
   }
 
-  SingleChildScrollView demoHome(BuildContext context) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 25),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          _buildCategory(
-              context, ConstAssetsImages.serviceWear, 'Hizmet Kıyafeti'),
-          _buildCategory(
-              context, ConstAssetsImages.trainingClothing, 'Eğitim Kıyafeti'),
-          _buildCategory(context, ConstAssetsImages.stafTaskClothing,
-              'Kadro Görev Kıyafeti'),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildCategory(
-      BuildContext context, AssetImage assetsImages, String title) {
+  Widget _buildCategory(AssetImage assetsImages, String title, Key key) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 25),
       child: InkWell(
         child: Container(
           alignment: Alignment.bottomCenter,
-          width: MediaQuery.of(context).size.width,
+          width: double.infinity,
           height: 200,
           decoration: BoxDecoration(
             boxShadow: const <BoxShadow>[
-              BoxShadow(blurRadius: 1, color: Colors.cyan, spreadRadius: 2),
+              BoxShadow(blurRadius: 2, color: Colors.red, spreadRadius: 2),
+              BoxShadow(blurRadius: 2, color: Colors.blue, spreadRadius: 1)
             ],
             image: DecorationImage(image: assetsImages, fit: BoxFit.fill),
             borderRadius: const BorderRadius.all(
@@ -166,7 +89,21 @@ class _HomeViewState extends State<HomeView>
             ),
           ),
         ),
-        onTap: () {},
+        onTap: () {
+          String value = key.toString().substring(3, key.toString().lastIndexOf('\''));
+          switch (value) {
+            case 'hizmet_giyecegi':
+              homeController.getCategory(1);
+              mainController.changeAppbarLeading(true);
+              break;
+            case 'egitim_giyecegi':
+              homeController.getCategory(2);
+              break;
+            case 'kadro_gorev_giyecegi':
+              homeController.getCategory(3);
+              break;
+          }
+        },
       ),
     );
   }

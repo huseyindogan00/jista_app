@@ -2,17 +2,16 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:jista/constant/const_text.dart';
+import 'package:get/route_manager.dart';
+import 'package:jista/data/constant/const_text.dart';
 import 'package:jista/core/services/service_result/base/service_result.dart';
-import 'package:jista/core/services/service_result/firebase_service_result_model.dart';
 import 'package:jista/core/utility/validation_utility/validation_controller.dart';
-import 'package:jista/models/person/person_model.dart';
-import 'package:jista/models/user/user_model.dart';
 
-import '../../../constant/const_assets_images.dart';
-import '../../../constant/const_button_style.dart';
-import '../../../constant/const_font_size.dart';
+import '../../../data/constant/const_assets_images.dart';
+import '../../../data/constant/const_button_style.dart';
+import '../../../data/constant/const_font_size.dart';
 import '../../../core/router/route_name.dart';
+import '../../../product/models/person/person_model.dart';
 import '../vm/entry_view_model.dart';
 
 class EntryView extends StatelessWidget {
@@ -128,7 +127,7 @@ class EntryView extends StatelessWidget {
             ServiceResult result = await EntryViewModel.login(personModel);
             if (result.isSuccess) {
               // HOME SAYFASINA GEÇİŞŞŞŞ
-              Navigator.pushReplacementNamed(context, RouteName.homeView);
+              Get.toNamed(RouteName.homeView, arguments: result);
               //EasyLoading.showToast(result.dataInfo.toString(), duration: const Duration(milliseconds: 2000));
             } else {
               EasyLoading.showError(result.dataInfo.toString());

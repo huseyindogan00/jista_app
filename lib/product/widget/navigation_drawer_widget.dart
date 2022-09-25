@@ -1,8 +1,14 @@
-import 'package:flutter/cupertino.dart';
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:jista/data/theme/theme_app.dart';
+import 'package:jista/product/models/person/person_model.dart';
 
 class NavigationDrawer extends StatelessWidget {
-  const NavigationDrawer({Key? key}) : super(key: key);
+  NavigationDrawer({Key? key, required this.imagePath, required this.personModel}) : super(key: key);
+  String imagePath;
+  PersonModel personModel;
 
   @override
   Widget build(BuildContext context) => Drawer(
@@ -10,7 +16,7 @@ class NavigationDrawer extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              buildHeader(context),
+              buildHeader(context, imagePath, personModel),
               buildMenuItem(context),
             ],
           ),
@@ -18,7 +24,7 @@ class NavigationDrawer extends StatelessWidget {
       );
 }
 
-Widget buildHeader(BuildContext context) {
+Widget buildHeader(BuildContext context, String imagePath, PersonModel personModel) {
   return Container(
     color: Theme.of(context).primaryColor.withOpacity(0.8),
     padding: EdgeInsets.only(
@@ -26,23 +32,23 @@ Widget buildHeader(BuildContext context) {
       bottom: 24,
     ),
     child: Column(
-      children: const [
+      children: [
         CircleAvatar(
-          radius: 52,
-          backgroundImage: AssetImage('assets/images/person.png'),
+          radius: 45,
+          backgroundImage: AssetImage(imagePath),
         ),
-        SizedBox(height: 12),
+        const SizedBox(height: 12),
         Text(
-          'Hüseyin DOĞAN',
-          style: TextStyle(fontSize: 28, color: Colors.white, fontWeight: FontWeight.bold),
-        ),
-        Text(
-          'J.Mu.Asb.Kd.Çvş.',
-          style: TextStyle(fontSize: 16, color: Colors.white, fontStyle: FontStyle.italic),
+          '${personModel.name} ${personModel.lastName}',
+          style: const TextStyle(fontSize: 28, color: Colors.white, fontWeight: FontWeight.bold),
         ),
         Text(
-          'MEBS İşlt. ve Emn.Asb.',
-          style: TextStyle(fontSize: 16, color: Colors.white, fontStyle: FontStyle.italic),
+          '${personModel.rank}',
+          style: const TextStyle(fontSize: 16, color: Colors.white, fontStyle: FontStyle.italic),
+        ),
+        Text(
+          '${personModel.duty}',
+          style: const TextStyle(fontSize: 16, color: Colors.white, fontStyle: FontStyle.italic),
         ),
       ],
     ),
@@ -50,52 +56,100 @@ Widget buildHeader(BuildContext context) {
 }
 
 Widget buildMenuItem(BuildContext context) {
+  TextStyle textStyle = const TextStyle(fontSize: 16);
+  ThemeApp theme = Get.put(ThemeApp());
   return Container(
-    padding: const EdgeInsets.all(24),
+    padding: const EdgeInsets.all(20),
     child: Wrap(
-      runSpacing: 16,
       children: [
         ListTile(
           leading: const Icon(Icons.home_outlined),
-          title: const Text('Anasayfa'),
+          title: Text(
+            'Anasayfa',
+            style: textStyle,
+          ),
           onTap: () {},
         ),
         ListTile(
           leading: const Icon(Icons.align_horizontal_left_outlined),
-          title: const Text('Kategoriler'),
+          title: Text(
+            'Kategoriler',
+            style: textStyle,
+          ),
           onTap: () {},
         ),
         ListTile(
           leading: const Icon(Icons.square_foot_outlined),
-          title: const Text('Ölçü Bilgileri'),
+          title: Text(
+            'Ölçü Bilgileri',
+            style: textStyle,
+          ),
           onTap: () {},
         ),
         ListTile(
           leading: const Icon(Icons.local_shipping_outlined),
-          title: const Text('Kargo Adresim'),
+          title: Text(
+            'Kargo Adresim',
+            style: textStyle,
+          ),
           onTap: () {},
         ),
         ListTile(
           leading: const Icon(Icons.supervised_user_circle),
-          title: const Text('Mutemet İşlemlerim'),
+          title: Text(
+            'Mutemet İşlemlerim',
+            style: textStyle,
+          ),
           onTap: () {},
         ),
         ListTile(
           leading: const Icon(Icons.calendar_month_outlined),
-          title: const Text('İstihkak İstek Dönemi'),
+          title: Text(
+            'İstihkak İstek Dönemi',
+            style: textStyle,
+          ),
           onTap: () {},
         ),
         ListTile(
           leading: const Icon(Icons.boy_outlined),
-          title: const Text('Beden Ölçüleri Tespit Broşürü'),
+          title: Text(
+            'Beden Ölçüleri Tespit Broşürü',
+            style: textStyle,
+          ),
           onTap: () {},
         ),
         ListTile(
           leading: const Icon(Icons.plagiarism),
-          title: const Text('İstihkak Kargo İhalesi Fiyat Cetveli'),
+          title: Text(
+            'İstihkak Kargo İhalesi Fiyat Cetveli',
+            style: textStyle,
+          ),
           onTap: () {},
         ),
+        selectThemeMode(theme)
       ],
     ),
+  );
+}
+
+Row selectThemeMode(ThemeApp theme) {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.end,
+    children: [
+      const Text('Koyu Tema'),
+      Obx(
+        () => Switch(
+          value: theme.isDarkModeApp.value,
+          onChanged: (value) {
+            theme.isDarkModeApp.value = value;
+            if (value) {
+              Get.changeThemeMode(ThemeMode.dark);
+            } else {
+              Get.changeThemeMode(ThemeMode.light);
+            }
+          },
+        ),
+      ),
+    ],
   );
 }

@@ -1,60 +1,46 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:jista/core/router/route_name.dart';
 import 'package:jista/core/services/service/firebase_auth_service.dart';
 import 'package:jista/core/services/service/firebase_store_service.dart';
 import 'package:jista/core/services/service/hive_service.dart';
 import 'package:jista/data/data_model/entities/cities.dart';
-import 'package:jista/core/router/route_generator.dart';
-import 'package:jista/models/address/address_model.dart';
-import 'package:jista/models/order/order_model.dart';
-import 'package:jista/models/person/person_model.dart';
-import 'package:jista/models/product/product_model.dart';
+import 'package:jista/product/models/address/address_model.dart';
+import 'package:jista/product/models/order/order_model.dart';
+import 'package:jista/product/models/person/person_model.dart';
+import 'package:jista/product/models/product/product_model.dart';
 import 'package:jista/views/splash/view/splash_view.dart';
 
-import 'common/theme/theme_app.dart';
+import 'data/theme/theme_app.dart';
 
 // SİNGLE OBJECT OLUŞTURUCU
 GetIt locator = GetIt.instance;
-
-// TEMA BİLGİSİ
-bool darkTheme = false;
-
 // FLOATİN ACTIN BUTTON - BUBBLE ANIMATION
 late Animation<double> animation;
 late AnimationController animationController;
 
 void main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
   await Firebase.initializeApp();
-  setupLocator();
   await setupHive();
+  setupLocator();
   easyloadingConfig();
-  //FlutterNativeSplash.remove();
-  runApp(JIsTaApp());
+
+  runApp(GetMaterialApp(
+      initialRoute: RouteName.splashView,
+      getPages: RoutePage.pageList,
+      theme: ThemeApp.themeLight,
+      darkTheme: ThemeApp.themeDark,
+      builder: EasyLoading.init()));
 }
 
-class JIsTaApp extends StatelessWidget {
-  JIsTaApp({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      themeMode: ThemeMode.system,
-      darkTheme: ThemeData.dark(),
-      theme: ThemeApp.themeData,
-      debugShowCheckedModeBanner: false,
-      title: 'Jandarma İstihkak Talep',
-      onGenerateRoute: RouteGenerator.routeGenerator,
-      home: const SplashView(),
-      builder: EasyLoading.init(),
-    );
-  }
-}
-
+// KULLANILACAK OBJELERİN SINGLE OLMASINI GARANTİ EDİYORUZ
 setupLocator() {
   locator.registerLazySingleton(() => FirebaseAuthService());
   locator.registerLazySingleton(() => FirebaseStoreService());
@@ -62,7 +48,7 @@ setupLocator() {
   locator.registerLazySingleton(() => Cities());
 }
 
-// Uyarı penceremin ayarları yapılıyor
+// UYARI PENVERESİNİN AYARLARI YAPILIYOR
 void easyloadingConfig() {
   EasyLoading.instance
     ..dismissOnTap = true
@@ -70,7 +56,7 @@ void easyloadingConfig() {
     ..maskType = EasyLoadingMaskType.black;
 }
 
-// Hive oluşturuluyor
+// HİVE OLUŞTURULUYOR
 Future<void> setupHive() async {
   await Hive.initFlutter();
   Hive.registerAdapter<PersonModel>(PersonModelAdapter());

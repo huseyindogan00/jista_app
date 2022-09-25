@@ -3,11 +3,11 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:jista/core/services/service_result/firebase_service_result_model.dart';
 import 'package:jista/core/utility/show_utility/show_snacbar.dart';
 import 'package:jista/core/utility/validation_utility/validation_controller.dart';
-import 'package:jista/models/person/person_model.dart';
 
-import '../../../constant/const_button_style.dart';
-import '../../../constant/const_font_size.dart';
-import '../../../constant/const_margin.dart';
+import '../../../data/constant/const_button_style.dart';
+import '../../../data/constant/const_font_size.dart';
+import '../../../data/constant/const_margin.dart';
+import '../../../product/models/person/person_model.dart';
 import '../vm/register_view_model.dart';
 
 class RegisterView extends StatelessWidget {
@@ -132,8 +132,7 @@ class RegisterView extends StatelessWidget {
                 formKey.currentState?.save();
                 /* AŞAĞIDAKİ Do not use BuildContexts across async gaps 
                 HATASINI GİDER İLERİDE PROBLEM ÇIKARABİLİR*/
-                FirebaseServiceResultModel result =
-                    await RegisterViewModel.savePerson(personModel);
+                FirebaseServiceResultModel result = await RegisterViewModel.savePerson(personModel);
                 if (result.isSuccess) {
                   EasyLoading.showSuccess(result.dataInfo.toString());
                 } else {

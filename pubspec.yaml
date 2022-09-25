@@ -44,6 +44,7 @@ dependencies:
 
   # STATE MENAGEMENT
   provider: ^6.0.3
+  get: ^4.6.5
 
   # YÜKLEME ANİMASYONU
   flutter_easyloading: ^3.0.5

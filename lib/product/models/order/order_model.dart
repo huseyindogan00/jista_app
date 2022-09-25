@@ -4,8 +4,6 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hive_flutter/adapters.dart';
 
-import 'package:jista/models/person/person_model.dart';
-
 import '../product/product_model.dart';
 
 part 'order_model.g.dart';

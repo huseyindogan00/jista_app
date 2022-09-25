@@ -3,16 +3,13 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:jista/core/services/service_result/firebase_service_result_model.dart';
 import 'package:jista/core/services/service/firebase_auth_service.dart';
 import 'package:jista/core/utility/internet_connection_control.dart';
-import 'package:jista/models/person/person_model.dart';
-
 import '../../../main.dart';
-import '../../../models/user/user_model.dart';
+import '../../../product/models/person/person_model.dart';
 
 class RegisterViewModel {
   static final _firebaseAuthService = locator<FirebaseAuthService>();
 
-  static Future<FirebaseServiceResultModel> savePerson(
-      PersonModel personModel) async {
+  static Future<FirebaseServiceResultModel> savePerson(PersonModel personModel) async {
     return await _firebaseAuthService.update(personModel);
   }
 
