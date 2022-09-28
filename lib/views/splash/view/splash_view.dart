@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jista/data/constant/const_assets_images.dart';
-import 'package:jista/views/splash/vm/splash_view_model.dart';
+import 'package:jista/views/splash/view_model/splash_view_model.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});

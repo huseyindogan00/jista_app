@@ -1,7 +1,7 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jista/views/main/vm/main_view_model.dart';
+import 'package:jista/views/main/view_model/main_view_model.dart';
 
 class MyAppBar {
   static final MainViewModel _controller = Get.find<MainViewModel>();
@@ -13,7 +13,7 @@ class MyAppBar {
         () => Text(_controller.appbarTitle.value,
             style: const TextStyle(fontFamily: 'Montserrat', fontWeight: FontWeight.w700)),
       ),
-      leading: _buildLeading(),
+      leading: null,
       actions: [
         Badge(
           badgeColor: Colors.white,
@@ -37,7 +37,7 @@ class MyAppBar {
   }
 
   // APPBAR DA LEADİNGİ KAPATMAM GEREK CATEGORY SAYFASINDAN GİTTİĞİMDA APPBARDA DRAWER YERİNE GERİ BUTONU OLARAK LEADİNGE ICON ATAMAM VE O ICON İLE GERİ DÖNÜŞÜ SAĞLAMALIYIM.
-  static Widget? _buildLeading() {
+  /* static Widget? _buildLeading() {
     return Obx(
       () => _controller.isAppbarLeading.value
           ? InkWell(
@@ -46,5 +46,5 @@ class MyAppBar {
             )
           : null,
     );
-  }
+  } */
 }

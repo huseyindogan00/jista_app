@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jista/views/home/vm/home_view_model.dart';
-import 'package:jista/views/main/vm/main_view_model.dart';
+import 'package:jista/views/home/view_model/home_view_model.dart';
+import 'package:jista/views/main/view_model/main_view_model.dart';
 
 class ServiceWearView extends StatelessWidget {
   ServiceWearView({super.key});

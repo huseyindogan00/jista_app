@@ -39,35 +39,35 @@ class FirebaseStoreService implements IFirebaseStoreService {
   }
 
   @override
-  Future<ServiceResult<List<PersonModel>>> login(PersonModel personModel) async {
+  Future<ServiceResult<PersonModel>> login(PersonModel personModel) async {
     //QuerySnapshot<Map<String, dynamic>> snapshot = await _firebaseFirestore.collection('person').where('pbik',isEqualTo: userModel.pbik).get();
-    List<PersonModel> personModelList = [];
+    late PersonModel person;
 
     try {
-      QuerySnapshot<Map<String, dynamic>> snapshot =
+      QuerySnapshot<Map<String, dynamic>> personSnapshot =
           await _firebaseFirestore.collection('person').where('pbik', isEqualTo: personModel.pbik).get();
 
-      if (snapshot.docs.isNotEmpty) {
-        DocumentSnapshot<Map<String, dynamic>> doc = snapshot.docs.first;
-        if (doc.exists) {
-          Map<String, dynamic>? personMap = doc.data();
+      if (personSnapshot.docs.isNotEmpty) {
+        DocumentSnapshot<Map<String, dynamic>> personDoc = personSnapshot.docs.first;
+        if (personDoc.exists) {
+          Map<String, dynamic>? personMap = personDoc.data();
 
           QuerySnapshot<Map<String, dynamic>> addressSnapshot =
-              await _firebaseFirestore.collection('person').doc(doc.id).collection('address').get();
+              await _firebaseFirestore.collection('person').doc(personDoc.id).collection('address').get();
+
           Map<String, dynamic> address = addressSnapshot.docs.first.data();
 
-          personMap?['id'] = doc.id;
+          personMap?['id'] = personDoc.id;
           address['id'] = addressSnapshot.docs.first.id;
 
           if (personMap != null) {
             personMap['address'] = address;
-            personModelList.add(PersonModel.fromMap(personMap));
-            return FirebaseServiceResultModel(isSuccess: true, data: personModelList);
+            person = PersonModel.fromMap(personMap);
+            return FirebaseServiceResultModel(isSuccess: true, data: person);
           }
         }
       }
-      return FirebaseServiceResultModel(
-          isSuccess: false, data: personModelList, dataInfo: 'Pbik numarası veritabınında yok');
+      return FirebaseServiceResultModel(isSuccess: false, dataInfo: 'Pbik numarası veritabınında yok');
     } catch (_) {
       print('FİRESERVİCE DE hata oluştu');
     }

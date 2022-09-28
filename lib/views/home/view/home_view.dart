@@ -6,8 +6,8 @@ import 'package:jista/data/constant/font/const_text_style.dart';
 import 'package:jista/views/category_module/service_page/view/service_wear_view.dart';
 import 'package:jista/views/category_module/staff_page/view/staff_task_clothing_view.dart';
 import 'package:jista/views/category_module/training_page/view/training_clothing_view.dart';
-import 'package:jista/views/home/vm/home_view_model.dart';
-import 'package:jista/views/main/vm/main_view_model.dart';
+import 'package:jista/views/home/view_model/home_view_model.dart';
+import 'package:jista/views/main/view_model/main_view_model.dart';
 
 import '../../../data/constant/const_assets_images.dart';
 

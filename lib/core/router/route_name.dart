@@ -1,27 +1,27 @@
 import 'package:get/get.dart';
-import 'package:get/get_navigation/src/routes/get_route.dart';
-import 'package:get/get_navigation/src/routes/transitions_type.dart';
 import 'package:jista/views/category_module/service_page/view/service_wear_view.dart';
-import 'package:jista/views/main/binding/main_binding.dart';
 import 'package:jista/views/main/view/main_view.dart';
 import 'package:jista/views/period/view/ration_request_period_view.dart';
 
 import '../../product/error/error_view.dart';
 import '../../views/entry/view/entry_view.dart';
 import '../../views/home/view/home_view.dart';
+import '../../views/main/view_model/main_view_model.dart';
 import '../../views/register/view/register_view.dart';
 import '../../views/splash/view/splash_view.dart';
 
 class RouteName {
+  // starting app
   static const String entryView = '/entryView';
   static const String registerView = '/registerView';
   static const String splashView = '/splashView';
 
-  //
+  // bottomnavigator pages
   static const String mainView = '/mainView';
   static const String homeView = '/homeView';
   static const String requestPeriodView = '/requestPeriodView';
-  //category
+
+  //category pages
   static const String serviceWearView = '/serviceWearView';
   static const String trainingClothing = '/trainingClothing';
   static const String staffTaskClothing = '/staffTaskClothing';
@@ -31,7 +31,7 @@ class RouteName {
 
 class RoutePage {
   static Transition _getTransition() {
-    return GetPlatform.isAndroid ? Transition.native : Transition.zoom;
+    return GetPlatform.isAndroid ? Transition.native : Transition.cupertino;
   }
 
   static final List<GetPage> pageList = <GetPage>[
@@ -54,7 +54,9 @@ class RoutePage {
       name: RouteName.mainView,
       page: () => MainView(),
       transition: _getTransition(),
-      binding: MainBinding(),
+      binding: BindingsBuilder(
+        () => Get.put<MainViewModel>(MainViewModel()),
+      ),
     ),
     GetPage(
       name: RouteName.homeView,
@@ -73,9 +75,7 @@ class RoutePage {
     ),
     GetPage(
       name: RouteName.errorView,
-      page: () => ErrorView(
-        errorTitle: '',
-      ),
+      page: () => ErrorView(errorTitle: ''),
       transition: _getTransition(),
     ),
   ];

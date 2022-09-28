@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jista/data/constant/pages/pages_list.dart';
 import 'package:jista/product/models/person/person_model.dart';
-import 'package:jista/views/main/vm/main_view_model.dart';
+import 'package:jista/views/main/view_model/main_view_model.dart';
 
 import '../../../product/components/appbar.dart';
 import '../../../product/widget/navigation_drawer_widget.dart';
@@ -16,6 +16,8 @@ import '../../../product/widget/navigation_drawer_widget.dart';
 } */
 
 class MainView extends GetView<MainViewModel> {
+  MainView({super.key});
+
   PersonModel? personModel = Get.arguments;
   //int selectedIndex = 0;
   final String appbarTitle = 'Anasayfa';
@@ -25,6 +27,8 @@ class MainView extends GetView<MainViewModel> {
   final String requestPeriod = 'İstek Dönemi';
 
   List<Widget> pages = PagesList.pagesList;
+
+  MainViewModel mainViewModelController = Get.find<MainViewModel>();
 
   /* @override
   void initState() {
@@ -83,7 +87,7 @@ class MainView extends GetView<MainViewModel> {
         ),
         bottomNavigationBar: _buildBottomNavigatonBar(context),
         backgroundColor: Theme.of(context).backgroundColor,
-        body: Obx(() => pages[controller.selectIndex.value]),
+        body: Obx(() => pages[mainViewModelController.selectIndex.value]),
       ),
     );
   }
@@ -103,7 +107,7 @@ class MainView extends GetView<MainViewModel> {
         elevation: 10,
         showUnselectedLabels: false,
         type: BottomNavigationBarType.fixed,
-        currentIndex: controller.selectIndex.value,
+        currentIndex: mainViewModelController.selectIndex.value,
         selectedFontSize: selectedFontSize,
         unselectedItemColor: unselectedItemColor,
         unselectedIconTheme: unselectedIconTheme,
@@ -117,19 +121,19 @@ class MainView extends GetView<MainViewModel> {
 
   // BOTTOM İTEMLAR DEĞİŞTİĞİNDE
   void _buildOnTap(int index) {
-    controller.currentIndex(index);
+    mainViewModelController.currentIndex(index);
     switch (index) {
       case 0:
-        controller.appbarTitle.value = home;
+        mainViewModelController.appbarTitle.value = home;
         break;
       case 1:
-        controller.appbarTitle.value = cargoInfo;
+        mainViewModelController.appbarTitle.value = cargoInfo;
         break;
       case 2:
-        controller.appbarTitle.value = sizeInfo;
+        mainViewModelController.appbarTitle.value = sizeInfo;
         break;
       case 3:
-        controller.appbarTitle.value = requestPeriod;
+        mainViewModelController.appbarTitle.value = requestPeriod;
         break;
     }
   }
@@ -137,7 +141,7 @@ class MainView extends GetView<MainViewModel> {
   List<BottomNavigationBarItem> get _buildBottomItemList {
     return [
       BottomNavigationBarItem(
-        icon: const Icon(Icons.supervised_user_circle),
+        icon: const Icon(Icons.home),
         label: home,
         tooltip: 'Anasayfa',
       ),

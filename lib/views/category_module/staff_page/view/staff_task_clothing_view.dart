@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../home/vm/home_view_model.dart';
+import '../../../home/view_model/home_view_model.dart';
 
 class StaffTaskClothingView extends StatelessWidget {
   StaffTaskClothingView({super.key});

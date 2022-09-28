@@ -14,7 +14,6 @@ import 'package:jista/product/models/address/address_model.dart';
 import 'package:jista/product/models/order/order_model.dart';
 import 'package:jista/product/models/person/person_model.dart';
 import 'package:jista/product/models/product/product_model.dart';
-import 'package:jista/views/splash/view/splash_view.dart';
 
 import 'data/theme/theme_app.dart';
 

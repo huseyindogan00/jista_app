@@ -12,7 +12,7 @@ import '../../../data/constant/const_button_style.dart';
 import '../../../data/constant/const_font_size.dart';
 import '../../../core/router/route_name.dart';
 import '../../../product/models/person/person_model.dart';
-import '../vm/entry_view_model.dart';
+import '../view_model/entry_view_model.dart';
 
 class EntryView extends StatelessWidget {
   EntryView({Key? key}) : super(key: key);
@@ -127,7 +127,7 @@ class EntryView extends StatelessWidget {
             ServiceResult result = await EntryViewModel.login(personModel);
             if (result.isSuccess) {
               // HOME SAYFASINA GEÇİŞŞŞŞ
-              Get.toNamed(RouteName.homeView, arguments: result);
+              Get.toNamed(RouteName.mainView, arguments: result.data);
               //EasyLoading.showToast(result.dataInfo.toString(), duration: const Duration(milliseconds: 2000));
             } else {
               EasyLoading.showError(result.dataInfo.toString());

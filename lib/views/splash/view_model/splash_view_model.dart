@@ -12,6 +12,7 @@ class SplashViewModel {
 
   static route(BuildContext context) {
     var box = locator<HiveService>();
+
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) {
         // userBox kutusunun daha önce olup olmadığını sorguluyoruz.

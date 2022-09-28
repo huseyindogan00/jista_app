@@ -8,7 +8,7 @@ import '../../../data/constant/const_button_style.dart';
 import '../../../data/constant/const_font_size.dart';
 import '../../../data/constant/const_margin.dart';
 import '../../../product/models/person/person_model.dart';
-import '../vm/register_view_model.dart';
+import '../view_model/register_view_model.dart';
 
 class RegisterView extends StatelessWidget {
   RegisterView({Key? key}) : super(key: key);
