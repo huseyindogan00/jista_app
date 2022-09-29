@@ -1,17 +1,19 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jista/views/main/view_model/main_view_model.dart';
+import 'package:jista/views/base/base_model.dart';
 
-class MyAppBar {
-  static final MainViewModel _controller = Get.find<MainViewModel>();
+class MyAppBar<T extends BaseModel> {
+  final T _controller = Get.find<T>();
 
-  static AppBar getAppBar() {
+  AppBar getAppBar(String title) {
     return AppBar(
       centerTitle: true,
       title: Obx(
-        () => Text(_controller.appbarTitle.value,
-            style: const TextStyle(fontFamily: 'Montserrat', fontWeight: FontWeight.w700)),
+        () => Text(
+          title,
+          style: const TextStyle(fontFamily: 'Montserrat', fontWeight: FontWeight.w700),
+        ),
       ),
       leading: null,
       actions: [

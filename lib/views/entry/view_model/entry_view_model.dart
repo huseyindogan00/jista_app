@@ -16,8 +16,6 @@ class EntryViewModel {
          BİR SONRAKİ GİRİŞİNDE DİREK HOME SAYFASINA YÖNLENDİRECEK. */
     if (result.isSuccess && result.data?.id != null) {
       if (result.data?.password == personModel.password) {
-        print('databaseden gelen password ---> ${result.data?.password}');
-        print('kullanıcıdan gelen password ---> ${personModel.password}');
         HiveService().savePerson(result.data!);
         return result;
       } else {

@@ -1,12 +1,12 @@
 import 'package:get/get.dart';
 import 'package:jista/views/category_module/service_page/view/service_wear_view.dart';
-import 'package:jista/views/main/view/main_view.dart';
+import 'package:jista/views/base/base_view.dart';
+import 'package:jista/views/home/view_model/home_view_model.dart';
 import 'package:jista/views/period/view/ration_request_period_view.dart';
 
 import '../../product/error/error_view.dart';
 import '../../views/entry/view/entry_view.dart';
 import '../../views/home/view/home_view.dart';
-import '../../views/main/view_model/main_view_model.dart';
 import '../../views/register/view/register_view.dart';
 import '../../views/splash/view/splash_view.dart';
 
@@ -51,11 +51,11 @@ class RoutePage {
       transition: _getTransition(),
     ),
     GetPage(
-      name: RouteName.mainView,
-      page: () => MainView(),
+      name: RouteName.homeView,
+      page: () => const HomeView(),
       transition: _getTransition(),
       binding: BindingsBuilder(
-        () => Get.put<MainViewModel>(MainViewModel()),
+        () => Get.put<HomeViewModel>(HomeViewModel()),
       ),
     ),
     GetPage(

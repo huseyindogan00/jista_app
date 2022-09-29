@@ -47,7 +47,7 @@ setupLocator() {
   locator.registerLazySingleton(() => Cities());
 }
 
-// UYARI PENVERESİNİN AYARLARI YAPILIYOR
+// UYARI PENCERESİNİN AYARLARI YAPILIYOR
 void easyloadingConfig() {
   EasyLoading.instance
     ..dismissOnTap = true

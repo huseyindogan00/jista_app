@@ -1,55 +1,40 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jista/data/constant/pages/pages_list.dart';
 import 'package:jista/product/models/person/person_model.dart';
-import 'package:jista/views/main/view_model/main_view_model.dart';
 
-import '../../../product/components/appbar.dart';
-import '../../../product/widget/navigation_drawer_widget.dart';
+import '../../product/components/appbar.dart';
+import 'base_model.dart';
+import '../../product/widget/navigation_drawer_widget.dart';
 
-/* class MainView extends StatefulWidget {
-  const MainView({Key? key}) : super(key: key);
+class BaseView<T extends BaseModel> extends StatefulWidget {
+  BaseView({
+    Key? key,
+    required this.appTitle,
+    required this.builder,
+    this.pagesList,
+  }) : super(key: key);
+
+  final Widget Function(BuildContext context, T model, Widget body) builder;
+  String appTitle;
+  List<PagesList>? pagesList;
+
   @override
-  State<MainView> createState() => _MainViewState();
-} */
+  _BaseViewState<T> createState() => _BaseViewState<T>();
+}
 
-class MainView extends GetView<MainViewModel> {
-  MainView({super.key});
-
+class _BaseViewState<T extends BaseModel> extends State<BaseView<T>> {
   PersonModel? personModel = Get.arguments;
+  T model = Get.find<T>();
   //int selectedIndex = 0;
-  final String appbarTitle = 'Anasayfa';
   final String home = 'Anasayfa';
   final String cargoInfo = 'Kargo Bilgileri';
   final String sizeInfo = 'Ölçü Bilgileri';
   final String requestPeriod = 'İstek Dönemi';
 
   List<Widget> pages = PagesList.pagesList;
-
-  MainViewModel mainViewModelController = Get.find<MainViewModel>();
-
-  /* @override
-  void initState() {
-    getPersonel();
-    appbarTitle = home; 
-  } */
-
-  /* getPersonel() {
-    if (Get.arguments == null) {
-      personModel = HiveService().getBox('person');
-    } else {
-      personModel = Get.arguments;
-    }
-  } */
-
-  // FAB da kullanılan bubble paketi için gerekli animasyon sınıfları başlatılıyor
-  /* initializationAnimate() {
-    animationController = AnimationController(vsync: this, duration: const Duration(milliseconds: 500));
-    final curverAnimation = CurvedAnimation(parent: animationController, curve: Curves.easeInOut);
-    animation = Tween<double>(begin: 0, end: 1).animate(curverAnimation);
-  } */
 
   @override
   Widget build(BuildContext context) {
@@ -79,13 +64,12 @@ class MainView extends GetView<MainViewModel> {
         return result;
       },
       child: Scaffold(
-        appBar: MyAppBar.getAppBar(),
+        appBar: MyAppBar().getAppBar('deneme'),
         drawerEnableOpenDragGesture: false,
-        drawer: NavigationDrawer(
-            imagePath: 'assets/images/person.png', personModel: personModel!),
+        drawer: NavigationDrawer(imagePath: 'assets/images/person.png', personModel: personModel!),
         bottomNavigationBar: _buildBottomNavigatonBar(context),
         backgroundColor: Theme.of(context).backgroundColor,
-        body: Obx(() => pages[mainViewModelController.selectIndex.value]),
+        body: Obx(() => pages[model.selectedBottomIndex]),
       ),
     );
   }
@@ -105,36 +89,21 @@ class MainView extends GetView<MainViewModel> {
         elevation: 10,
         showUnselectedLabels: false,
         type: BottomNavigationBarType.fixed,
-        currentIndex: mainViewModelController.selectIndex.value,
+        currentIndex: model.selectedBottomIndex,
         selectedFontSize: selectedFontSize,
         unselectedItemColor: unselectedItemColor,
         unselectedIconTheme: unselectedIconTheme,
         fixedColor: fixedColor,
         iconSize: iconSize,
-        onTap: _buildOnTap,
+        onTap: (index) {
+          model.selectIndex(index);
+        },
         items: _buildBottomItemList,
       ),
     );
   }
 
   // BOTTOM İTEMLAR DEĞİŞTİĞİNDE
-  void _buildOnTap(int index) {
-    mainViewModelController.currentIndex(index);
-    switch (index) {
-      case 0:
-        mainViewModelController.appbarTitle.value = home;
-        break;
-      case 1:
-        mainViewModelController.appbarTitle.value = cargoInfo;
-        break;
-      case 2:
-        mainViewModelController.appbarTitle.value = sizeInfo;
-        break;
-      case 3:
-        mainViewModelController.appbarTitle.value = requestPeriod;
-        break;
-    }
-  }
 
   List<BottomNavigationBarItem> get _buildBottomItemList {
     return [

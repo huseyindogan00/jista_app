@@ -3,7 +3,7 @@ import 'package:jista/core/router/route_name.dart';
 import 'package:jista/views/entry/view/entry_view.dart';
 import 'package:jista/product/error/error_view.dart';
 import 'package:jista/views/home/view/home_view.dart';
-import 'package:jista/views/main/view/main_view.dart';
+import 'package:jista/views/base/base_view.dart';
 import 'package:jista/views/register/view/register_view.dart';
 import '../../views/splash/view/splash_view.dart';
 
