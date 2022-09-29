@@ -82,9 +82,7 @@ class MainView extends GetView<MainViewModel> {
         appBar: MyAppBar.getAppBar(),
         drawerEnableOpenDragGesture: false,
         drawer: NavigationDrawer(
-          imagePath: 'assets/images/person.png',
-          personModel: personModel!,
-        ),
+            imagePath: 'assets/images/person.png', personModel: personModel!),
         bottomNavigationBar: _buildBottomNavigatonBar(context),
         backgroundColor: Theme.of(context).backgroundColor,
         body: Obx(() => pages[mainViewModelController.selectIndex.value]),
