@@ -20,7 +20,7 @@ class SplashViewModel {
         bool isPerson = box.isPersonBox();
         if (isPerson) {
           final personModel = box.getBox('person');
-          Get.offAndToNamed(RouteName.mainView, arguments: personModel);
+          Get.offAndToNamed(RouteName.homeView, arguments: personModel);
           //Navigator.pushReplacementNamed(context, RouteName.homeView);
         } else {
           Get.offAndToNamed(RouteName.entryView);

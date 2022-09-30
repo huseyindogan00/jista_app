@@ -13,11 +13,14 @@ class BaseView<T extends BaseModel> extends StatefulWidget {
   BaseView({
     Key? key,
     required this.appTitle,
-    required this.builder,
+    required this.onBuilder,
     this.pagesList,
+    this.onModelRead,
   }) : super(key: key);
 
-  final Widget Function(BuildContext context, T model, Widget body) builder;
+  final Widget Function(BuildContext context, T model) onBuilder;
+  final Function(T model)? onModelRead;
+  T? viewModel;
   String appTitle;
   List<PagesList>? pagesList;
 
@@ -27,7 +30,6 @@ class BaseView<T extends BaseModel> extends StatefulWidget {
 
 class _BaseViewState<T extends BaseModel> extends State<BaseView<T>> {
   PersonModel? personModel = Get.arguments;
-  T model = Get.find<T>();
   //int selectedIndex = 0;
   final String home = 'Anasayfa';
   final String cargoInfo = 'Kargo Bilgileri';
@@ -35,6 +37,15 @@ class _BaseViewState<T extends BaseModel> extends State<BaseView<T>> {
   final String requestPeriod = 'İstek Dönemi';
 
   List<Widget> pages = PagesList.pagesList;
+
+  @override
+  void initState() {
+    super.initState();
+    widget.viewModel = Get.find<T>();
+    if (widget.onModelRead != null) {
+      widget.onModelRead!(widget.viewModel!);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,12 +75,15 @@ class _BaseViewState<T extends BaseModel> extends State<BaseView<T>> {
         return result;
       },
       child: Scaffold(
-        appBar: MyAppBar().getAppBar('deneme'),
+        appBar: MyAppBar().getAppBar(widget.appTitle),
         drawerEnableOpenDragGesture: false,
-        drawer: NavigationDrawer(imagePath: 'assets/images/person.png', personModel: personModel!),
+        drawer: NavigationDrawer(
+            imagePath: 'assets/images/person.png', personModel: personModel!),
         bottomNavigationBar: _buildBottomNavigatonBar(context),
         backgroundColor: Theme.of(context).backgroundColor,
-        body: Obx(() => pages[model.selectedBottomIndex]),
+        body: widget.onBuilder(context, widget.viewModel!),
+
+        //Obx(() => pages[model.selectedBottomIndex]),
       ),
     );
   }
@@ -89,14 +103,14 @@ class _BaseViewState<T extends BaseModel> extends State<BaseView<T>> {
         elevation: 10,
         showUnselectedLabels: false,
         type: BottomNavigationBarType.fixed,
-        currentIndex: model.selectedBottomIndex,
+        currentIndex: widget.viewModel!.selectedBottomIndex,
         selectedFontSize: selectedFontSize,
         unselectedItemColor: unselectedItemColor,
         unselectedIconTheme: unselectedIconTheme,
         fixedColor: fixedColor,
         iconSize: iconSize,
         onTap: (index) {
-          model.selectIndex(index);
+          widget.viewModel!.selectIndex(index);
         },
         items: _buildBottomItemList,
       ),

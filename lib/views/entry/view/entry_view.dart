@@ -127,7 +127,7 @@ class EntryView extends StatelessWidget {
             ServiceResult result = await EntryViewModel.login(personModel);
             if (result.isSuccess) {
               // HOME SAYFASINA GEÇİŞŞŞŞ
-              Get.toNamed(RouteName.mainView, arguments: result.data);
+              Get.toNamed(RouteName.homeView, arguments: result.data);
               //EasyLoading.showToast(result.dataInfo.toString(), duration: const Duration(milliseconds: 2000));
             } else {
               EasyLoading.showError(result.dataInfo.toString());

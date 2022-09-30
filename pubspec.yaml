@@ -42,8 +42,7 @@ dependencies:
   firebase_auth: ^3.6.4
   cloud_firestore: ^3.4.7
 
-  # STATE MENAGEMENT
-  provider: ^6.0.3
+  # STATE MENAGEMENT 
   get: ^4.6.5
 
   # YÜKLEME ANİMASYONU

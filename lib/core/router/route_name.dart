@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:jista/views/base/base_model.dart';
 import 'package:jista/views/category_module/service_page/view/service_wear_view.dart';
 import 'package:jista/views/base/base_view.dart';
 import 'package:jista/views/home/view_model/home_view_model.dart';
@@ -17,7 +18,6 @@ class RouteName {
   static const String splashView = '/splashView';
 
   // bottomnavigator pages
-  static const String mainView = '/mainView';
   static const String homeView = '/homeView';
   static const String requestPeriodView = '/requestPeriodView';
 
@@ -55,13 +55,8 @@ class RoutePage {
       page: () => const HomeView(),
       transition: _getTransition(),
       binding: BindingsBuilder(
-        () => Get.put<HomeViewModel>(HomeViewModel()),
+        () => Get.lazyPut<HomeViewModel>(() => HomeViewModel()),
       ),
-    ),
-    GetPage(
-      name: RouteName.homeView,
-      page: () => HomeView(),
-      transition: _getTransition(),
     ),
     GetPage(
       name: RouteName.serviceWearView,

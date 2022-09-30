@@ -1,19 +1,18 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import 'package:jista/views/base/base_model.dart';
 
-class MyAppBar<T extends BaseModel> {
-  final T _controller = Get.find<T>();
-
+class MyAppBar {
   AppBar getAppBar(String title) {
     return AppBar(
       centerTitle: true,
-      title: Obx(
-        () => Text(
-          title,
-          style: const TextStyle(fontFamily: 'Montserrat', fontWeight: FontWeight.w700),
-        ),
+      title: Text(
+        title,
+        style: const TextStyle(
+            fontFamily: 'Montserrat', fontWeight: FontWeight.w700),
       ),
       leading: null,
       actions: [
@@ -27,7 +26,8 @@ class MyAppBar<T extends BaseModel> {
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
           ),
           child: InkWell(
-            child: const Icon(Icons.add_shopping_cart_sharp, color: Colors.white),
+            child:
+                const Icon(Icons.add_shopping_cart_sharp, color: Colors.white),
             onTap: () {
               print('Carta tıklandı');
             },
