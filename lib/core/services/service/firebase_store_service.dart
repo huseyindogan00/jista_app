@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:jista/core/services/service/base/i_firebase_store_service.dart';
 import 'package:jista/core/services/service_result/firebase_service_result_model.dart';
 import 'package:jista/core/services/service_result/base/service_result.dart';
+import 'package:jista/data/constant/type/type_name.dart';
 import '../../../product/models/person/person_model.dart';
 import '../../../product/models/product/product_model.dart';
 
@@ -10,12 +11,7 @@ class FirebaseStoreService implements IFirebaseStoreService {
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
   @override
-  update(PersonModel personModel) {}
-  @override
-  delete(PersonModel personModel) {}
-
-  @override
-  Future<FirebaseServiceResultModel<List<ProductModel>>> read(String collectionName) async {
+  Future<FirebaseServiceResultModel<List<ProductModel>>> getAllCategory(String collectionName) async {
     List<ProductModel> productList = [];
     try {
       QuerySnapshot<Map<String, dynamic>> snapshot = await _firebaseFirestore.collection(collectionName).get();
@@ -26,6 +22,7 @@ class FirebaseStoreService implements IFirebaseStoreService {
           ProductModel productModel = ProductModel.fromMap(product);
           productList.add(productModel);
         }
+        ProductModel.productList = productList;
         return FirebaseServiceResultModel(isSuccess: true, data: productList);
       }
     } on FirebaseException catch (_) {}
@@ -34,12 +31,34 @@ class FirebaseStoreService implements IFirebaseStoreService {
   }
 
   @override
-  create(PersonModel personModel) {
+  Future<FirebaseServiceResultModel<List<ProductModel>>> getToCategory(String type) async {
+    List<ProductModel> productList = [];
+
+    try {
+      QuerySnapshot<Map<String, dynamic>> snapshot =
+          await _firebaseFirestore.collection('product').where('type', isEqualTo: type).get();
+
+      if (snapshot.docs.isNotEmpty) {
+        for (QueryDocumentSnapshot<Map<String, dynamic>> doc in snapshot.docs) {
+          Map<String, dynamic> product = doc.data();
+          product['id'] = doc.id;
+          ProductModel productModel = ProductModel.fromMap(product);
+          productList.add(productModel);
+        }
+        ProductModel.productList = productList;
+        return FirebaseServiceResultModel(isSuccess: true, data: productList, dataInfo: 'Başarılı');
+      }
+    } on FirebaseException catch (_) {}
+    return FirebaseServiceResultModel(isSuccess: false, dataInfo: 'Product çekilemedi');
+  }
+
+  @override
+  void create(PersonModel personModel) {
     _firebaseFirestore.collection('person').doc().set(personModel.toMap());
   }
 
   @override
-  Future<ServiceResult<PersonModel>> login(PersonModel personModel) async {
+  Future<ServiceResult<PersonModel>> loginControl(PersonModel personModel) async {
     //QuerySnapshot<Map<String, dynamic>> snapshot = await _firebaseFirestore.collection('person').where('pbik',isEqualTo: userModel.pbik).get();
     late PersonModel person;
 
@@ -92,4 +111,19 @@ class FirebaseStoreService implements IFirebaseStoreService {
     return FirebaseServiceResultModel<List<PersonModel>>(isSuccess: true, data: personModelList,dataInfo: 'Login oldu');
     */
   }
+
+  @override
+  update(PersonModel personModel) {}
+  @override
+  delete(PersonModel personModel) {}
+
+  /* Future<FirebaseServiceResultModel<List<ProductModel>>> getAllProductFilter(List<String> filters,String type){
+     List<ProductModel> productList = [];
+    try {
+      _firebaseFirestore.collection('product').where(type,isEqualTo: type).where()
+
+    } catch (_) {
+      
+    }
+  } */
 }

@@ -3,18 +3,41 @@ import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:jista/views/base/base_model.dart';
-
 class MyAppBar {
-  AppBar getAppBar(String title) {
+  AppBar getAppBar(String title, BuildContext context) {
+    const iconBack = Icon(Icons.arrow_back_ios_new);
+    const iconMenuDrawer = Icon(Icons.menu_rounded);
+    bool navigatorState = Navigator.canPop(context);
+
     return AppBar(
       centerTitle: true,
       title: Text(
         title,
-        style: const TextStyle(
-            fontFamily: 'Montserrat', fontWeight: FontWeight.w700),
+        style: const TextStyle(fontFamily: 'Montserrat', fontWeight: FontWeight.w700),
       ),
-      leading: null,
+      leading: navigatorState
+          ? Builder(
+              builder: (BuildContext context) {
+                return IconButton(
+                  icon: iconBack,
+                  onPressed: () {
+                    Get.back();
+                  },
+                  //tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+                );
+              },
+            )
+          : Builder(
+              builder: (BuildContext context) {
+                return IconButton(
+                  icon: iconMenuDrawer,
+                  onPressed: () {
+                    Scaffold.of(context).openDrawer();
+                  },
+                  tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+                );
+              },
+            ),
       actions: [
         Badge(
           badgeColor: Colors.white,
@@ -26,8 +49,7 @@ class MyAppBar {
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
           ),
           child: InkWell(
-            child:
-                const Icon(Icons.add_shopping_cart_sharp, color: Colors.white),
+            child: const Icon(Icons.add_shopping_cart_sharp, color: Colors.white),
             onTap: () {
               print('Carta tıklandı');
             },

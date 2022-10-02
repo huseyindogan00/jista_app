@@ -7,6 +7,8 @@ part 'product_model.g.dart';
 
 @HiveType(typeId: 2)
 class ProductModel {
+  static List<ProductModel>? productList;
+
   @HiveField(0)
   dynamic id;
   @HiveField(1)

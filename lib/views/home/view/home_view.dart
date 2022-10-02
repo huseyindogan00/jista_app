@@ -16,18 +16,15 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BaseView<HomeViewModel>(
       appTitle: 'Anasayfa',
-      onBuilder: (context, model) {
+      onBuilder: (context, model, productList) {
         return SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 25),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _buildServiceWear(
-                  ConstAssetsImages.serviceWear, 'Hizmet Kıyafeti'),
-              _buildTrainingClothing(
-                  ConstAssetsImages.trainingClothing, 'Eğitim Kıyafeti'),
-              _buildStafTaskClothing(
-                  ConstAssetsImages.stafTaskClothing, 'Kadro Görev Kıyafeti'),
+              _buildServiceWear(ConstAssetsImages.serviceWear, 'Hizmet Giyeceği'),
+              _buildTrainingClothing(ConstAssetsImages.trainingClothing, 'Eğitim Giyeceği'),
+              _buildStafTaskClothing(ConstAssetsImages.stafTaskClothing, 'Kadro Görev Kıyafeti'),
             ],
           ),
         );

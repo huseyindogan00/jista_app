@@ -4,4 +4,5 @@ import '../../../../product/models/person/person_model.dart';
 
 abstract class IFirebaseAuthService implements IService {
   isEmailVerified(PersonModel person);
+  login(PersonModel personModel);
 }

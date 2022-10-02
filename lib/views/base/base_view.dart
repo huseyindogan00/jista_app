@@ -2,8 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jista/core/enums/view_state.dart';
 import 'package:jista/data/constant/pages/pages_list.dart';
 import 'package:jista/product/models/person/person_model.dart';
+import 'package:jista/product/models/product/product_model.dart';
 
 import '../../product/components/appbar.dart';
 import 'base_model.dart';
@@ -14,15 +16,24 @@ class BaseView<T extends BaseModel> extends StatefulWidget {
     Key? key,
     required this.appTitle,
     required this.onBuilder,
+    this.onBuilderProductModel,
     this.pagesList,
-    this.onModelRead,
+    this.personModel,
+    //this.onModelRead,
   }) : super(key: key);
 
-  final Widget Function(BuildContext context, T model) onBuilder;
-  final Function(T model)? onModelRead;
-  T? viewModel;
-  String appTitle;
-  List<PagesList>? pagesList;
+  // baseviewı kullanan widget, personelmodele ihtiyaç duyduğunda
+  PersonModel? personModel;
+
+  //verilen modelController üzerinden productmodelini dolduran callbackfunction
+  Future<List<ProductModel>?> Function(T model)? onBuilderProductModel;
+
+  final Widget Function(BuildContext context, T model, List<ProductModel>? productModel)
+      onBuilder; // callfunction ile body de kullanılacak fonksiyonu alıyoruz
+  //final Function(T model)? onModelRead; // BaseViewı kullanan widgetın T tipindeki viewModeli geri döndürmek için
+  T? viewModel; //BaseView widgetınının içinde T viewModelini kullanmak için
+  String appTitle; // baseviewı kullanan widgetların appbar titleını alıyoruz
+  List<PagesList>? pagesList; //bottom için indeksle gezeceğimiz sayfaları alıyoruz
 
   @override
   _BaseViewState<T> createState() => _BaseViewState<T>();
@@ -37,18 +48,32 @@ class _BaseViewState<T extends BaseModel> extends State<BaseView<T>> {
   final String requestPeriod = 'İstek Dönemi';
 
   List<Widget> pages = PagesList.pagesList;
+  T? viewModel;
 
   @override
   void initState() {
     super.initState();
-    widget.viewModel = Get.find<T>();
-    if (widget.onModelRead != null) {
-      widget.onModelRead!(widget.viewModel!);
+    // CONTROLLER MODEL HERZAMAN T TİPİNDE ATANIYOR
+    viewModel = Get.find<T>();
+    // PERSONEL MODEL SINIFA VERİLMEZSE TELEFON HAFIZASINDAN GETİR
+    getPersonel();
+    // BaseView PRODUCTMODELE ihtiyaç duyarsa getir
+    getProduct();
+  }
+
+  getPersonel() {
+    return widget.personModel ??= viewModel?.getPersonHive();
+  }
+
+  getProduct() async {
+    if (widget.onBuilderProductModel != null) {
+      widget.onBuilderProductModel!(viewModel!);
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    getPersonel();
     return WillPopScope(
       //PROGRAMDAN TAMAMEN ÇIKIP ÇIKMAMAYI KONTROL EDİLİYOR
       onWillPop: () async {
@@ -75,16 +100,25 @@ class _BaseViewState<T extends BaseModel> extends State<BaseView<T>> {
         return result;
       },
       child: Scaffold(
-        appBar: MyAppBar().getAppBar(widget.appTitle),
-        drawerEnableOpenDragGesture: false,
-        drawer: NavigationDrawer(
-            imagePath: 'assets/images/person.png', personModel: personModel!),
-        bottomNavigationBar: _buildBottomNavigatonBar(context),
-        backgroundColor: Theme.of(context).backgroundColor,
-        body: widget.onBuilder(context, widget.viewModel!),
+          appBar: MyAppBar().getAppBar(widget.appTitle, context),
+          drawerEnableOpenDragGesture: false,
+          drawer: NavigationDrawer(imagePath: 'assets/images/person.png', personModel: getPersonel()),
+          bottomNavigationBar: _buildBottomNavigatonBar(context),
+          backgroundColor: Theme.of(context).backgroundColor,
+          body: Obx(
+            () => viewModel?.viewState == ViewState.Busy
+                ? Container(
+                    alignment: Alignment.center,
+                    color: Colors.lightGreenAccent.shade700,
+                    child: const CircularProgressIndicator(),
+                  )
+                : viewModel!.selectedBottomIndex > 0
+                    ? pages[viewModel!.selectedBottomIndex]
+                    : widget.onBuilder(context, viewModel!, ProductModel.productList),
+          )
 
-        //Obx(() => pages[model.selectedBottomIndex]),
-      ),
+          //Obx(() => pages[model.selectedBottomIndex]),
+          ),
     );
   }
 
@@ -103,14 +137,15 @@ class _BaseViewState<T extends BaseModel> extends State<BaseView<T>> {
         elevation: 10,
         showUnselectedLabels: false,
         type: BottomNavigationBarType.fixed,
-        currentIndex: widget.viewModel!.selectedBottomIndex,
+        currentIndex: viewModel!.selectedBottomIndex,
         selectedFontSize: selectedFontSize,
         unselectedItemColor: unselectedItemColor,
         unselectedIconTheme: unselectedIconTheme,
         fixedColor: fixedColor,
         iconSize: iconSize,
         onTap: (index) {
-          widget.viewModel!.selectIndex(index);
+          viewModel!.selectIndex(index);
+          print('Bootom da değişen index : $index');
         },
         items: _buildBottomItemList,
       ),

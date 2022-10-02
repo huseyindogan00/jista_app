@@ -10,7 +10,7 @@ class EntryViewModel {
   //static final _firebaseAuthService = locator<FirebaseAuthService>();
 
   static Future<ServiceResult> login(PersonModel personModel) async {
-    ServiceResult<PersonModel> result = await _firebaseStorageService.login(personModel);
+    ServiceResult<PersonModel> result = await _firebaseStorageService.loginControl(personModel);
 
     /* KULLANICI GİRİŞ YAPTIYSA, KULLANICIYI TELEFONUNA KAYDEDİYOR
          BİR SONRAKİ GİRİŞİNDE DİREK HOME SAYFASINA YÖNLENDİRECEK. */

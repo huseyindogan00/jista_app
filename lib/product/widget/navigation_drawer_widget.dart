@@ -144,8 +144,10 @@ Row selectThemeMode(ThemeApp theme) {
             theme.isDarkModeApp.value = value;
             if (value) {
               Get.changeThemeMode(ThemeMode.dark);
+              Get.back();
             } else {
               Get.changeThemeMode(ThemeMode.light);
+              Get.back();
             }
           },
         ),

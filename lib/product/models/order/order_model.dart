@@ -11,7 +11,7 @@ part 'order_model.g.dart';
 @HiveType(typeId: 3)
 class OrderModel {
   @HiveField(0)
-  dynamic id;
+  String? id;
   @HiveField(1)
   ProductModel productModel;
   @HiveField(2)
@@ -23,7 +23,7 @@ class OrderModel {
   });
 
   OrderModel copyWith({
-    dynamic? id,
+    String? id,
     ProductModel? productModel,
     DateTime? dateTime,
   }) {
@@ -44,7 +44,7 @@ class OrderModel {
 
   factory OrderModel.fromMap(Map<String, dynamic> map) {
     return OrderModel(
-      id: map['id'] as dynamic,
+      id: map['id'] as String,
       productModel: ProductModel.fromMap(map['productModel'] as Map<String, dynamic>),
       dateTime: DateTime.fromMillisecondsSinceEpoch(map['dateTime'] as int),
     );

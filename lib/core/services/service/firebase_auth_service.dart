@@ -83,14 +83,11 @@ class FirebaseAuthService extends IFirebaseAuthService {
 
   // -> KULLANICI E POSTA ADRESİNE GÖNDERİLEN BAĞLANTIYI ONAYLAMIŞ MI
   @override
-  isEmailVerified(PersonModel personModel) {}
+  isEmailVerified(PersonModel person) {}
 
   @override
   delete(PersonModel personModel) {}
 
   @override
   create(PersonModel personModel) {}
-
-  @override
-  read(String userId) {}
 }
