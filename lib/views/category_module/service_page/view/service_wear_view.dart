@@ -10,8 +10,8 @@ import 'package:jista/data/constant/type/type_name.dart';
 import 'package:jista/product/models/person/person_model.dart';
 import 'package:jista/product/models/product/product_model.dart';
 import 'package:jista/views/base/base_view.dart';
-import 'package:jista/views/cart/view/cart_view.dart';
-import 'package:jista/views/cart/view_model/cart_view_model.dart';
+import 'package:jista/views/products/view/product_view.dart';
+import 'package:jista/views/products/view_model/product_view_model.dart';
 import 'package:jista/views/category_module/service_page/view_model/service_wear_view_model.dart';
 
 class ServiceWearView extends StatefulWidget {
@@ -44,31 +44,35 @@ class _ServiceWearViewState extends State<ServiceWearView> {
         model.getToProduct(TypeName.hizmetGiyecegi);
       },
       onBuilder: (context, model, productList) {
-        return CartView(productList: productList!);
-        /* Column(
+        return Column(
           children: [
             _buildRowFilter(model),
-            CartView(productList: productList!),
+            Expanded(child: ProductView(productList: productList!)),
           ],
-        ) 
-        ;*/
+        );
       },
     );
   }
 
   Row _buildRowFilter(ServiceWearViewModel model) {
     return Row(
+      mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
+        Text('Filtrele :'),
         Obx(
           () {
             return InkWell(
               child: Chip(
                 label: Text(all),
                 elevation: 2,
-                backgroundColor: model.isAll.value ? Colors.amber.shade700 : Colors.white,
+                backgroundColor:
+                    model.isAll.value ? Colors.amber.shade700 : Colors.white,
               ),
-              onTap: () {},
+              onTap: () {
+                model.isAll.value = !model.isAll.value;
+                addFilterList(model, all);
+              },
             );
           },
         ),
@@ -78,9 +82,13 @@ class _ServiceWearViewState extends State<ServiceWearView> {
               child: Chip(
                 label: Text(winter),
                 elevation: 2,
-                backgroundColor: model.isWinter.value ? Colors.amber.shade700 : Colors.white,
+                backgroundColor:
+                    model.isWinter.value ? Colors.amber.shade700 : Colors.white,
               ),
-              onTap: () {},
+              onTap: () {
+                model.isWinter.value = !model.isWinter.value;
+                addFilterList(model, winter);
+              },
             );
           },
         ),
@@ -90,13 +98,60 @@ class _ServiceWearViewState extends State<ServiceWearView> {
               child: Chip(
                 label: Text(summer),
                 elevation: 2,
-                backgroundColor: model.isSummer.value ? Colors.amber.shade700 : Colors.white,
+                backgroundColor:
+                    model.isSummer.value ? Colors.amber.shade700 : Colors.white,
               ),
-              onTap: () {},
+              onTap: () {
+                model.isSummer.value = !model.isSummer.value;
+                addFilterList(model, summer);
+              },
             );
           },
         ),
       ],
     );
+  }
+
+  void addFilterList(ServiceWearViewModel model, String filterName) {
+    switch (filterName) {
+      case 'HEPSİ':
+        if (model.isSummer.value || model.isWinter.value) {
+          model.filterList.remove(winter);
+          model.filterList.remove(summer);
+          model.filterList.add(all);
+          /* 
+            filtremele işlemleri yapılacak HEPSİni seçince yaz ve kış sönecek ve setliste hepsi oalrak eklenecek
+            
+          
+           */
+
+          model.isSummer.value = false;
+          model.isWinter.value = false;
+        } else {
+          model.isAll.value
+              ? model.filterList.add(all)
+              : model.filterList.remove(all);
+        }
+
+        break;
+      case 'KIŞ':
+        model.isWinter.value
+            ? model.filterList.add(all)
+            : model.filterList.contains(all)
+                ? model.filterList.remove(all)
+                : false;
+
+        break;
+      case 'YAZ':
+        model.isSummer.value
+            ? model.filterList.add(all)
+            : model.filterList.contains(all)
+                ? model.filterList.remove(all)
+                : false;
+
+        break;
+    }
+
+    print(model.filterList.length);
   }
 }
