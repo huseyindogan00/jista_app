@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
 import 'package:jista/views/base/base_model.dart';
-import 'package:jista/views/cart/view/cart_details_view.dart';
-import 'package:jista/views/cart/view/cart_view.dart';
-import 'package:jista/views/cart/view_model/cart_view_model.dart';
+import 'package:jista/views/products/view/product_details_view.dart';
+import 'package:jista/views/products/view/product_view.dart';
+import 'package:jista/views/products/view_model/product_view_model.dart';
 import 'package:jista/views/category_module/service_page/view/service_wear_view.dart';
 import 'package:jista/views/base/base_view.dart';
 import 'package:jista/views/category_module/service_page/view_model/service_wear_view_model.dart';
@@ -76,14 +76,17 @@ class RoutePage {
     ),
     GetPage(
       name: RouteName.cartView,
-      page: () => CartView(),
+      page: () => ProductView(),
       binding: BindingsBuilder(
-        () => Get.lazyPut<CartViewModel>(() => CartViewModel()),
+        () => Get.lazyPut<ProductViewModel>(() => ProductViewModel()),
       ),
     ),
     GetPage(
       name: RouteName.cartDetailsView,
       page: () => CartDetailsView(),
+      binding: BindingsBuilder(
+        () => Get.lazyPut<ProductViewModel>(() => ProductViewModel()),
+      ),
     ),
     GetPage(
       name: RouteName.requestPeriodView,

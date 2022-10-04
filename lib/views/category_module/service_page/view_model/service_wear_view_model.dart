@@ -8,7 +8,8 @@ import 'package:jista/product/models/product/product_model.dart';
 import 'package:jista/views/base/base_model.dart';
 
 class ServiceWearViewModel extends BaseModel {
-  final FirebaseStoreService firebaseStoreService = locator<FirebaseStoreService>();
+  final FirebaseStoreService firebaseStoreService =
+      locator<FirebaseStoreService>();
 
   //final productModel = Rxn<ProductModel>().obs;
   Future<List<ProductModel>?> getToProduct(String productType) async {
@@ -22,7 +23,7 @@ class ServiceWearViewModel extends BaseModel {
   var isWinter = false.obs;
   var isSummer = false.obs;
   var isAll = false.obs;
-  filter(List<String> seasonKeys) {}
+  var filterList = <String>{};
 
-  setFilterColor(bool value) {}
+  setFilterColorState(bool value) {}
 }
