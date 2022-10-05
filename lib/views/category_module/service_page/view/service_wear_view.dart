@@ -66,8 +66,7 @@ class _ServiceWearViewState extends State<ServiceWearView> {
               child: Chip(
                 label: Text(all),
                 elevation: 2,
-                backgroundColor:
-                    model.isAll.value ? Colors.amber.shade700 : Colors.white,
+                backgroundColor: model.isAll.value ? Colors.amber.shade700 : Colors.white,
               ),
               onTap: () {
                 model.isAll.value = !model.isAll.value;
@@ -82,8 +81,7 @@ class _ServiceWearViewState extends State<ServiceWearView> {
               child: Chip(
                 label: Text(winter),
                 elevation: 2,
-                backgroundColor:
-                    model.isWinter.value ? Colors.amber.shade700 : Colors.white,
+                backgroundColor: model.isWinter.value ? Colors.amber.shade700 : Colors.white,
               ),
               onTap: () {
                 model.isWinter.value = !model.isWinter.value;
@@ -97,9 +95,8 @@ class _ServiceWearViewState extends State<ServiceWearView> {
             return InkWell(
               child: Chip(
                 label: Text(summer),
-                elevation: 2,
-                backgroundColor:
-                    model.isSummer.value ? Colors.amber.shade700 : Colors.white,
+                elevation: 10,
+                backgroundColor: model.isSummer.value ? Colors.amber.shade700 : Colors.white,
               ),
               onTap: () {
                 model.isSummer.value = !model.isSummer.value;
@@ -116,25 +113,19 @@ class _ServiceWearViewState extends State<ServiceWearView> {
     switch (filterName) {
       case 'HEPSİ':
         if (model.isSummer.value || model.isWinter.value) {
-          model.filterList.remove(winter);
-          model.filterList.remove(summer);
+          model.filterList.clear();
           model.filterList.add(all);
-          /* 
-            filtremele işlemleri yapılacak HEPSİni seçince yaz ve kış sönecek ve setliste hepsi oalrak eklenecek
-            
-          
-           */
-
           model.isSummer.value = false;
           model.isWinter.value = false;
         } else {
-          model.isAll.value
-              ? model.filterList.add(all)
-              : model.filterList.remove(all);
+          model.isAll.value ? model.filterList.add(summer) : model.filterList.remove(all);
         }
 
         break;
       case 'KIŞ':
+        if (model.isAll.value) {
+          model.isAll.value = false;
+        }
         model.isWinter.value
             ? model.filterList.add(all)
             : model.filterList.contains(all)
