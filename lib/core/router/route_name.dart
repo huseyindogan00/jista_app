@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 import 'package:jista/views/base/base_model.dart';
+import 'package:jista/views/cargo/view/cargo_info_view.dart';
+import 'package:jista/views/cargo/view_model/cargo_info_view_model.dart';
 import 'package:jista/views/products/view/product_details_view.dart';
 import 'package:jista/views/products/view/product_view.dart';
 import 'package:jista/views/products/view_model/product_view_model.dart';
@@ -23,6 +25,7 @@ class RouteName {
 
   // bottomnavigator pages
   static const String homeView = '/homeView';
+  static const String cargoInfoView = '/cargoInfoView';
   static const String requestPeriodView = '/requestPeriodView';
 
   //category pages
@@ -88,6 +91,12 @@ class RoutePage {
         () => Get.lazyPut<ProductViewModel>(() => ProductViewModel()),
       ),
     ),
+    GetPage(
+        name: RouteName.cargoInfoView,
+        page: () => CargoInfoView(),
+        binding: BindingsBuilder(
+          () => Get.lazyPut<CargoInfoViewModel>(() => CargoInfoViewModel()),
+        )),
     GetPage(
       name: RouteName.requestPeriodView,
       page: () => const RationRequestPeriodView(),

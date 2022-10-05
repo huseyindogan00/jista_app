@@ -4,9 +4,9 @@ import 'package:jista/core/services/service_result/firebase_service_result_model
 import 'package:jista/core/utility/show_utility/show_snacbar.dart';
 import 'package:jista/core/utility/validation_utility/validation_controller.dart';
 
-import '../../../data/constant/const_button_style.dart';
-import '../../../data/constant/const_font_size.dart';
-import '../../../data/constant/const_margin.dart';
+import '../../../data/constant/style/const_button_style.dart';
+import '../../../data/constant/style/const_font_size.dart';
+import '../../../data/constant/distance/const_margin.dart';
 import '../../../product/models/person/person_model.dart';
 import '../view_model/register_view_model.dart';
 
@@ -132,7 +132,8 @@ class RegisterView extends StatelessWidget {
                 formKey.currentState?.save();
                 /* AŞAĞIDAKİ Do not use BuildContexts across async gaps 
                 HATASINI GİDER İLERİDE PROBLEM ÇIKARABİLİR*/
-                FirebaseServiceResultModel result = await RegisterViewModel.savePerson(personModel);
+                FirebaseServiceResultModel result =
+                    await RegisterViewModel.savePerson(personModel);
                 if (result.isSuccess) {
                   EasyLoading.showSuccess(result.dataInfo.toString());
                 } else {

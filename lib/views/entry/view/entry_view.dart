@@ -3,13 +3,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/route_manager.dart';
-import 'package:jista/data/constant/const_text.dart';
+import 'package:jista/data/constant/style/const_text.dart';
 import 'package:jista/core/services/service_result/base/service_result.dart';
 import 'package:jista/core/utility/validation_utility/validation_controller.dart';
 
 import '../../../data/constant/const_assets_images.dart';
-import '../../../data/constant/const_button_style.dart';
-import '../../../data/constant/const_font_size.dart';
+import '../../../data/constant/style/const_button_style.dart';
+import '../../../data/constant/style/const_font_size.dart';
 import '../../../core/router/route_name.dart';
 import '../../../product/models/person/person_model.dart';
 import '../view_model/entry_view_model.dart';
