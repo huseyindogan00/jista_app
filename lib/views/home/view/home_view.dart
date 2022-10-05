@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jista/core/router/route_name.dart';
+import 'package:jista/data/constant/appbar_text/appbar_title.dart';
 import 'package:jista/data/constant/font/const_text_style.dart';
 import 'package:jista/views/base/base_view.dart';
 import 'package:jista/views/home/view_model/home_view_model.dart';
@@ -15,16 +16,19 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseView<HomeViewModel>(
-      appTitle: 'Anasayfa',
+      appTitle: AppbarTitle.homePageTitle,
       onBuilder: (context, model, productList) {
         return SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 25),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _buildServiceWear(ConstAssetsImages.serviceWear, 'Hizmet Giyeceği'),
-              _buildTrainingClothing(ConstAssetsImages.trainingClothing, 'Eğitim Giyeceği'),
-              _buildStafTaskClothing(ConstAssetsImages.stafTaskClothing, 'Kadro Görev Kıyafeti'),
+              _buildServiceWear(
+                  ConstAssetsImages.serviceWear, 'Hizmet Giyeceği'),
+              _buildTrainingClothing(
+                  ConstAssetsImages.trainingClothing, 'Eğitim Giyeceği'),
+              _buildStafTaskClothing(
+                  ConstAssetsImages.stafTaskClothing, 'Kadro Görev Kıyafeti'),
             ],
           ),
         );
@@ -43,7 +47,6 @@ class HomeView extends StatelessWidget {
           decoration: BoxDecoration(
             boxShadow: const <BoxShadow>[
               BoxShadow(blurRadius: 2, color: Colors.red, spreadRadius: 2),
-              BoxShadow(blurRadius: 2, color: Colors.blue, spreadRadius: 1)
             ],
             image: DecorationImage(image: assetsImages, fit: BoxFit.fill),
             borderRadius: const BorderRadius.all(
@@ -88,8 +91,7 @@ class HomeView extends StatelessWidget {
           height: 200,
           decoration: BoxDecoration(
             boxShadow: const <BoxShadow>[
-              BoxShadow(blurRadius: 2, color: Colors.red, spreadRadius: 2),
-              BoxShadow(blurRadius: 2, color: Colors.blue, spreadRadius: 1)
+              BoxShadow(blurRadius: 2, color: Colors.green, spreadRadius: 2),
             ],
             image: DecorationImage(image: assetsImages, fit: BoxFit.fill),
             borderRadius: const BorderRadius.all(
@@ -131,8 +133,7 @@ class HomeView extends StatelessWidget {
           height: 200,
           decoration: BoxDecoration(
             boxShadow: const <BoxShadow>[
-              BoxShadow(blurRadius: 2, color: Colors.red, spreadRadius: 2),
-              BoxShadow(blurRadius: 2, color: Colors.blue, spreadRadius: 1)
+              BoxShadow(blurRadius: 2, color: Colors.blue, spreadRadius: 2)
             ],
             image: DecorationImage(image: assetsImages, fit: BoxFit.fill),
             borderRadius: const BorderRadius.all(
