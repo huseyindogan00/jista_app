@@ -1,7 +1,10 @@
 // ignore_for_file: must_be_immutable
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jista/data/constant/style/const_button_style.dart';
 import 'package:jista/data/theme/theme_app.dart';
 import 'package:jista/product/models/person/person_model.dart';
 
@@ -61,39 +64,25 @@ Widget buildMenuItem(BuildContext context) {
   return Container(
     padding: const EdgeInsets.all(20),
     child: Wrap(
+      runSpacing: 10,
+      spacing: 10,
       children: [
-        ListTile(
-          leading: const Icon(Icons.home_outlined),
-          title: Text(
-            'Anasayfa',
-            style: textStyle,
-          ),
-          onTap: () {},
-        ),
-        ListTile(
-          leading: const Icon(Icons.align_horizontal_left_outlined),
-          title: Text(
-            'Kategoriler',
-            style: textStyle,
-          ),
-          onTap: () {},
-        ),
-        ListTile(
+        /* ListTile(
           leading: const Icon(Icons.square_foot_outlined),
           title: Text(
             'Ölçü Bilgileri',
             style: textStyle,
           ),
           onTap: () {},
-        ),
-        ListTile(
+        ), */
+        /* ListTile(
           leading: const Icon(Icons.local_shipping_outlined),
           title: Text(
             'Kargo Adresim',
             style: textStyle,
           ),
           onTap: () {},
-        ),
+        ), */
         ListTile(
           leading: const Icon(Icons.supervised_user_circle),
           title: Text(
@@ -102,14 +91,14 @@ Widget buildMenuItem(BuildContext context) {
           ),
           onTap: () {},
         ),
-        ListTile(
+        /* ListTile(
           leading: const Icon(Icons.calendar_month_outlined),
           title: Text(
             'İstihkak İstek Dönemi',
             style: textStyle,
           ),
           onTap: () {},
-        ),
+        ), */
         ListTile(
           leading: const Icon(Icons.boy_outlined),
           title: Text(
@@ -126,12 +115,23 @@ Widget buildMenuItem(BuildContext context) {
           ),
           onTap: () {},
         ),
-        selectThemeMode(theme)
+        selectThemeMode(theme),
+        const Divider(
+          height: 11,
+          color: Colors.grey,
+        ),
+        Center(
+            child: ElevatedButton(
+          onPressed: () => exit(0),
+          child: const Text('Oturumu Kapat'),
+          style: ConstButtonStyle.commonButtonStyle(context),
+        )),
       ],
     ),
   );
 }
 
+// THEME DEĞİŞTİĞİNDE
 Row selectThemeMode(ThemeApp theme) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.end,

@@ -123,7 +123,7 @@ class RegisterView extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       margin: ConstMargin.entryMargin,
       child: ElevatedButton(
-          style: ConstButtonStyle.entryPageButtonStyle(context),
+          style: ConstButtonStyle.commonButtonStyle(context),
           onPressed: () async {
             if (formKey.currentState!.validate()) {
               EasyLoading.show();
@@ -132,8 +132,7 @@ class RegisterView extends StatelessWidget {
                 formKey.currentState?.save();
                 /* AŞAĞIDAKİ Do not use BuildContexts across async gaps 
                 HATASINI GİDER İLERİDE PROBLEM ÇIKARABİLİR*/
-                FirebaseServiceResultModel result =
-                    await RegisterViewModel.savePerson(personModel);
+                FirebaseServiceResultModel result = await RegisterViewModel.savePerson(personModel);
                 if (result.isSuccess) {
                   EasyLoading.showSuccess(result.dataInfo.toString());
                 } else {

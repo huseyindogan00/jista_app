@@ -87,7 +87,7 @@ class RoutePage {
     ),
     GetPage(
       name: RouteName.cartDetailsView,
-      page: () => CartDetailsView(),
+      page: () => ProductDetailView(),
       transition: _getTransition(),
       binding: BindingsBuilder(
         () => Get.lazyPut<ProductViewModel>(() => ProductViewModel()),

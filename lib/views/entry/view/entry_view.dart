@@ -120,14 +120,14 @@ class EntryView extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       height: 50,
       child: ElevatedButton(
-        style: ConstButtonStyle.entryPageButtonStyle(context),
+        style: ConstButtonStyle.commonButtonStyle(context),
         onPressed: () async {
           if (formKey.currentState!.validate()) {
             formKey.currentState!.save();
             ServiceResult result = await EntryViewModel.login(personModel);
             if (result.isSuccess) {
               // HOME SAYFASINA GEÇİŞŞŞŞ
-              Get.toNamed(RouteName.homeView, arguments: result.data);
+              Get.offAndToNamed(RouteName.homeView, arguments: result.data);
               //EasyLoading.showToast(result.dataInfo.toString(), duration: const Duration(milliseconds: 2000));
             } else {
               EasyLoading.showError(result.dataInfo.toString());
@@ -147,7 +147,7 @@ class EntryView extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       height: 50,
       child: ElevatedButton(
-          style: ConstButtonStyle.entryPageButtonStyle(context),
+          style: ConstButtonStyle.commonButtonStyle(context),
           onPressed: () async {
             await Navigator.pushNamed(context, RouteName.registerView);
             _buildTextFieldClear();

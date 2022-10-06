@@ -14,12 +14,14 @@ class SplashViewModel {
     var box = locator<HiveService>();
 
     WidgetsBinding.instance.addPostFrameCallback(
-      (timeStamp) {
+      (timeStamp) async {
         // userBox kutusunun daha önce olup olmadığını sorguluyoruz.
         // Varsa Home sayfasın yoksa Entry sayfasına yönlendirme yapıcaz.
         bool isPerson = box.isPersonBox();
+        await Future.delayed(Duration(seconds: 2));
         if (isPerson) {
           final personModel = box.getBox('person');
+
           Get.offAndToNamed(RouteName.homeView, arguments: personModel);
           //Navigator.pushReplacementNamed(context, RouteName.homeView);
         } else {

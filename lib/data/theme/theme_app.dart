@@ -15,7 +15,9 @@ class ThemeApp extends GetxController {
     ),
   );
 
-  static final themeDark = ThemeData.dark().copyWith();
+  static final themeDark = ThemeData.dark().copyWith(
+      /** DARK THEME DE GÜCELLEMELER YAPILACAK */
+      );
 
-  var isDarkModeApp = false.obs;
+  var isDarkModeApp = (Get.isPlatformDarkMode ? true : false).obs;
 }

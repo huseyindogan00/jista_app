@@ -4,8 +4,8 @@ import 'package:get/get.dart';
 import 'package:jista/data/constant/font/const_text_style.dart';
 import 'package:jista/product/models/product/product_model.dart';
 
-class CartDetailsView extends StatelessWidget {
-  CartDetailsView({super.key});
+class ProductDetailView extends StatelessWidget {
+  ProductDetailView({super.key});
 
   ProductModel product = Get.arguments ?? [];
 
