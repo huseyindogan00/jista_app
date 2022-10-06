@@ -28,12 +28,14 @@ class BaseView<T extends BaseModel> extends StatefulWidget {
   //verilen modelController üzerinden productmodelini dolduran callbackfunction
   Future<List<ProductModel>?> Function(T model)? onBuilderProductModel;
 
-  final Widget Function(BuildContext context, T model, List<ProductModel>? productModel)
+  final Widget Function(
+          BuildContext context, T model, List<ProductModel>? productModel)
       onBuilder; // callfunction ile body de kullanılacak fonksiyonu alıyoruz
   //final Function(T model)? onModelRead; // BaseViewı kullanan widgetın T tipindeki viewModeli geri döndürmek için
   T? viewModel; //BaseView widgetınının içinde T viewModelini kullanmak için
   String appTitle; // baseviewı kullanan widgetların appbar titleını alıyoruz
-  List<PagesList>? pagesList; //bottom için indeksle gezeceğimiz sayfaları alıyoruz
+  List<PagesList>?
+      pagesList; //bottom için indeksle gezeceğimiz sayfaları alıyoruz
 
   @override
   _BaseViewState<T> createState() => _BaseViewState<T>();
@@ -100,9 +102,11 @@ class _BaseViewState<T extends BaseModel> extends State<BaseView<T>> {
         return result;
       },
       child: Scaffold(
-          appBar: MyAppBar().getAppBar(widget.appTitle, context),
-          drawerEnableOpenDragGesture: false,
-          drawer: NavigationDrawer(imagePath: 'assets/images/person.png', personModel: getPersonel()),
+          appBar: MyAppBar().getAppBar(viewModel!, context),
+          drawerEnableOpenDragGesture: true,
+          drawer: NavigationDrawer(
+              imagePath: 'assets/images/person.png',
+              personModel: getPersonel()),
           bottomNavigationBar: _buildBottomNavigatonBar(context),
           backgroundColor: Theme.of(context).backgroundColor,
           body: Obx(
@@ -114,7 +118,8 @@ class _BaseViewState<T extends BaseModel> extends State<BaseView<T>> {
                   )
                 : viewModel!.selectedBottomIndex > 0
                     ? pages[viewModel!.selectedBottomIndex]
-                    : widget.onBuilder(context, viewModel!, ProductModel.productList),
+                    : widget.onBuilder(
+                        context, viewModel!, ProductModel.productList),
           )
 
           //Obx(() => pages[model.selectedBottomIndex]),

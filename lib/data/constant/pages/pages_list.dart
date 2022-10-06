@@ -9,7 +9,7 @@ import '../../../views/size/view/size_info.dart';
 class PagesList {
   static get pagesList {
     return [
-      HomeView(), // 0
+      const HomeView(), // 0
       const CargoInfoView(), // 1
       const SizeInfoView(), // 2
       const RationRequestPeriodView(), // 3

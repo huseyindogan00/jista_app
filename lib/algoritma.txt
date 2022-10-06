@@ -1,3 +1,8 @@
 1. MainView -> BaseView olacak
 2. BaseModel'den extends edilen modeller BaseView'ı kullanacak
 3. HomeView, CargoView gibi sayfalar BaseView'dan extends edilecek
+
+
+Bütün sayfaların isimlerini tanımlayacağım bir enuma at ENUM
+Baseview içinde tanımlanan ENUMları gözle
+Değişen enumlara göre body de sayfaları değiştir.
