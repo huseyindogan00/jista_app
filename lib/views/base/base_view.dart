@@ -28,14 +28,12 @@ class BaseView<T extends BaseModel> extends StatefulWidget {
   //verilen modelController üzerinden productmodelini dolduran callbackfunction
   Future<List<ProductModel>?> Function(T model)? onBuilderProductModel;
 
-  final Widget Function(
-          BuildContext context, T model, List<ProductModel>? productModel)
+  final Widget Function(BuildContext context, T model, List<ProductModel>? productModel)
       onBuilder; // callfunction ile body de kullanılacak fonksiyonu alıyoruz
   //final Function(T model)? onModelRead; // BaseViewı kullanan widgetın T tipindeki viewModeli geri döndürmek için
   T? viewModel; //BaseView widgetınının içinde T viewModelini kullanmak için
   String appTitle; // baseviewı kullanan widgetların appbar titleını alıyoruz
-  List<PagesList>?
-      pagesList; //bottom için indeksle gezeceğimiz sayfaları alıyoruz
+  List<PagesList>? pagesList; //bottom için indeksle gezeceğimiz sayfaları alıyoruz
 
   @override
   _BaseViewState<T> createState() => _BaseViewState<T>();
@@ -73,7 +71,7 @@ class _BaseViewState<T extends BaseModel> extends State<BaseView<T>> {
     }
   }
 
-  /* BASEVİEWE BİR DEĞER GÖNDERİP SCAFOLDUN OLUŞUP OLUŞMAYACAĞINI SORACAZ VE ONA GÖRE SCAFFOLDA VEYA DİREK SAYFAYI OLUŞTURCAZ*/
+  /* BASEVİEWE BİR DEĞER GÖNDERİP SCAfFOLDUN OLUŞUP OLUŞMAYACAĞINI SORACAZ VE ONA GÖRE SCAFFOLDA VEYA DİREK SAYFAYI OLUŞTURCAZ*/
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -87,7 +85,7 @@ class _BaseViewState<T extends BaseModel> extends State<BaseView<T>> {
               actions: [
                 TextButton(
                     onPressed: () {
-                      Get.toEnd(() => null);
+                      Navigator.popUntil(context, (route) => false);
                     },
                     child: const Text('Evet')),
                 TextButton(
@@ -104,9 +102,7 @@ class _BaseViewState<T extends BaseModel> extends State<BaseView<T>> {
       child: Scaffold(
           appBar: MyAppBar().getAppBar(widget.appTitle, context),
           drawerEnableOpenDragGesture: false,
-          drawer: NavigationDrawer(
-              imagePath: 'assets/images/person.png',
-              personModel: getPersonel()),
+          drawer: NavigationDrawer(imagePath: 'assets/images/person.png', personModel: getPersonel()),
           bottomNavigationBar: _buildBottomNavigatonBar(context),
           backgroundColor: Theme.of(context).backgroundColor,
           body: Obx(
@@ -114,12 +110,11 @@ class _BaseViewState<T extends BaseModel> extends State<BaseView<T>> {
                 ? Container(
                     alignment: Alignment.center,
                     color: Colors.grey,
-                    child: const CircularProgressIndicator(color: Colors.amber),
+                    child: const CircularProgressIndicator(color: Colors.red),
                   )
                 : viewModel!.selectedBottomIndex > 0
                     ? pages[viewModel!.selectedBottomIndex]
-                    : widget.onBuilder(
-                        context, viewModel!, ProductModel.productList),
+                    : widget.onBuilder(context, viewModel!, ProductModel.productList),
           )
 
           //Obx(() => pages[model.selectedBottomIndex]),
@@ -134,12 +129,12 @@ class _BaseViewState<T extends BaseModel> extends State<BaseView<T>> {
     const double selectedFontSize = 14;
     const double iconSize = 34;
     final backgroundColor = Theme.of(context).appBarTheme.backgroundColor;
-    final fixedColor = Colors.amber.shade600;
+    const fixedColor = Colors.blueAccent;
 
     return Obx(
       () => BottomNavigationBar(
         backgroundColor: backgroundColor,
-        elevation: 10,
+        elevation: 50,
         showUnselectedLabels: false,
         type: BottomNavigationBarType.fixed,
         currentIndex: viewModel!.selectedBottomIndex,
