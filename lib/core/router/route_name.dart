@@ -63,7 +63,7 @@ class RoutePage {
     ),
     GetPage(
       name: RouteName.homeView,
-      page: () => const HomeView(),
+      page: () => HomeView(),
       transition: _getTransition(),
       binding: BindingsBuilder(
         () => Get.lazyPut<HomeViewModel>(() => HomeViewModel()),

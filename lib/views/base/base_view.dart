@@ -62,6 +62,7 @@ class _BaseViewState<T extends BaseModel> extends State<BaseView<T>> {
   }
 
   getPersonel() {
+    
     return widget.personModel ??= viewModel?.getPersonHive();
   }
 

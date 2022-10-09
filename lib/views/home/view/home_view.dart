@@ -11,7 +11,14 @@ import 'package:jista/views/home/view_model/home_view_model.dart';
 import '../../../data/constant/const_assets_images.dart';
 
 class HomeView extends StatelessWidget {
-  const HomeView({super.key});
+  HomeView({super.key});
+
+  final double imageLeftValue = 0;
+  final double imageBottomValue = 0;
+  final double imageContainerHeight = 130;
+  final double imageContainerWidth = 150;
+  final double cardContainerHeight = 90;
+  final cardContainerMargin = const EdgeInsets.only(top: 50);
 
   @override
   Widget build(BuildContext context) {
@@ -19,16 +26,19 @@ class HomeView extends StatelessWidget {
       appTitle: AppbarTitle.homePageTitle,
       onBuilder: (context, model, productList) {
         return SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 25),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+          child: Wrap(
+            runSpacing: 30,
             children: [
-              _buildServiceWear(
-                  ConstAssetsImages.serviceWear, 'Hizmet Giyeceği'),
-              _buildTrainingClothing(
-                  ConstAssetsImages.trainingClothing, 'Eğitim Giyeceği'),
-              _buildStafTaskClothing(
-                  ConstAssetsImages.stafTaskClothing, 'Kadro Görev Kıyafeti'),
+              _buildServiceWear(ConstAssetsImages.trainingClothing, 'EĞİTİM GİYECEĞİ'),
+
+              _buildServiceWear(ConstAssetsImages.serviceWear, 'HİZMET GİYECEĞİ'),
+              _buildServiceWear(ConstAssetsImages.stafTaskClothing, 'KADRO GÖREV GİYECEĞİ'),
+
+              _buildServiceWear(ConstAssetsImages.coldClimateClothing, 'SOĞUK İKLİM'),
+
+              //_buildTrainingClothing(ConstAssetsImages.trainingClothing, 'Eğitim Giyeceği'),
+              //_buildStafTaskClothing(ConstAssetsImages.stafTaskClothing, 'Kadro Görev Kıyafeti'),
             ],
           ),
         );
@@ -37,7 +47,58 @@ class HomeView extends StatelessWidget {
   }
 
   Widget _buildServiceWear(AssetImage assetsImages, String title) {
-    return Padding(
+    return Stack(
+      children: [
+        Positioned(
+          child: Container(
+            width: double.infinity,
+            margin: cardContainerMargin,
+            height: cardContainerHeight,
+            decoration: BoxDecoration(
+              boxShadow: const [
+                BoxShadow(
+                  blurRadius: 10,
+                  color: Color.fromARGB(248, 80, 154, 156),
+                )
+              ],
+              color: Colors.blueGrey[600],
+              borderRadius: BorderRadius.circular(20),
+            ),
+          ),
+        ),
+        Positioned(
+          left: imageLeftValue,
+          bottom: imageBottomValue,
+          child: Container(
+            width: imageContainerWidth,
+            height: imageContainerHeight,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: assetsImages,
+                fit: BoxFit.fitHeight,
+              ),
+            ),
+          ),
+        ),
+        Positioned(
+          right: 0,
+          bottom: 17,
+          child: Container(
+            width: 230,
+            child: ListTile(
+              title: Text(
+                title,
+                style: ConstTextStyle.categoriTextStyle.copyWith(fontSize: 14, color: Colors.white),
+              ),
+              subtitle: Text('Buraya açıklama girilecek'),
+              trailing: Icon(Icons.arrow_forward_ios_outlined),
+            ),
+          ),
+        )
+      ],
+    );
+
+    /* Padding(
       padding: const EdgeInsets.only(bottom: 25),
       child: InkWell(
         child: Container(
@@ -78,7 +139,7 @@ class HomeView extends StatelessWidget {
           print('sayfadan dönüldü');
         },
       ),
-    );
+    ); */
   }
 
   Widget _buildTrainingClothing(AssetImage assetsImages, String title) {
@@ -132,9 +193,7 @@ class HomeView extends StatelessWidget {
           width: double.infinity,
           height: 200,
           decoration: BoxDecoration(
-            boxShadow: const <BoxShadow>[
-              BoxShadow(blurRadius: 2, color: Colors.blue, spreadRadius: 2)
-            ],
+            boxShadow: const <BoxShadow>[BoxShadow(blurRadius: 2, color: Colors.blue, spreadRadius: 2)],
             image: DecorationImage(image: assetsImages, fit: BoxFit.fill),
             borderRadius: const BorderRadius.all(
               Radius.circular(10),
