@@ -17,7 +17,7 @@ class OrderModelAdapter extends TypeAdapter<OrderModel> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return OrderModel(
-      id: fields[0] as dynamic,
+      id: fields[0] as String?,
       productModel: fields[1] as ProductModel,
       dateTime: fields[2] as DateTime,
     );
