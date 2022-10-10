@@ -10,10 +10,6 @@ class BaseModel extends GetxController {
   // BASEMODELİ extend eden widgetlardan sepet güncellenicek
   RxString appbarTitle = ''.obs;
 
-  setAppbarTitle(String title) {}
-  setBody() {}
-  setBottom() {}
-
   //**************************************************
   // SAYFA İŞLEM YAPTIĞINDA BEKLEME DURUMUNU BELİRTİR
   Rx<ViewState> _viewState = ViewState.Idle.obs;

@@ -15,11 +15,8 @@ import 'package:jista/views/products/view_model/product_view_model.dart';
 import 'package:jista/views/category_module/service_page/view_model/service_wear_view_model.dart';
 
 class ServiceWearView extends StatefulWidget {
-  PersonModel? personModel;
-
   ServiceWearView({
     Key? key,
-    this.personModel,
   }) : super(key: key);
 
   @override
@@ -30,47 +27,100 @@ class _ServiceWearViewState extends State<ServiceWearView> {
   String winter = 'KIŞ';
   String summer = 'YAZ';
   String all = 'HEPSİ';
+  List<ProductModel>? producList;
+
+  final controller = Get.put<ServiceWearViewModel>(ServiceWearViewModel());
 
   @override
   void initState() {
     super.initState();
   }
 
+  getProduct() async {
+    producList = await controller.getToProduct(TypeName.hizmetGiyecegi);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return BaseView<ServiceWearViewModel>(
-      appTitle: 'Hizmet Kıyafeti',
-      onBuilderProductModel: (model) async {
-        model.getToProduct(TypeName.hizmetGiyecegi);
-      },
-      onBuilder: (context, model, productList) {
-        return Column(
-          children: [
-            _buildRowFilter(model),
-            Expanded(child: ProductView(productList: productList!)),
-          ],
-        );
-      },
+    return Column(
+      children: [
+        _buildRowFilter(controller),
+        Expanded(
+          child: GridView.builder(
+            itemCount: producList?.length,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+            itemBuilder: (context, index) {
+              var product = producList![index];
+              return InkWell(
+                onTap: () {},
+                child: Container(
+                  color: Colors.grey,
+                  padding: const EdgeInsets.all(10),
+                  margin: const EdgeInsets.all(10),
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: Center(
+                          child: Text(
+                            product.type,
+                            style: const TextStyle(fontSize: 10),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(
+                          margin: const EdgeInsets.all(10),
+                          child: const Image(
+                            image: AssetImage('assets/images/jandarma_logo.jpg'),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      Expanded(child: Text(product.title, style: TextStyle(fontSize: 10))),
+                      Row(
+                        children: [
+                          Expanded(child: Text(product.point.toString(), style: TextStyle(fontSize: 10))),
+                          Container(
+                            width: 60,
+                            height: 20,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                /****************************************/
+                                // SEPETE EKLEME YAPILACAK
+                              },
+                              child: Text('EKLE', style: TextStyle(fontSize: 10, color: Colors.green.shade900)),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 
-  Row _buildRowFilter(ServiceWearViewModel model) {
+  Row _buildRowFilter(ServiceWearViewModel ctrl) {
     return Row(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        Text('Filtrele :'),
+        const Text('Filtrele :'),
         Obx(
           () {
             return InkWell(
               child: Chip(
                 label: Text(all),
                 elevation: 2,
-                backgroundColor: model.isAll.value ? Colors.amber.shade700 : Colors.white,
+                backgroundColor: ctrl.isAll.value ? Colors.amber.shade700 : Colors.white,
               ),
               onTap: () {
-                model.isAll.value = !model.isAll.value;
-                addFilterList(model, all);
+                ctrl.isAll.value = !ctrl.isAll.value;
+                addFilterList(ctrl, all);
               },
             );
           },
@@ -81,11 +131,11 @@ class _ServiceWearViewState extends State<ServiceWearView> {
               child: Chip(
                 label: Text(winter),
                 elevation: 2,
-                backgroundColor: model.isWinter.value ? Colors.amber.shade700 : Colors.white,
+                backgroundColor: ctrl.isWinter.value ? Colors.amber.shade700 : Colors.white,
               ),
               onTap: () {
-                model.isWinter.value = !model.isWinter.value;
-                addFilterList(model, winter);
+                ctrl.isWinter.value = !ctrl.isWinter.value;
+                addFilterList(ctrl, winter);
               },
             );
           },
@@ -96,11 +146,11 @@ class _ServiceWearViewState extends State<ServiceWearView> {
               child: Chip(
                 label: Text(summer),
                 elevation: 10,
-                backgroundColor: model.isSummer.value ? Colors.amber.shade700 : Colors.white,
+                backgroundColor: ctrl.isSummer.value ? Colors.amber.shade700 : Colors.white,
               ),
               onTap: () {
-                model.isSummer.value = !model.isSummer.value;
-                addFilterList(model, summer);
+                ctrl.isSummer.value = !ctrl.isSummer.value;
+                addFilterList(ctrl, summer);
               },
             );
           },
@@ -109,40 +159,40 @@ class _ServiceWearViewState extends State<ServiceWearView> {
     );
   }
 
-  void addFilterList(ServiceWearViewModel model, String filterName) {
+  void addFilterList(ServiceWearViewModel ctrl, String filterName) {
     switch (filterName) {
       case 'HEPSİ':
-        if (model.isSummer.value || model.isWinter.value) {
-          model.filterList.clear();
-          model.filterList.add(all);
-          model.isSummer.value = false;
-          model.isWinter.value = false;
+        if (ctrl.isSummer.value || ctrl.isWinter.value) {
+          ctrl.filterList.clear();
+          ctrl.filterList.add(all);
+          ctrl.isSummer.value = false;
+          ctrl.isWinter.value = false;
         } else {
-          model.isAll.value ? model.filterList.add(summer) : model.filterList.remove(all);
+          ctrl.isAll.value ? ctrl.filterList.add(summer) : ctrl.filterList.remove(all);
         }
 
         break;
       case 'KIŞ':
-        if (model.isAll.value) {
-          model.isAll.value = false;
+        if (ctrl.isAll.value) {
+          ctrl.isAll.value = false;
         }
-        model.isWinter.value
-            ? model.filterList.add(all)
-            : model.filterList.contains(all)
-                ? model.filterList.remove(all)
+        ctrl.isWinter.value
+            ? ctrl.filterList.add(all)
+            : ctrl.filterList.contains(all)
+                ? ctrl.filterList.remove(all)
                 : false;
 
         break;
       case 'YAZ':
-        model.isSummer.value
-            ? model.filterList.add(all)
-            : model.filterList.contains(all)
-                ? model.filterList.remove(all)
+        ctrl.isSummer.value
+            ? ctrl.filterList.add(all)
+            : ctrl.filterList.contains(all)
+                ? ctrl.filterList.remove(all)
                 : false;
 
         break;
     }
 
-    print(model.filterList.length);
+    print(ctrl.filterList.length);
   }
 }

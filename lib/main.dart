@@ -15,6 +15,7 @@ import 'package:jista/product/models/order/order_model.dart';
 import 'package:jista/product/models/person/person_model.dart';
 import 'package:jista/product/models/product/product_model.dart';
 
+import 'core/router/auto_router/router.gr.dart';
 import 'data/theme/theme_app.dart';
 
 // SİNGLE OBJECT OLUŞTURUCU
@@ -31,12 +32,17 @@ void main(List<String> args) async {
   setupLocator();
   easyloadingConfig();
 
-  runApp(GetMaterialApp(
-      initialRoute: RouteName.splashView,
-      getPages: RoutePage.pageList,
+  final _appRouter = AutoRouter();
+
+  runApp(
+    MaterialApp.router(
+      title: 'JİSTA',
       theme: ThemeApp.themeLight,
       darkTheme: ThemeApp.themeDark,
-      builder: EasyLoading.init()));
+      routerDelegate: _appRouter.delegate(),
+      routeInformationParser: _appRouter.defaultRouteParser(),
+    ),
+  );
 }
 
 // KULLANILACAK OBJELERİN SINGLE OLMASINI GARANTİ EDİYORUZ

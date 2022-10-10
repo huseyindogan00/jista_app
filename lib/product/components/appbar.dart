@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:auto_route/auto_route.dart';
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -6,41 +7,16 @@ import 'package:get/get.dart';
 import '../../views/base/base_model.dart';
 
 class MyAppBar {
-  AppBar getAppBar(BaseModel viewModel, BuildContext context) {
-    const iconBack = Icon(Icons.arrow_back_ios_new);
-    const iconMenuDrawer = Icon(Icons.menu_rounded);
-    bool navigatorState = Navigator.canPop(context);
-
+  static AppBar getAppBar(BaseModel viewModel) {
     return AppBar(
       centerTitle: true,
       title: Obx(
         () => Text(
           viewModel.appbarTitle.value,
-          style: const TextStyle(
-              fontFamily: 'Montserrat', fontWeight: FontWeight.w700),
+          style: const TextStyle(fontFamily: 'Montserrat', fontWeight: FontWeight.w700),
         ),
       ),
-      leading: navigatorState
-          ? Builder(
-              builder: (BuildContext context) {
-                return IconButton(
-                  icon: iconBack,
-                  onPressed: () {
-                    Get.back();
-                  },
-                );
-              },
-            )
-          : Builder(
-              builder: (BuildContext context) {
-                return IconButton(
-                  icon: iconMenuDrawer,
-                  onPressed: () {
-                    Scaffold.of(context).openDrawer();
-                  },
-                );
-              },
-            ),
+      leading: const AutoLeadingButton(),
       actions: [
         Badge(
           badgeColor: Colors.white,
@@ -52,8 +28,7 @@ class MyAppBar {
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
           ),
           child: InkWell(
-            child:
-                const Icon(Icons.add_shopping_cart_sharp, color: Colors.white),
+            child: const Icon(Icons.add_shopping_cart_sharp, color: Colors.white),
             onTap: () {
               print('Carta tıklandı');
             },

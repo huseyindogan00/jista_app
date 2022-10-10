@@ -1,7 +1,9 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jista/core/router/auto_router/router.gr.dart';
 import 'package:jista/core/router/route_name.dart';
 import 'package:jista/data/constant/appbar_text/appbar_title.dart';
 import 'package:jista/data/constant/font/const_text_style.dart';
@@ -22,34 +24,29 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BaseView<HomeViewModel>(
-      appTitle: AppbarTitle.homePageTitle,
-      onBuilder: (context, model, productList) {
-        return SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
-          child: Wrap(
-            runSpacing: 30,
-            children: [
-              GestureDetector(
-                child: _buildServiceWear(
-                    ConstAssetsImages.trainingClothing, 'EĞİTİM GİYECEĞİ'),
-              ),
-              GestureDetector(
-                child: _buildServiceWear(
-                    ConstAssetsImages.serviceWear, 'HİZMET GİYECEĞİ'),
-              ),
-              GestureDetector(
-                child: _buildServiceWear(
-                    ConstAssetsImages.stafTaskClothing, 'KADRO GÖREV GİYECEĞİ'),
-              ),
-              GestureDetector(
-                child: _buildServiceWear(
-                    ConstAssetsImages.coldClimateClothing, 'SOĞUK İKLİM'),
-              ),
-            ],
+    return SingleChildScrollView(
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+      child: Wrap(
+        runSpacing: 30,
+        children: [
+          GestureDetector(
+            onTap: () => context.router.push(const TrainingClothingRoute()),
+            child: _buildServiceWear(ConstAssetsImages.trainingClothing, 'EĞİTİM GİYECEĞİ'),
           ),
-        );
-      },
+          GestureDetector(
+            onTap: () => context.router.push(ServiceWearRoute()),
+            child: _buildServiceWear(ConstAssetsImages.serviceWear, 'HİZMET GİYECEĞİ'),
+          ),
+          GestureDetector(
+            onTap: () => context.router.push(const StaffTaskClothingRoute()),
+            child: _buildServiceWear(ConstAssetsImages.stafTaskClothing, 'KADRO GÖREV GİYECEĞİ'),
+          ),
+          /* GestureDetector(
+            onTap: () => context.router.push(const ()),
+            child: _buildServiceWear(ConstAssetsImages.coldClimateClothing, 'SOĞUK İKLİM'),
+          ), */
+        ],
+      ),
     );
   }
 
@@ -95,8 +92,7 @@ class HomeView extends StatelessWidget {
             child: ListTile(
               title: Text(
                 title,
-                style: ConstTextStyle.categoriTextStyle
-                    .copyWith(fontSize: 14, color: Colors.white),
+                style: ConstTextStyle.categoriTextStyle.copyWith(fontSize: 14, color: Colors.white),
               ),
               subtitle: Text('Buraya açıklama girilecek'),
               trailing: Icon(Icons.arrow_forward_ios_outlined),
@@ -201,9 +197,7 @@ class HomeView extends StatelessWidget {
           width: double.infinity,
           height: 200,
           decoration: BoxDecoration(
-            boxShadow: const <BoxShadow>[
-              BoxShadow(blurRadius: 2, color: Colors.blue, spreadRadius: 2)
-            ],
+            boxShadow: const <BoxShadow>[BoxShadow(blurRadius: 2, color: Colors.blue, spreadRadius: 2)],
             image: DecorationImage(image: assetsImages, fit: BoxFit.fill),
             borderRadius: const BorderRadius.all(
               Radius.circular(10),

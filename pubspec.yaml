@@ -55,8 +55,8 @@ dependencies:
   # SİNGLE OBJECT CREATE 
   get_it: ^7.2.0
 
-  # AÇILIŞ EKRANI EKLENTİSİ
-  flutter_native_splash: ^2.2.8
+  # BOTTOMBAR
+  salomon_bottom_bar: ^3.3.1
   
   # FLOATİNG ACTİON BUBLE
   badges: ^2.0.3

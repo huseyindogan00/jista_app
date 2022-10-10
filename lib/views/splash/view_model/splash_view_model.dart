@@ -1,5 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/route_manager.dart';
+import 'package:jista/core/router/auto_router/router.gr.dart';
 import 'package:jista/core/router/route_name.dart';
 import 'package:jista/core/services/service/firebase_store_service.dart';
 import 'package:jista/core/services/service/hive_service.dart';
@@ -18,14 +20,13 @@ class SplashViewModel {
         // userBox kutusunun daha önce olup olmadığını sorguluyoruz.
         // Varsa Home sayfasın yoksa Entry sayfasına yönlendirme yapıcaz.
         bool isPerson = box.isPersonBox();
-        await Future.delayed(Duration(seconds: 2));
+        await Future.delayed(const Duration(seconds: 2));
         if (isPerson) {
           final personModel = box.getBox('person');
-
-          Get.offAndToNamed(RouteName.homeView, arguments: personModel);
-          //Navigator.pushReplacementNamed(context, RouteName.homeView);
+          //Get.offAndToNamed(RouteName.homeView, arguments: personModel);
+          context.router.replace(BaseTabsRoute());
         } else {
-          Get.offAndToNamed(RouteName.entryView);
+          context.router.replace(EntryRoute());
           //Navigator.pushReplacementNamed(context, RouteName.entryView);
         }
       },
