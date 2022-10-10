@@ -30,15 +30,22 @@ class HomeView extends StatelessWidget {
           child: Wrap(
             runSpacing: 30,
             children: [
-              _buildServiceWear(ConstAssetsImages.trainingClothing, 'EĞİTİM GİYECEĞİ'),
-
-              _buildServiceWear(ConstAssetsImages.serviceWear, 'HİZMET GİYECEĞİ'),
-              _buildServiceWear(ConstAssetsImages.stafTaskClothing, 'KADRO GÖREV GİYECEĞİ'),
-
-              _buildServiceWear(ConstAssetsImages.coldClimateClothing, 'SOĞUK İKLİM'),
-
-              //_buildTrainingClothing(ConstAssetsImages.trainingClothing, 'Eğitim Giyeceği'),
-              //_buildStafTaskClothing(ConstAssetsImages.stafTaskClothing, 'Kadro Görev Kıyafeti'),
+              GestureDetector(
+                child: _buildServiceWear(
+                    ConstAssetsImages.trainingClothing, 'EĞİTİM GİYECEĞİ'),
+              ),
+              GestureDetector(
+                child: _buildServiceWear(
+                    ConstAssetsImages.serviceWear, 'HİZMET GİYECEĞİ'),
+              ),
+              GestureDetector(
+                child: _buildServiceWear(
+                    ConstAssetsImages.stafTaskClothing, 'KADRO GÖREV GİYECEĞİ'),
+              ),
+              GestureDetector(
+                child: _buildServiceWear(
+                    ConstAssetsImages.coldClimateClothing, 'SOĞUK İKLİM'),
+              ),
             ],
           ),
         );
@@ -88,7 +95,8 @@ class HomeView extends StatelessWidget {
             child: ListTile(
               title: Text(
                 title,
-                style: ConstTextStyle.categoriTextStyle.copyWith(fontSize: 14, color: Colors.white),
+                style: ConstTextStyle.categoriTextStyle
+                    .copyWith(fontSize: 14, color: Colors.white),
               ),
               subtitle: Text('Buraya açıklama girilecek'),
               trailing: Icon(Icons.arrow_forward_ios_outlined),
@@ -193,7 +201,9 @@ class HomeView extends StatelessWidget {
           width: double.infinity,
           height: 200,
           decoration: BoxDecoration(
-            boxShadow: const <BoxShadow>[BoxShadow(blurRadius: 2, color: Colors.blue, spreadRadius: 2)],
+            boxShadow: const <BoxShadow>[
+              BoxShadow(blurRadius: 2, color: Colors.blue, spreadRadius: 2)
+            ],
             image: DecorationImage(image: assetsImages, fit: BoxFit.fill),
             borderRadius: const BorderRadius.all(
               Radius.circular(10),

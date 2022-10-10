@@ -1,12 +1,10 @@
 import 'package:get/get.dart';
-import 'package:jista/views/base/base_model.dart';
 import 'package:jista/views/cargo/view/cargo_info_view.dart';
 import 'package:jista/views/cargo/view_model/cargo_info_view_model.dart';
 import 'package:jista/views/products/view/product_details_view.dart';
 import 'package:jista/views/products/view/product_view.dart';
 import 'package:jista/views/products/view_model/product_view_model.dart';
 import 'package:jista/views/category_module/service_page/view/service_wear_view.dart';
-import 'package:jista/views/base/base_view.dart';
 import 'package:jista/views/category_module/service_page/view_model/service_wear_view_model.dart';
 import 'package:jista/views/home/view_model/home_view_model.dart';
 import 'package:jista/views/period/view/ration_request_period_view.dart';
@@ -27,6 +25,7 @@ class RouteName {
   static const String homeView = '/homeView';
   static const String cargoInfoView = '/cargoInfoView';
   static const String requestPeriodView = '/requestPeriodView';
+  static const String sizeInfoView = '/sizeInfoView';
 
   //category pages
   static const String serviceWearView = '/serviceWearView';
