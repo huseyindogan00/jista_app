@@ -1,9 +1,6 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
-import 'package:jista/data/constant/font/const_text_style.dart';
-import 'package:jista/product/models/product/product_model.dart';
 
 class ProductDetailView extends StatelessWidget {
   ProductDetailView({@PathParam() required this.productModel, super.key});

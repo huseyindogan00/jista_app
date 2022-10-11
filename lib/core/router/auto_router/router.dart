@@ -38,7 +38,6 @@ import 'package:jista/views/splash/view/splash_view.dart';
               page: HomeView,
             ),
             AutoRoute(
-              name: 'ServiceWearView',
               page: EmptyRouterPage,
               children: [
                 AutoRoute(

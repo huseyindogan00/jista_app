@@ -80,7 +80,7 @@ class AutoRouter extends _i13.RootStackRouter {
       return _i13.MaterialPageX<dynamic>(
           routeData: routeData, child: _i8.HomeView(key: args.key));
     },
-    ServiceWearView.name: (routeData) {
+    EmptyRouterPage.name: (routeData) {
       return _i13.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i4.EmptyRouterPage());
     },
@@ -123,21 +123,21 @@ class AutoRouter extends _i13.RootStackRouter {
                   children: [
                     _i13.RouteConfig(HomeRoute.name,
                         path: '', parent: HomeRouter.name),
-                    _i13.RouteConfig(ServiceWearView.name,
+                    _i13.RouteConfig(EmptyRouterPage.name,
                         path: 'empty-router-page',
                         parent: HomeRouter.name,
                         children: [
                           _i13.RouteConfig(ServiceWearRoute.name,
-                              path: '', parent: ServiceWearView.name),
+                              path: '', parent: EmptyRouterPage.name),
                           _i13.RouteConfig(ProductDetailRoute.name,
                               path: ':productModel',
-                              parent: ServiceWearView.name),
+                              parent: EmptyRouterPage.name),
                           _i13.RouteConfig(TrainingClothingRoute.name,
                               path: 'trainingClothing',
-                              parent: ServiceWearView.name),
+                              parent: EmptyRouterPage.name),
                           _i13.RouteConfig(StaffTaskClothingRoute.name,
                               path: 'staffTaskClothing',
-                              parent: ServiceWearView.name)
+                              parent: EmptyRouterPage.name)
                         ])
                   ]),
               _i13.RouteConfig(CargoInfoRouter.name,
@@ -277,12 +277,12 @@ class HomeRouteArgs {
 
 /// generated route for
 /// [_i4.EmptyRouterPage]
-class ServiceWearView extends _i13.PageRouteInfo<void> {
-  const ServiceWearView({List<_i13.PageRouteInfo>? children})
-      : super(ServiceWearView.name,
+class EmptyRouterPage extends _i13.PageRouteInfo<void> {
+  const EmptyRouterPage({List<_i13.PageRouteInfo>? children})
+      : super(EmptyRouterPage.name,
             path: 'empty-router-page', initialChildren: children);
 
-  static const String name = 'ServiceWearView';
+  static const String name = 'EmptyRouterPage';
 }
 
 /// generated route for
