@@ -26,23 +26,32 @@ late AnimationController animationController;
 
 void main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
+  );
   await Firebase.initializeApp();
   await setupHive();
   setupLocator();
   easyloadingConfig();
 
+  runApp(MyAutoWidget());
+}
+
+class MyAutoWidget extends StatelessWidget {
+  MyAutoWidget({super.key});
   final _appRouter = AutoRouter();
 
-  runApp(
-    MaterialApp.router(
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp.router(
+      builder: EasyLoading.init(),
       title: 'JİSTA',
       theme: ThemeApp.themeLight,
       darkTheme: ThemeApp.themeDark,
       routerDelegate: _appRouter.delegate(),
       routeInformationParser: _appRouter.defaultRouteParser(),
-    ),
-  );
+    );
+  }
 }
 
 // KULLANILACAK OBJELERİN SINGLE OLMASINI GARANTİ EDİYORUZ

@@ -101,9 +101,9 @@ class AutoRouter extends _i13.RootStackRouter {
 
   @override
   List<_i13.RouteConfig> get routes => [
-        _i13.RouteConfig(SplashRouter.name, path: 'splashView'),
+        _i13.RouteConfig(SplashRouter.name, path: '/'),
         _i13.RouteConfig(EntryRoute.name, path: 'entryView'),
-        _i13.RouteConfig(BaseTabsRoute.name, path: '/', children: [
+        _i13.RouteConfig(BaseTabsRoute.name, path: 'baseTabsView', children: [
           _i13.RouteConfig(HomeRouter.name,
               path: '',
               parent: BaseTabsRoute.name,
@@ -135,7 +135,7 @@ class AutoRouter extends _i13.RootStackRouter {
 /// generated route for
 /// [_i1.SplashView]
 class SplashRouter extends _i13.PageRouteInfo<void> {
-  const SplashRouter() : super(SplashRouter.name, path: 'splashView');
+  const SplashRouter() : super(SplashRouter.name, path: '/');
 
   static const String name = 'SplashRouter';
 }
@@ -166,7 +166,7 @@ class EntryRouteArgs {
 class BaseTabsRoute extends _i13.PageRouteInfo<BaseTabsRouteArgs> {
   BaseTabsRoute({_i14.Key? key, List<_i13.PageRouteInfo>? children})
       : super(BaseTabsRoute.name,
-            path: '/',
+            path: 'baseTabsView',
             args: BaseTabsRouteArgs(key: key),
             initialChildren: children);
 

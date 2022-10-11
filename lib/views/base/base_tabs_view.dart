@@ -21,7 +21,8 @@ class BaseTabsView extends StatefulWidget {
   // baseviewı kullanan widget, personelmodele ihtiyaç duyduğunda
   PersonModel? personModel;
 
-  List<PagesList>? pagesList; //bottom için indeksle gezeceğimiz sayfaları alıyoruz
+  List<PagesList>?
+      pagesList; //bottom için indeksle gezeceğimiz sayfaları alıyoruz
 
   @override
   _BaseTabsViewState createState() => _BaseTabsViewState();
@@ -41,24 +42,24 @@ class _BaseTabsViewState extends State<BaseTabsView> {
   @override
   void initState() {
     super.initState();
-    viewModel = Get.find<BaseModel>();
     personModel = getPersonel();
   }
 
   getPersonel() {
-    return widget.personModel ??= viewModel?.getPersonHive();
+    return widget.personModel ??= controllerBaseTabs.getPersonHive();
   }
 
   /* BASEVİEWE BİR DEĞER GÖNDERİP SCAfFOLDUN OLUŞUP OLUŞMAYACAĞINI SORACAZ VE ONA GÖRE SCAFFOLDA VEYA DİREK SAYFAYI OLUŞTURCAZ*/
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      home: AutoTabsScaffold(
-        appBarBuilder: (context, tabsRouter) => MyAppBar.getAppBar(controllerBaseTabs),
-        drawer: NavigationDrawer(imagePath: 'assets/images/person.png', personModel: personModel!),
-        routes: pages,
-        bottomNavigationBuilder: (_, tabsRouter) => _buildBottomNavigatonBar(tabsRouter),
-      ),
+    return AutoTabsScaffold(
+      appBarBuilder: (context, tabsRouter) =>
+          MyAppBar.getAppBar(controllerBaseTabs),
+      drawer: NavigationDrawer(
+          imagePath: 'assets/images/person.png', personModel: personModel!),
+      routes: pages,
+      bottomNavigationBuilder: (_, tabsRouter) =>
+          _buildBottomNavigatonBar(tabsRouter),
     );
   }
 

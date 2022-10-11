@@ -12,10 +12,10 @@ import '../../../views/size/view/size_info.dart';
 class PagesList {
   static List<PageRouteInfo> get pagesList {
     return <PageRouteInfo>[
-      HomeRouter(),
-      CargoInfoRouter(), // 2
-      SizeInfoRouter(),
-      RationRequestPeriodRouter() // 3 / 6
+      const HomeRouter(),
+      const CargoInfoRouter(), // 2
+      const SizeInfoRouter(),
+      const RationRequestPeriodRouter() // 3 / 6
     ];
   }
 }

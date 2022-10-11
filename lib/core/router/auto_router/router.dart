@@ -19,7 +19,8 @@ import 'package:jista/views/splash/view/splash_view.dart';
   replaceInRouteName: 'View,Route',
   routes: <AutoRoute>[
     AutoRoute(
-      path: 'splashView',
+      path: '/',
+      initial: true,
       name: 'SplashRouter',
       page: SplashView,
     ),
@@ -27,13 +28,8 @@ import 'package:jista/views/splash/view/splash_view.dart';
       path: 'entryView',
       page: EntryView,
     ),
-    /* AutoRoute(
-      path: 'registerView',
-      name: 'RegisterView',
-      page: RegisterView,
-    ), */
     AutoRoute(
-      path: '/',
+      path: 'baseTabsView',
       page: BaseTabsView,
       children: [
         AutoRoute(

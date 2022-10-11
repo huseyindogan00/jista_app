@@ -11,10 +11,12 @@ class FirebaseStoreService implements IFirebaseStoreService {
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
   @override
-  Future<FirebaseServiceResultModel<List<ProductModel>>> getAllCategory(String collectionName) async {
+  Future<FirebaseServiceResultModel<List<ProductModel>>> getAllCategory(
+      String collectionName) async {
     List<ProductModel> productList = [];
     try {
-      QuerySnapshot<Map<String, dynamic>> snapshot = await _firebaseFirestore.collection(collectionName).get();
+      QuerySnapshot<Map<String, dynamic>> snapshot =
+          await _firebaseFirestore.collection(collectionName).get();
       if (snapshot.docs.isNotEmpty) {
         for (QueryDocumentSnapshot<Map<String, dynamic>> doc in snapshot.docs) {
           Map<String, dynamic> product = doc.data();
@@ -27,16 +29,20 @@ class FirebaseStoreService implements IFirebaseStoreService {
       }
     } on FirebaseException catch (_) {}
 
-    return FirebaseServiceResultModel(isSuccess: false, dataInfo: 'Product çekilemedi');
+    return FirebaseServiceResultModel(
+        isSuccess: false, dataInfo: 'Product çekilemedi');
   }
 
   @override
-  Future<FirebaseServiceResultModel<List<ProductModel>>> getToCategory(String type) async {
+  Future<FirebaseServiceResultModel<List<ProductModel>>> getToCategory(
+      String type) async {
     List<ProductModel> productList = [];
 
     try {
-      QuerySnapshot<Map<String, dynamic>> snapshot =
-          await _firebaseFirestore.collection('product').where('type', isEqualTo: type).get();
+      QuerySnapshot<Map<String, dynamic>> snapshot = await _firebaseFirestore
+          .collection('product')
+          .where('type', isEqualTo: type)
+          .get();
 
       if (snapshot.docs.isNotEmpty) {
         for (QueryDocumentSnapshot<Map<String, dynamic>> doc in snapshot.docs) {
@@ -46,10 +52,12 @@ class FirebaseStoreService implements IFirebaseStoreService {
           productList.add(productModel);
         }
         ProductModel.productList = productList;
-        return FirebaseServiceResultModel(isSuccess: true, data: productList, dataInfo: 'Başarılı');
+        return FirebaseServiceResultModel(
+            isSuccess: true, data: productList, dataInfo: 'Başarılı');
       }
     } on FirebaseException catch (_) {}
-    return FirebaseServiceResultModel(isSuccess: false, dataInfo: 'Product çekilemedi');
+    return FirebaseServiceResultModel(
+        isSuccess: false, dataInfo: 'Product çekilemedi');
   }
 
   @override
@@ -58,21 +66,31 @@ class FirebaseStoreService implements IFirebaseStoreService {
   }
 
   @override
-  Future<ServiceResult<PersonModel>> loginControl(PersonModel personModel) async {
+  Future<ServiceResult<PersonModel>> loginControl(
+      PersonModel personModel) async {
     //QuerySnapshot<Map<String, dynamic>> snapshot = await _firebaseFirestore.collection('person').where('pbik',isEqualTo: userModel.pbik).get();
     late PersonModel person;
+    String error = '';
 
     try {
       QuerySnapshot<Map<String, dynamic>> personSnapshot =
-          await _firebaseFirestore.collection('person').where('pbik', isEqualTo: personModel.pbik).get();
+          await _firebaseFirestore
+              .collection('person')
+              .where('pbik', isEqualTo: personModel.pbik)
+              .get();
 
       if (personSnapshot.docs.isNotEmpty) {
-        DocumentSnapshot<Map<String, dynamic>> personDoc = personSnapshot.docs.first;
+        DocumentSnapshot<Map<String, dynamic>> personDoc =
+            personSnapshot.docs.first;
         if (personDoc.exists) {
           Map<String, dynamic>? personMap = personDoc.data();
 
           QuerySnapshot<Map<String, dynamic>> addressSnapshot =
-              await _firebaseFirestore.collection('person').doc(personDoc.id).collection('address').get();
+              await _firebaseFirestore
+                  .collection('person')
+                  .doc(personDoc.id)
+                  .collection('address')
+                  .get();
 
           Map<String, dynamic> address = addressSnapshot.docs.first.data();
 
@@ -86,12 +104,14 @@ class FirebaseStoreService implements IFirebaseStoreService {
           }
         }
       }
-      return FirebaseServiceResultModel(isSuccess: false, dataInfo: 'Pbik numarası veritabınında yok');
-    } catch (_) {
-      print('FİRESERVİCE DE hata oluştu');
+      return FirebaseServiceResultModel(
+          isSuccess: false, dataInfo: 'Pbik numarası veritabınında yok');
+    } on FirebaseException catch (e) {
+      error = e.message.toString();
+      print(e.stackTrace);
     }
 
-    return FirebaseServiceResultModel(isSuccess: false, dataInfo: 'Giriş işlemi başarısız');
+    return FirebaseServiceResultModel(isSuccess: false, dataInfo: error);
 
     // PERSON LİSTESİNİ GETİRME
     /* QuerySnapshot<Map<String, dynamic>> snapshot = await _firebaseFirestore.collection('person').get();  
