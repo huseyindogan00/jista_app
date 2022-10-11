@@ -46,7 +46,7 @@ class _BaseTabsViewState extends State<BaseTabsView> {
   }
 
   getPersonel() {
-    return widget.personModel ??= viewModel?.getPersonHive();
+    return widget.personModel ??= controllerBaseTabs.getPersonHive();
   }
 
   /* BASEVİEWE BİR DEĞER GÖNDERİP SCAfFOLDUN OLUŞUP OLUŞMAYACAĞINI SORACAZ VE ONA GÖRE SCAFFOLDA VEYA DİREK SAYFAYI OLUŞTURCAZ*/

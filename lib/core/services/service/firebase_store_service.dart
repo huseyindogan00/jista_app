@@ -63,6 +63,7 @@ class FirebaseStoreService implements IFirebaseStoreService {
   Future<ServiceResult<PersonModel>> loginControl(PersonModel personModel) async {
     //QuerySnapshot<Map<String, dynamic>> snapshot = await _firebaseFirestore.collection('person').where('pbik',isEqualTo: userModel.pbik).get();
     late PersonModel person;
+    String error = '';
 
     try {
       QuerySnapshot<Map<String, dynamic>> personSnapshot =
@@ -89,11 +90,12 @@ class FirebaseStoreService implements IFirebaseStoreService {
         }
       }
       return FirebaseServiceResultModel(isSuccess: false, dataInfo: 'Pbik numarası veritabınında yok');
-    } catch (_) {
-      print('FİRESERVİCE DE hata oluştu');
+    } on FirebaseException catch (e) {
+      error = e.message.toString();
+      print(e.stackTrace);
     }
 
-    return FirebaseServiceResultModel(isSuccess: false, dataInfo: 'Giriş işlemi başarısız');
+    return FirebaseServiceResultModel(isSuccess: false, dataInfo: error);
 
     // PERSON LİSTESİNİ GETİRME
     /* QuerySnapshot<Map<String, dynamic>> snapshot = await _firebaseFirestore.collection('person').get();  

@@ -13,7 +13,7 @@ class ServiceWearViewModel extends BaseModel {
   Future<List<ProductModel>?> getToProduct(String productType) async {
     setViewState(ViewState.Busy);
     FirebaseServiceResultModel<List<ProductModel>> resultService =
-        await firebaseStoreService.getToCategory(TypeName.egitimGiyecegi);
+        await firebaseStoreService.getToCategory(productType);
     setViewState(ViewState.Idle);
     return resultService.data;
   }
