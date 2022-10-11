@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jista/core/enums/view_state.dart';
+import 'package:jista/product/models/product/product_model.dart';
 
 import '../../core/services/service/hive_service.dart';
 import '../../product/models/person/person_model.dart';
@@ -9,6 +10,7 @@ class BaseModel extends GetxController {
   //**************************************************
   // BASEMODELİ extend eden widgetlardan sepet güncellenicek
   RxString appbarTitle = ''.obs;
+  RxList<ProductModel> productList = <ProductModel>[].obs;
 
   //**************************************************
   // SAYFA İŞLEM YAPTIĞINDA BEKLEME DURUMUNU BELİRTİR

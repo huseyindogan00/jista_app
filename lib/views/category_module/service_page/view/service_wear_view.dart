@@ -1,16 +1,15 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: must_be_immutable
 
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/adapters.dart';
-
 import 'package:jista/core/enums/view_state.dart';
+import 'package:jista/core/router/auto_router/router.gr.dart';
 import 'package:jista/data/constant/type/type_name.dart';
 import 'package:jista/product/models/person/person_model.dart';
 import 'package:jista/product/models/product/product_model.dart';
-import 'package:jista/views/base/base_view.dart';
-import 'package:jista/views/products/view/product_view.dart';
 import 'package:jista/views/products/view_model/product_view_model.dart';
 import 'package:jista/views/category_module/service_page/view_model/service_wear_view_model.dart';
 
@@ -27,80 +26,91 @@ class _ServiceWearViewState extends State<ServiceWearView> {
   String winter = 'KIŞ';
   String summer = 'YAZ';
   String all = 'HEPSİ';
-  List<ProductModel>? producList;
+  //List<ProductModel>? producList;
 
   final controller = Get.put<ServiceWearViewModel>(ServiceWearViewModel());
 
   @override
   void initState() {
     super.initState();
+    getProduct();
   }
 
-  getProduct() async {
-    producList = await controller.getToProduct(TypeName.hizmetGiyecegi);
+  getProduct() {
+    controller.getToProduct(TypeName.hizmetGiyecegi).then((productList) {
+      controller.productList.value = productList!;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        _buildRowFilter(controller),
-        Expanded(
-          child: GridView.builder(
-            itemCount: producList?.length,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-            itemBuilder: (context, index) {
-              var product = producList![index];
-              return InkWell(
-                onTap: () {},
-                child: Container(
-                  color: Colors.grey,
-                  padding: const EdgeInsets.all(10),
-                  margin: const EdgeInsets.all(10),
-                  child: Column(
-                    children: [
-                      Expanded(
-                        child: Center(
-                          child: Text(
-                            product.type,
-                            style: const TextStyle(fontSize: 10),
-                          ),
-                        ),
-                      ),
-                      Expanded(
+    return Obx(
+      () => controller.viewState == ViewState.Busy
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : Column(
+              children: [
+                _buildRowFilter(controller),
+                Expanded(
+                  child: GridView.builder(
+                    itemCount: controller.productList.length,
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+                    itemBuilder: (context, index) {
+                      var product = controller.productList[index];
+                      return InkWell(
+                        onTap: () {
+                          context.router.push(ProductDetailRoute(productModel: product));
+                        },
                         child: Container(
+                          color: Colors.grey,
+                          padding: const EdgeInsets.all(10),
                           margin: const EdgeInsets.all(10),
-                          child: const Image(
-                            image: AssetImage('assets/images/jandarma_logo.jpg'),
-                            fit: BoxFit.cover,
+                          child: Column(
+                            children: [
+                              Expanded(
+                                child: Center(
+                                  child: Text(
+                                    product.type,
+                                    style: const TextStyle(fontSize: 10),
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: Container(
+                                  margin: const EdgeInsets.all(10),
+                                  child: const Image(
+                                    image: AssetImage('assets/images/jandarma_logo.jpg'),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                              Expanded(child: Text(product.title, style: const TextStyle(fontSize: 10))),
+                              Row(
+                                children: [
+                                  Expanded(child: Text(product.point.toString(), style: const TextStyle(fontSize: 10))),
+                                  Container(
+                                    width: 60,
+                                    height: 20,
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        /****************************************/
+                                        // SEPETE EKLEME YAPILACAK
+                                      },
+                                      child: Text('EKLE', style: TextStyle(fontSize: 10, color: Colors.green.shade900)),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
                         ),
-                      ),
-                      Expanded(child: Text(product.title, style: TextStyle(fontSize: 10))),
-                      Row(
-                        children: [
-                          Expanded(child: Text(product.point.toString(), style: TextStyle(fontSize: 10))),
-                          Container(
-                            width: 60,
-                            height: 20,
-                            child: ElevatedButton(
-                              onPressed: () {
-                                /****************************************/
-                                // SEPETE EKLEME YAPILACAK
-                              },
-                              child: Text('EKLE', style: TextStyle(fontSize: 10, color: Colors.green.shade900)),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
+                      );
+                    },
                   ),
                 ),
-              );
-            },
-          ),
-        ),
-      ],
+              ],
+            ),
     );
   }
 

@@ -7,7 +7,6 @@ import 'package:jista/core/router/auto_router/router.gr.dart';
 import 'package:jista/core/router/route_name.dart';
 import 'package:jista/data/constant/appbar_text/appbar_title.dart';
 import 'package:jista/data/constant/font/const_text_style.dart';
-import 'package:jista/views/base/base_view.dart';
 import 'package:jista/views/home/view_model/home_view_model.dart';
 
 import '../../../data/constant/const_assets_images.dart';

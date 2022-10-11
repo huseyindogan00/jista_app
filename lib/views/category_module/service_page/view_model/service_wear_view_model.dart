@@ -8,10 +8,8 @@ import 'package:jista/product/models/product/product_model.dart';
 import 'package:jista/views/base/base_model.dart';
 
 class ServiceWearViewModel extends BaseModel {
-  final FirebaseStoreService firebaseStoreService =
-      locator<FirebaseStoreService>();
+  final FirebaseStoreService firebaseStoreService = locator<FirebaseStoreService>();
 
-  //final productModel = Rxn<ProductModel>().obs;
   Future<List<ProductModel>?> getToProduct(String productType) async {
     setViewState(ViewState.Busy);
     FirebaseServiceResultModel<List<ProductModel>> resultService =

@@ -24,7 +24,9 @@ class SplashViewModel {
         if (isPerson) {
           final personModel = box.getBox('person');
           //Get.offAndToNamed(RouteName.homeView, arguments: personModel);
-          context.router.replace(BaseTabsRoute());
+          context.router.replace(BaseTabsRoute(
+            personModel: personModel,
+          ));
         } else {
           context.router.replace(EntryRoute());
           //Navigator.pushReplacementNamed(context, RouteName.entryView);

@@ -8,7 +8,7 @@ import '../../../product/models/person/person_model.dart';
 import '../../../product/models/product/product_model.dart';
 
 class FirebaseStoreService implements IFirebaseStoreService {
-  final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
+  static final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
   @override
   Future<FirebaseServiceResultModel<List<ProductModel>>> getAllCategory(String collectionName) async {
@@ -48,7 +48,9 @@ class FirebaseStoreService implements IFirebaseStoreService {
         ProductModel.productList = productList;
         return FirebaseServiceResultModel(isSuccess: true, data: productList, dataInfo: 'Başarılı');
       }
-    } on FirebaseException catch (_) {}
+    } on FirebaseException catch (e) {
+      return FirebaseServiceResultModel(isSuccess: false, dataInfo: e.message.toString());
+    }
     return FirebaseServiceResultModel(isSuccess: false, dataInfo: 'Product çekilemedi');
   }
 

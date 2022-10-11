@@ -2,7 +2,6 @@ import 'package:get/get.dart';
 import 'package:jista/views/cargo/view/cargo_info_view.dart';
 import 'package:jista/views/cargo/view_model/cargo_info_view_model.dart';
 import 'package:jista/views/products/view/product_details_view.dart';
-import 'package:jista/views/products/view/product_view.dart';
 import 'package:jista/views/products/view_model/product_view_model.dart';
 import 'package:jista/views/category_module/service_page/view/service_wear_view.dart';
 import 'package:jista/views/category_module/service_page/view_model/service_wear_view_model.dart';
@@ -76,22 +75,22 @@ class RoutePage {
         () => Get.lazyPut<ServiceWearViewModel>(() => ServiceWearViewModel()),
       ),
     ),
-    GetPage(
+    /* GetPage(
       name: RouteName.cartView,
       page: () => ProductView(),
       transition: _getTransition(),
       binding: BindingsBuilder(
         () => Get.lazyPut<ProductViewModel>(() => ProductViewModel()),
       ),
-    ),
-    GetPage(
+    ), */
+    /*  GetPage(
       name: RouteName.cartDetailsView,
-      page: () => ProductDetailView(),
+      page: () => ProductDetailView(productModel: null,),
       transition: _getTransition(),
       binding: BindingsBuilder(
         () => Get.lazyPut<ProductViewModel>(() => ProductViewModel()),
       ),
-    ),
+    ), */
     GetPage(
         name: RouteName.cargoInfoView,
         page: () => CargoInfoView(),

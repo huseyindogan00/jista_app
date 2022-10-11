@@ -2,6 +2,7 @@
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:jista/data/constant/appbar_text/appbar_title.dart';
 import 'package:jista/data/constant/pages/pages_list.dart';
@@ -14,14 +15,13 @@ import 'base_model.dart';
 
 class BaseTabsView extends StatefulWidget {
   BaseTabsView({
+    @PathParam() required this.personModel,
     Key? key,
     //this.onModelRead,
   }) : super(key: key);
 
   // baseviewı kullanan widget, personelmodele ihtiyaç duyduğunda
-  PersonModel? personModel;
-
-  List<PagesList>? pagesList; //bottom için indeksle gezeceğimiz sayfaları alıyoruz
+  dynamic personModel;
 
   @override
   _BaseTabsViewState createState() => _BaseTabsViewState();
@@ -34,7 +34,6 @@ class _BaseTabsViewState extends State<BaseTabsView> {
   final String sizeInfo = 'Ölçülerim';
   final String requestPeriod = 'İsteklerim';
 
-  List<PageRouteInfo> pages = PagesList.pagesList;
   BaseModel? viewModel;
   final controllerBaseTabs = Get.put<BaseModel>(BaseModel());
 
@@ -42,7 +41,8 @@ class _BaseTabsViewState extends State<BaseTabsView> {
   void initState() {
     super.initState();
     viewModel = Get.find<BaseModel>();
-    personModel = getPersonel();
+
+    personModel = (widget.personModel as PersonModel) ?? getPersonel();
   }
 
   getPersonel() {
@@ -52,13 +52,11 @@ class _BaseTabsViewState extends State<BaseTabsView> {
   /* BASEVİEWE BİR DEĞER GÖNDERİP SCAfFOLDUN OLUŞUP OLUŞMAYACAĞINI SORACAZ VE ONA GÖRE SCAFFOLDA VEYA DİREK SAYFAYI OLUŞTURCAZ*/
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      home: AutoTabsScaffold(
-        appBarBuilder: (context, tabsRouter) => MyAppBar.getAppBar(controllerBaseTabs),
-        drawer: NavigationDrawer(imagePath: 'assets/images/person.png', personModel: personModel!),
-        routes: pages,
-        bottomNavigationBuilder: (_, tabsRouter) => _buildBottomNavigatonBar(tabsRouter),
-      ),
+    return AutoTabsScaffold(
+      appBarBuilder: (context, tabsRouter) => MyAppBar.getAppBar(controllerBaseTabs),
+      drawer: NavigationDrawer(imagePath: 'assets/images/person.png', personModel: personModel!),
+      routes: PagesList.pagesList,
+      bottomNavigationBuilder: (_, tabsRouter) => _buildBottomNavigatonBar(tabsRouter),
     );
   }
 

@@ -26,6 +26,7 @@ late AnimationController animationController;
 
 void main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
+
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
   await Firebase.initializeApp();
   await setupHive();
@@ -36,6 +37,7 @@ void main(List<String> args) async {
 
   runApp(
     MaterialApp.router(
+      builder: EasyLoading.init(),
       title: 'JİSTA',
       theme: ThemeApp.themeLight,
       darkTheme: ThemeApp.themeDark,

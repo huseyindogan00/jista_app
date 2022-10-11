@@ -1,3 +1,4 @@
+import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -5,9 +6,9 @@ import 'package:jista/data/constant/font/const_text_style.dart';
 import 'package:jista/product/models/product/product_model.dart';
 
 class ProductDetailView extends StatelessWidget {
-  ProductDetailView({super.key});
+  ProductDetailView({@PathParam() required this.productModel, super.key});
 
-  ProductModel product = Get.arguments ?? [];
+  dynamic productModel;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,7 @@ class ProductDetailView extends StatelessWidget {
         centerTitle: true,
         systemOverlayStyle: const SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
         title: Text(
-          product.type,
+          productModel.type,
         ),
       ),
       body: Container(
@@ -25,16 +26,16 @@ class ProductDetailView extends StatelessWidget {
           textDirection: TextDirection.ltr,
           children: [
             Text(
-              product.title,
+              productModel.title,
             ),
             Container(
                 margin: const EdgeInsets.all(20),
                 child: const Image(image: AssetImage('assets/images/jandarma_logo.jpg'), fit: BoxFit.cover)),
-            Text(product.title),
+            Text(productModel.title),
             OverflowBar(
               children: [
                 Text(
-                  product.point.toString(),
+                  productModel.point.toString(),
                 ),
                 TextButton(
                   onPressed: () {
