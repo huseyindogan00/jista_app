@@ -10,13 +10,6 @@ class ProductDetailView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        systemOverlayStyle: const SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
-        title: Text(
-          productModel.type,
-        ),
-      ),
       body: Container(
         margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         child: Column(
@@ -27,7 +20,9 @@ class ProductDetailView extends StatelessWidget {
             ),
             Container(
                 margin: const EdgeInsets.all(20),
-                child: const Image(image: AssetImage('assets/images/jandarma_logo.jpg'), fit: BoxFit.cover)),
+                child: const Image(
+                    image: AssetImage('assets/images/jandarma_logo.jpg'),
+                    fit: BoxFit.cover)),
             Text(productModel.title),
             OverflowBar(
               children: [
@@ -41,7 +36,8 @@ class ProductDetailView extends StatelessWidget {
                   },
                   child: Text(
                     'EKLE',
-                    style: TextStyle(fontSize: 18, color: Colors.green.shade900),
+                    style:
+                        TextStyle(fontSize: 18, color: Colors.green.shade900),
                   ),
                 )
               ],

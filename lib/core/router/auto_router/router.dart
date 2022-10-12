@@ -33,14 +33,17 @@ import 'package:jista/views/splash/view/splash_view.dart';
           name: 'HomeRouter',
           page: EmptyRouterPage,
           children: [
-            AutoRoute(path: 'home', page: HomeView),
             AutoRoute(
-              name: 'ServiceWearRouter',
-              page: EmptyRouterPage,
-              children: [
-                AutoRoute(path: '', page: ServiceWearView),
-                AutoRoute(path: ':productModel', page: ProductDetailView),
-              ],
+              path: '',
+              page: HomeView,
+            ),
+            AutoRoute(
+              path: '',
+              page: ServiceWearView,
+            ),
+            AutoRoute(
+              path: ':productModel',
+              page: ProductDetailView,
             ),
             AutoRoute(page: TrainingClothingView),
             AutoRoute(page: StaffTaskClothingView),
@@ -96,4 +99,33 @@ class $AutoRouter {}
           page: SettingsPage,
         )
       ],
+
+
+      
+        AutoRoute(
+          path: '',
+          name: 'HomeRouter',
+          page: EmptyRouterPage,
+          children: [
+            AutoRoute(
+              path: '',
+              page: HomeView,
+            ),
+            AutoRoute(
+              path: '',
+              page: ServiceWearView,
+            ),
+            AutoRoute(
+              path: ':productModel',
+              page: ProductDetailView,
+            ),
+            AutoRoute(page: TrainingClothingView),
+            AutoRoute(page: StaffTaskClothingView),
+          ],
+        ),
+        AutoRoute(
+          path: 'cargoInfoView',
+          name: 'CargoInfoRouter',
+          page: CargoInfoView,
+        ),
     ) */

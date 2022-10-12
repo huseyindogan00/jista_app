@@ -55,12 +55,15 @@ class _ServiceWearViewState extends State<ServiceWearView> {
                 Expanded(
                   child: GridView.builder(
                     itemCount: controller.productList.length,
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2),
                     itemBuilder: (context, index) {
                       var product = controller.productList[index];
                       return InkWell(
                         onTap: () {
-                          context.router.push(ProductDetailRoute(productModel: product));
+                          context.router
+                              .push(ProductDetailRoute(productModel: product));
                         },
                         child: Container(
                           color: Colors.grey,
@@ -80,15 +83,21 @@ class _ServiceWearViewState extends State<ServiceWearView> {
                                 child: Container(
                                   margin: const EdgeInsets.all(10),
                                   child: const Image(
-                                    image: AssetImage('assets/images/jandarma_logo.jpg'),
+                                    image: AssetImage(
+                                        'assets/images/jandarma_logo.jpg'),
                                     fit: BoxFit.cover,
                                   ),
                                 ),
                               ),
-                              Expanded(child: Text(product.title, style: const TextStyle(fontSize: 10))),
+                              Expanded(
+                                  child: Text(product.title,
+                                      style: const TextStyle(fontSize: 10))),
                               Row(
                                 children: [
-                                  Expanded(child: Text(product.point.toString(), style: const TextStyle(fontSize: 10))),
+                                  Expanded(
+                                      child: Text(product.point.toString(),
+                                          style:
+                                              const TextStyle(fontSize: 10))),
                                   Container(
                                     width: 60,
                                     height: 20,
@@ -97,7 +106,10 @@ class _ServiceWearViewState extends State<ServiceWearView> {
                                         /****************************************/
                                         // SEPETE EKLEME YAPILACAK
                                       },
-                                      child: Text('EKLE', style: TextStyle(fontSize: 10, color: Colors.green.shade900)),
+                                      child: Text('EKLE',
+                                          style: TextStyle(
+                                              fontSize: 10,
+                                              color: Colors.green.shade900)),
                                     ),
                                   ),
                                 ],
@@ -126,7 +138,8 @@ class _ServiceWearViewState extends State<ServiceWearView> {
               child: Chip(
                 label: Text(all),
                 elevation: 2,
-                backgroundColor: ctrl.isAll.value ? Colors.amber.shade700 : Colors.white,
+                backgroundColor:
+                    ctrl.isAll.value ? Colors.amber.shade700 : Colors.white,
               ),
               onTap: () {
                 ctrl.isAll.value = !ctrl.isAll.value;
@@ -141,7 +154,8 @@ class _ServiceWearViewState extends State<ServiceWearView> {
               child: Chip(
                 label: Text(winter),
                 elevation: 2,
-                backgroundColor: ctrl.isWinter.value ? Colors.amber.shade700 : Colors.white,
+                backgroundColor:
+                    ctrl.isWinter.value ? Colors.amber.shade700 : Colors.white,
               ),
               onTap: () {
                 ctrl.isWinter.value = !ctrl.isWinter.value;
@@ -156,7 +170,8 @@ class _ServiceWearViewState extends State<ServiceWearView> {
               child: Chip(
                 label: Text(summer),
                 elevation: 10,
-                backgroundColor: ctrl.isSummer.value ? Colors.amber.shade700 : Colors.white,
+                backgroundColor:
+                    ctrl.isSummer.value ? Colors.amber.shade700 : Colors.white,
               ),
               onTap: () {
                 ctrl.isSummer.value = !ctrl.isSummer.value;
@@ -178,7 +193,9 @@ class _ServiceWearViewState extends State<ServiceWearView> {
           ctrl.isSummer.value = false;
           ctrl.isWinter.value = false;
         } else {
-          ctrl.isAll.value ? ctrl.filterList.add(summer) : ctrl.filterList.remove(all);
+          ctrl.isAll.value
+              ? ctrl.filterList.add(summer)
+              : ctrl.filterList.remove(all);
         }
 
         break;
