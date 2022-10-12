@@ -9,7 +9,7 @@ class RationRequestPeriodView extends StatelessWidget {
     setAppbarTitle();
   }
 
-  static late final controller;
+  late final controller;
 
   @override
   Widget build(BuildContext context) {

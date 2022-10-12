@@ -16,7 +16,7 @@ class HomeView extends StatelessWidget {
     AppbarBaseTabsTitle.setAppTitle(0, controller);
   }
 
-  static late final controller;
+  late final controller;
 
   final double imageLeftValue = 0;
   final double imageBottomValue = 0;

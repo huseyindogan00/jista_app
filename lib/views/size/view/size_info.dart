@@ -10,7 +10,7 @@ class SizeInfoView extends StatelessWidget {
     AppbarBaseTabsTitle.setAppTitle(2, controller);
   }
 
-  static late final controller;
+  late final controller;
 
   @override
   Widget build(BuildContext context) {

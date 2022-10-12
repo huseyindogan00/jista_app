@@ -11,7 +11,7 @@ class CargoInfoView extends StatelessWidget {
     AppbarBaseTabsTitle.setAppTitle(1, controller);
   }
 
-  static late final controller;
+  late final controller;
   InternetConnectionControl connection = InternetConnectionControl();
 
   @override
