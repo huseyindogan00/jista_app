@@ -23,7 +23,10 @@ class HiveService {
     await Hive.deleteBoxFromDisk(boxName);
   }
 
-  bool isPersonBox() {
+  Future<bool> isPersonBox() async {
+    if (!Hive.isBoxOpen('personBox')) {
+      await Hive.openBox<PersonModel>('personBox');
+    }
     Box<PersonModel> personBox = Hive.box<PersonModel>('personBox');
     PersonModel? personModel = personBox.get('person');
 

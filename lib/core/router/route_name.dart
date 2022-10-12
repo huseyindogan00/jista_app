@@ -99,7 +99,7 @@ class RoutePage {
         )),
     GetPage(
       name: RouteName.requestPeriodView,
-      page: () => const RationRequestPeriodView(),
+      page: () => RationRequestPeriodView(),
       transition: _getTransition(),
     ),
     GetPage(

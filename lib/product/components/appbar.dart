@@ -7,12 +7,12 @@ import 'package:get/get.dart';
 import '../../views/base/base_model.dart';
 
 class MyAppBar {
-  static AppBar getAppBar(BaseModel viewModel) {
+  static AppBar getAppBar(BaseModel controllerBaseTabs) {
     return AppBar(
       centerTitle: true,
       title: Obx(
         () => Text(
-          viewModel.appbarTitle.value,
+          controllerBaseTabs.appbarTitle.value,
           style: const TextStyle(fontFamily: 'Montserrat', fontWeight: FontWeight.w700),
         ),
       ),
@@ -38,16 +38,4 @@ class MyAppBar {
       ],
     );
   }
-
-  // APPBAR DA LEADİNGİ KAPATMAM GEREK CATEGORY SAYFASINDAN GİTTİĞİMDA APPBARDA DRAWER YERİNE GERİ BUTONU OLARAK LEADİNGE ICON ATAMAM VE O ICON İLE GERİ DÖNÜŞÜ SAĞLAMALIYIM.
-  /* static Widget? _buildLeading() {
-    return Obx(
-      () => _controller.isAppbarLeading.value
-          ? InkWell(
-              onTap: () => _controller.selectIndex.value = 0,
-              child: const Icon(Icons.arrow_back_ios_outlined),
-            )
-          : null,
-    );
-  } */
 }

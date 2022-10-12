@@ -7,6 +7,11 @@ import '../../core/services/service/hive_service.dart';
 import '../../product/models/person/person_model.dart';
 
 class BaseModel extends GetxController {
+//**************************************************
+  // Çıkışın yapılıp yapılmadığını kontrol eder, duruma göre kullanıcı verilerini
+  // silmek için kullanılır
+  RxBool isExit = false.obs;
+
   //**************************************************
   // BASEMODELİ extend eden widgetlardan sepet güncellenicek
   RxString appbarTitle = ''.obs;

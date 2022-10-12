@@ -4,15 +4,19 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jista/core/router/auto_router/router.gr.dart';
-import 'package:jista/core/router/route_name.dart';
-import 'package:jista/data/constant/appbar_text/appbar_title.dart';
 import 'package:jista/data/constant/font/const_text_style.dart';
-import 'package:jista/views/home/view_model/home_view_model.dart';
 
+import '../../../core/utility/appbarController/appbar_base_tabs_title.dart';
 import '../../../data/constant/const_assets_images.dart';
+import '../../base/base_model.dart';
 
 class HomeView extends StatelessWidget {
-  HomeView({super.key});
+  HomeView({super.key}) {
+    controller = Get.put(BaseModel());
+    AppbarBaseTabsTitle.setAppTitle(0, controller);
+  }
+
+  static late final controller;
 
   final double imageLeftValue = 0;
   final double imageBottomValue = 0;

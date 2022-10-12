@@ -1,5 +1,7 @@
 // ignore_for_file: must_be_immutable
 
+import 'dart:io';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -50,7 +52,8 @@ class EntryView extends StatelessWidget {
                 const SizedBox(height: 30),
                 buildLoginButton(context),
                 const SizedBox(height: 20),
-                buildRegisterButton(context),
+                buildExitButton(context), // KAYIT EKLEME YAPILABİLİR
+                //buildRegisterButton(context),
               ],
             ),
           ),
@@ -145,14 +148,31 @@ class EntryView extends StatelessWidget {
     );
   }
 
-  buildRegisterButton(BuildContext context) {
+  Widget buildExitButton(BuildContext context) {
     return SizedBox(
       width: MediaQuery.of(context).size.width,
       height: 50,
       child: ElevatedButton(
           style: ConstButtonStyle.commonButtonStyle(context),
-          onPressed: () async {
-            await Navigator.pushNamed(context, RouteName.registerView);
+          onPressed: () {
+            exit(1);
+            //_buildTextFieldClear();
+          },
+          child: Text(
+            'Çıkış',
+            style: TextStyle(fontSize: ConstFontSize.textButtonFS),
+          )),
+    );
+  }
+
+  /* Widget buildRegisterButton(BuildContext context) {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width,
+      height: 50,
+      child: ElevatedButton(
+          style: ConstButtonStyle.commonButtonStyle(context),
+          onPressed: () {
+            context.router.push(RegisterRoute());
             _buildTextFieldClear();
           },
           child: Text(
@@ -160,7 +180,7 @@ class EntryView extends StatelessWidget {
             style: TextStyle(fontSize: ConstFontSize.textButtonFS),
           )),
     );
-  }
+  } */
 
   void _buildTextFieldClear() {
     _epostaController.clear();

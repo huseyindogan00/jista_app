@@ -9,6 +9,7 @@ import 'package:jista/views/entry/view/entry_view.dart';
 import 'package:jista/views/home/view/home_view.dart';
 import 'package:jista/views/period/view/ration_request_period_view.dart';
 import 'package:jista/views/products/view/product_details_view.dart';
+import 'package:jista/views/register/view/register_view.dart';
 import 'package:jista/views/size/view/size_info.dart';
 import 'package:jista/views/splash/view/splash_view.dart';
 
@@ -16,13 +17,17 @@ import 'package:jista/views/splash/view/splash_view.dart';
   replaceInRouteName: 'View,Route',
   routes: <AutoRoute>[
     AutoRoute(
-      path: '/',
+      initial: true,
       name: 'SplashRouter',
       page: SplashView,
     ),
     AutoRoute(
       path: 'entryView',
       page: EntryView,
+    ),
+    AutoRoute(
+      path: 'registery',
+      page: RegisterView,
     ),
     AutoRoute(
       path: '/:personModel',
@@ -34,19 +39,25 @@ import 'package:jista/views/splash/view/splash_view.dart';
           page: EmptyRouterPage,
           children: [
             AutoRoute(
-              path: '',
+              initial: true,
               page: HomeView,
             ),
             AutoRoute(
-              path: '',
+              path: 'serviceWear',
               page: ServiceWearView,
+            ),
+            AutoRoute(
+              path: 'trainingClothing',
+              page: TrainingClothingView,
+            ),
+            AutoRoute(
+              path: 'staffTaskClothing',
+              page: StaffTaskClothingView,
             ),
             AutoRoute(
               path: ':productModel',
               page: ProductDetailView,
             ),
-            AutoRoute(page: TrainingClothingView),
-            AutoRoute(page: StaffTaskClothingView),
           ],
         ),
         AutoRoute(
@@ -72,33 +83,26 @@ class $AutoRouter {}
 
 
 /* AutoRoute(
-      path: '/',
-      page: HomePage,
-      children: [
-        AutoRoute(
-          path: 'posts',
-          name: 'PostsRouter',
+          path: '',
+          name: 'HomeRouter',
           page: EmptyRouterPage,
           children: [
-            AutoRoute(path: '', page: PostsPage),
-            AutoRoute(path: ':postId', page: SinglePostPage),
+            AutoRoute(
+              path: '',
+              page: HomeView,
+            ),
+            AutoRoute(
+              path: '',
+              page: ServiceWearView,
+            ),
+            AutoRoute(
+              path: ':productModel',
+              page: ProductDetailView,
+            ),
+            AutoRoute(page: TrainingClothingView),
+            AutoRoute(page: StaffTaskClothingView),
           ],
         ),
-        AutoRoute(
-          path: 'users',
-          name: 'UsersRouter',
-          page: EmptyRouterPage,
-          children: [
-            AutoRoute(path: '', page: UsersPage),
-            AutoRoute(path: ':userId', page: UserProfilePage),
-          ],
-        ),
-        AutoRoute(
-          path: 'settings',
-          name: 'SettingsRouter',
-          page: SettingsPage,
-        )
-      ],
 
 
       

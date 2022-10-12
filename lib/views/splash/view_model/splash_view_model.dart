@@ -21,11 +21,11 @@ class SplashViewModel {
       (timeStamp) async {
         // userBox kutusunun daha önce olup olmadığını sorguluyoruz.
         // Varsa Home sayfasın yoksa Entry sayfasına yönlendirme yapıcaz.
-        bool isPerson = box.isPersonBox();
+        bool isPerson = await box.isPersonBox();
+
         await Future.delayed(const Duration(seconds: 2));
         if (isPerson) {
-          final ServiceResult result =
-              FirebaseServiceResultModel(isSuccess: true);
+          final ServiceResult result = FirebaseServiceResultModel(isSuccess: true);
           result.data = box.getBox('person');
           context.router.replace(BaseTabsRoute(
             personModel: result,

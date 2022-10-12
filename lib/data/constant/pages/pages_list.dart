@@ -14,8 +14,8 @@ class PagesList {
     return <PageRouteInfo>[
       const HomeRouter(),
       CargoInfoRouter(),
-      const SizeInfoRouter(),
-      const RationRequestPeriodRouter()
+      SizeInfoRouter(),
+      RationRequestPeriodRouter(),
     ];
   }
 }

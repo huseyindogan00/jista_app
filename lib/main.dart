@@ -16,7 +16,6 @@ import 'package:jista/product/models/person/person_model.dart';
 import 'package:jista/product/models/product/product_model.dart';
 
 import 'core/router/auto_router/router.gr.dart';
-import 'data/theme/theme_app.dart';
 
 // SİNGLE OBJECT OLUŞTURUCU
 GetIt locator = GetIt.instance;
@@ -37,8 +36,6 @@ void main(List<String> args) async {
   runApp(MaterialApp.router(
     builder: EasyLoading.init(),
     title: 'JİSTA',
-    theme: ThemeApp.themeLight,
-    darkTheme: ThemeApp.themeDark,
     routerDelegate: _appRouter.delegate(),
     routeInformationParser: _appRouter.defaultRouteParser(),
   ));

@@ -1,17 +1,27 @@
 // ignore_for_file: must_be_immutable
 
-import 'dart:io';
-
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jista/core/router/auto_router/router.gr.dart';
+import 'package:jista/core/services/service/hive_service.dart';
 import 'package:jista/data/constant/style/const_button_style.dart';
 import 'package:jista/data/theme/theme_app.dart';
 import 'package:jista/product/models/person/person_model.dart';
+import 'package:jista/views/base/base_model.dart';
+
+BaseModel? controller;
 
 class NavigationDrawer extends StatelessWidget {
-  NavigationDrawer({Key? key, required this.imagePath, required this.personModel}) : super(key: key);
+  NavigationDrawer({Key? key, required this.imagePath, required this.personModel}) : super(key: key) {
+    initializer();
+  }
   String imagePath;
   PersonModel personModel;
+
+  void initializer() {
+    controller = Get.put(BaseModel());
+  }
 
   @override
   Widget build(BuildContext context) => Drawer(
@@ -64,25 +74,9 @@ Widget buildMenuItem(BuildContext context) {
   return Container(
     padding: const EdgeInsets.all(20),
     child: Wrap(
-      runSpacing: 10,
+      runSpacing: 15,
       spacing: 10,
       children: [
-        /* ListTile(
-          leading: const Icon(Icons.square_foot_outlined),
-          title: Text(
-            'Ölçü Bilgileri',
-            style: textStyle,
-          ),
-          onTap: () {},
-        ), */
-        /* ListTile(
-          leading: const Icon(Icons.local_shipping_outlined),
-          title: Text(
-            'Kargo Adresim',
-            style: textStyle,
-          ),
-          onTap: () {},
-        ), */
         ListTile(
           leading: const Icon(Icons.supervised_user_circle),
           title: Text(
@@ -91,14 +85,6 @@ Widget buildMenuItem(BuildContext context) {
           ),
           onTap: () {},
         ),
-        /* ListTile(
-          leading: const Icon(Icons.calendar_month_outlined),
-          title: Text(
-            'İstihkak İstek Dönemi',
-            style: textStyle,
-          ),
-          onTap: () {},
-        ), */
         ListTile(
           leading: const Icon(Icons.boy_outlined),
           title: Text(
@@ -121,11 +107,15 @@ Widget buildMenuItem(BuildContext context) {
           color: Colors.grey,
         ),
         Center(
-            child: ElevatedButton(
-          onPressed: () => exit(0),
-          child: const Text('Oturumu Kapat'),
-          style: ConstButtonStyle.commonButtonStyle(context),
-        )),
+          child: ElevatedButton(
+            onPressed: () {
+              HiveService().deleteUserBox('personBox');
+              context.router.replace(EntryRoute());
+            },
+            style: ConstButtonStyle.commonButtonStyle(context),
+            child: const Text('Çıkış'),
+          ),
+        ),
       ],
     ),
   );
@@ -144,10 +134,10 @@ Row selectThemeMode(ThemeApp theme) {
             theme.isDarkModeApp.value = value;
             if (value) {
               Get.changeThemeMode(ThemeMode.dark);
-              Get.back();
+              //Get.back();
             } else {
               Get.changeThemeMode(ThemeMode.light);
-              Get.back();
+              //Get.back();
             }
           },
         ),

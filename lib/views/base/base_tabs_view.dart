@@ -5,12 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:jista/core/services/service_result/base/service_result.dart';
+import 'package:jista/core/utility/appbarController/appbar_base_tabs_title.dart';
 import 'package:jista/data/constant/appbar_text/appbar_title.dart';
 import 'package:jista/data/constant/pages/pages_list.dart';
 import 'package:jista/product/components/appbar.dart';
 import 'package:jista/product/models/person/person_model.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
+import '../../data/theme/theme_app.dart';
 import '../../product/widget/navigation_drawer_widget.dart';
 import 'base_model.dart';
 
@@ -30,7 +32,7 @@ class BaseTabsView extends StatefulWidget {
 class _BaseTabsViewState extends State<BaseTabsView> {
   PersonModel? personModel;
   final String home = 'Anasayfa';
-  final String cargoInfo = 'Kargo';
+  final String cargoInfo = 'Kargo Bilgileri';
   final String sizeInfo = 'Ölçülerim';
   final String requestPeriod = 'İsteklerim';
 
@@ -42,8 +44,7 @@ class _BaseTabsViewState extends State<BaseTabsView> {
     super.initState();
     viewModel = Get.find<BaseModel>();
 
-    personModel = (widget.personModel as ServiceResult).data as PersonModel ??
-        getPersonel();
+    personModel = (widget.personModel as ServiceResult).data as PersonModel ?? getPersonel();
   }
 
   getPersonel() {
@@ -53,14 +54,15 @@ class _BaseTabsViewState extends State<BaseTabsView> {
   /* BASEVİEWE BİR DEĞER GÖNDERİP SCAfFOLDUN OLUŞUP OLUŞMAYACAĞINI SORACAZ VE ONA GÖRE SCAFFOLDA VEYA DİREK SAYFAYI OLUŞTURCAZ*/
   @override
   Widget build(BuildContext context) {
-    return AutoTabsScaffold(
-      appBarBuilder: (context, tabsRouter) =>
-          MyAppBar.getAppBar(controllerBaseTabs),
-      drawer: NavigationDrawer(
-          imagePath: 'assets/images/person.png', personModel: personModel!),
-      routes: PagesList.pagesList,
-      bottomNavigationBuilder: (_, tabsRouter) =>
-          _buildBottomNavigatonBar(tabsRouter),
+    return GetMaterialApp(
+      theme: ThemeApp.themeLight,
+      darkTheme: ThemeApp.themeDark,
+      home: AutoTabsScaffold(
+        appBarBuilder: (context, tabsRouter) => MyAppBar.getAppBar(controllerBaseTabs),
+        drawer: NavigationDrawer(imagePath: 'assets/images/person.png', personModel: personModel!),
+        routes: PagesList.pagesList,
+        bottomNavigationBuilder: (_, tabsRouter) => _buildBottomNavigatonBar(tabsRouter),
+      ),
     );
   }
 
@@ -69,7 +71,6 @@ class _BaseTabsViewState extends State<BaseTabsView> {
       currentIndex: tabsRouter.activeIndex,
       onTap: (index) {
         tabsRouter.setActiveIndex(index);
-        setAppTitle(index);
       },
       items: <SalomonBottomBarItem>[
         SalomonBottomBarItem(
@@ -90,23 +91,5 @@ class _BaseTabsViewState extends State<BaseTabsView> {
         ),
       ],
     );
-  }
-
-  void setAppTitle(int index) {
-    switch (index) {
-      case 0:
-        controllerBaseTabs.appbarTitle.value = AppbarTitle.homePageTitle;
-        break;
-      case 1:
-        controllerBaseTabs.appbarTitle.value = AppbarTitle.cargoPageTitle;
-        break;
-      case 2:
-        controllerBaseTabs.appbarTitle.value = AppbarTitle.sizeInfoPageTitle;
-        break;
-      case 3:
-        controllerBaseTabs.appbarTitle.value = AppbarTitle.periodPageTitle;
-        break;
-      default:
-    }
   }
 }
