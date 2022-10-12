@@ -18,15 +18,15 @@ import 'package:flutter/material.dart' as _i14;
 import '../../../views/base/base_tabs_view.dart' as _i3;
 import '../../../views/cargo/view/cargo_info_view.dart' as _i5;
 import '../../../views/category_module/service_page/view/service_wear_view.dart'
-    as _i9;
-import '../../../views/category_module/staff_page/view/staff_task_clothing_view.dart'
-    as _i12;
-import '../../../views/category_module/training_page/view/training_clothing_view.dart'
     as _i11;
+import '../../../views/category_module/staff_page/view/staff_task_clothing_view.dart'
+    as _i10;
+import '../../../views/category_module/training_page/view/training_clothing_view.dart'
+    as _i9;
 import '../../../views/entry/view/entry_view.dart' as _i2;
 import '../../../views/home/view/home_view.dart' as _i8;
 import '../../../views/period/view/ration_request_period_view.dart' as _i6;
-import '../../../views/products/view/product_details_view.dart' as _i10;
+import '../../../views/products/view/product_details_view.dart' as _i12;
 import '../../../views/size/view/size_info.dart' as _i7;
 import '../../../views/splash/view/splash_view.dart' as _i1;
 
@@ -80,15 +80,23 @@ class AutoRouter extends _i13.RootStackRouter {
       return _i13.MaterialPageX<dynamic>(
           routeData: routeData, child: _i8.HomeView(key: args.key));
     },
-    EmptyRouterPage.name: (routeData) {
+    ServiceWearRouter.name: (routeData) {
       return _i13.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i4.EmptyRouterPage());
+    },
+    TrainingClothingRoute.name: (routeData) {
+      return _i13.MaterialPageX<dynamic>(
+          routeData: routeData, child: _i9.TrainingClothingView());
+    },
+    StaffTaskClothingRoute.name: (routeData) {
+      return _i13.MaterialPageX<dynamic>(
+          routeData: routeData, child: _i10.StaffTaskClothingView());
     },
     ServiceWearRoute.name: (routeData) {
       final args = routeData.argsAs<ServiceWearRouteArgs>(
           orElse: () => const ServiceWearRouteArgs());
       return _i13.MaterialPageX<dynamic>(
-          routeData: routeData, child: _i9.ServiceWearView(key: args.key));
+          routeData: routeData, child: _i11.ServiceWearView(key: args.key));
     },
     ProductDetailRoute.name: (routeData) {
       final pathParams = routeData.inheritedPathParams;
@@ -97,16 +105,8 @@ class AutoRouter extends _i13.RootStackRouter {
               productModel: pathParams.get('productModel')));
       return _i13.MaterialPageX<dynamic>(
           routeData: routeData,
-          child: _i10.ProductDetailView(
+          child: _i12.ProductDetailView(
               productModel: args.productModel, key: args.key));
-    },
-    TrainingClothingRoute.name: (routeData) {
-      return _i13.MaterialPageX<dynamic>(
-          routeData: routeData, child: _i11.TrainingClothingView());
-    },
-    StaffTaskClothingRoute.name: (routeData) {
-      return _i13.MaterialPageX<dynamic>(
-          routeData: routeData, child: _i12.StaffTaskClothingView());
     }
   };
 
@@ -114,39 +114,34 @@ class AutoRouter extends _i13.RootStackRouter {
   List<_i13.RouteConfig> get routes => [
         _i13.RouteConfig(SplashRouter.name, path: '/'),
         _i13.RouteConfig(EntryRoute.name, path: 'entryView'),
-        _i13.RouteConfig(BaseTabsRoute.name,
-            path: 'baseTabs/:personModel',
-            children: [
-              _i13.RouteConfig(HomeRouter.name,
-                  path: '',
-                  parent: BaseTabsRoute.name,
-                  children: [
-                    _i13.RouteConfig(HomeRoute.name,
-                        path: '', parent: HomeRouter.name),
-                    _i13.RouteConfig(EmptyRouterPage.name,
-                        path: 'empty-router-page',
-                        parent: HomeRouter.name,
-                        children: [
-                          _i13.RouteConfig(ServiceWearRoute.name,
-                              path: '', parent: EmptyRouterPage.name),
-                          _i13.RouteConfig(ProductDetailRoute.name,
-                              path: ':productModel',
-                              parent: EmptyRouterPage.name),
-                          _i13.RouteConfig(TrainingClothingRoute.name,
-                              path: 'trainingClothing',
-                              parent: EmptyRouterPage.name),
-                          _i13.RouteConfig(StaffTaskClothingRoute.name,
-                              path: 'staffTaskClothing',
-                              parent: EmptyRouterPage.name)
-                        ])
-                  ]),
-              _i13.RouteConfig(CargoInfoRouter.name,
-                  path: 'cargoInfoView', parent: BaseTabsRoute.name),
-              _i13.RouteConfig(RationRequestPeriodRouter.name,
-                  path: 'rationRequestPeriodView', parent: BaseTabsRoute.name),
-              _i13.RouteConfig(SizeInfoRouter.name,
-                  path: 'sizeInfoView', parent: BaseTabsRoute.name)
-            ])
+        _i13.RouteConfig(BaseTabsRoute.name, path: '/:personModel', children: [
+          _i13.RouteConfig(HomeRouter.name,
+              path: '',
+              parent: BaseTabsRoute.name,
+              children: [
+                _i13.RouteConfig(HomeRoute.name,
+                    path: 'home', parent: HomeRouter.name),
+                _i13.RouteConfig(ServiceWearRouter.name,
+                    path: 'empty-router-page',
+                    parent: HomeRouter.name,
+                    children: [
+                      _i13.RouteConfig(ServiceWearRoute.name,
+                          path: '', parent: ServiceWearRouter.name),
+                      _i13.RouteConfig(ProductDetailRoute.name,
+                          path: ':productModel', parent: ServiceWearRouter.name)
+                    ]),
+                _i13.RouteConfig(TrainingClothingRoute.name,
+                    path: 'training-clothing-view', parent: HomeRouter.name),
+                _i13.RouteConfig(StaffTaskClothingRoute.name,
+                    path: 'staff-task-clothing-view', parent: HomeRouter.name)
+              ]),
+          _i13.RouteConfig(CargoInfoRouter.name,
+              path: 'cargoInfoView', parent: BaseTabsRoute.name),
+          _i13.RouteConfig(RationRequestPeriodRouter.name,
+              path: 'rationRequestPeriodView', parent: BaseTabsRoute.name),
+          _i13.RouteConfig(SizeInfoRouter.name,
+              path: 'sizeInfoView', parent: BaseTabsRoute.name)
+        ])
       ];
 }
 
@@ -187,7 +182,7 @@ class BaseTabsRoute extends _i13.PageRouteInfo<BaseTabsRouteArgs> {
       _i14.Key? key,
       List<_i13.PageRouteInfo>? children})
       : super(BaseTabsRoute.name,
-            path: 'baseTabs/:personModel',
+            path: '/:personModel',
             args: BaseTabsRouteArgs(personModel: personModel, key: key),
             rawPathParams: {'personModel': personModel},
             initialChildren: children);
@@ -259,7 +254,7 @@ class SizeInfoRouter extends _i13.PageRouteInfo<void> {
 /// [_i8.HomeView]
 class HomeRoute extends _i13.PageRouteInfo<HomeRouteArgs> {
   HomeRoute({_i14.Key? key})
-      : super(HomeRoute.name, path: '', args: HomeRouteArgs(key: key));
+      : super(HomeRoute.name, path: 'home', args: HomeRouteArgs(key: key));
 
   static const String name = 'HomeRoute';
 }
@@ -277,16 +272,34 @@ class HomeRouteArgs {
 
 /// generated route for
 /// [_i4.EmptyRouterPage]
-class EmptyRouterPage extends _i13.PageRouteInfo<void> {
-  const EmptyRouterPage({List<_i13.PageRouteInfo>? children})
-      : super(EmptyRouterPage.name,
+class ServiceWearRouter extends _i13.PageRouteInfo<void> {
+  const ServiceWearRouter({List<_i13.PageRouteInfo>? children})
+      : super(ServiceWearRouter.name,
             path: 'empty-router-page', initialChildren: children);
 
-  static const String name = 'EmptyRouterPage';
+  static const String name = 'ServiceWearRouter';
 }
 
 /// generated route for
-/// [_i9.ServiceWearView]
+/// [_i9.TrainingClothingView]
+class TrainingClothingRoute extends _i13.PageRouteInfo<void> {
+  const TrainingClothingRoute()
+      : super(TrainingClothingRoute.name, path: 'training-clothing-view');
+
+  static const String name = 'TrainingClothingRoute';
+}
+
+/// generated route for
+/// [_i10.StaffTaskClothingView]
+class StaffTaskClothingRoute extends _i13.PageRouteInfo<void> {
+  const StaffTaskClothingRoute()
+      : super(StaffTaskClothingRoute.name, path: 'staff-task-clothing-view');
+
+  static const String name = 'StaffTaskClothingRoute';
+}
+
+/// generated route for
+/// [_i11.ServiceWearView]
 class ServiceWearRoute extends _i13.PageRouteInfo<ServiceWearRouteArgs> {
   ServiceWearRoute({_i14.Key? key})
       : super(ServiceWearRoute.name,
@@ -307,7 +320,7 @@ class ServiceWearRouteArgs {
 }
 
 /// generated route for
-/// [_i10.ProductDetailView]
+/// [_i12.ProductDetailView]
 class ProductDetailRoute extends _i13.PageRouteInfo<ProductDetailRouteArgs> {
   ProductDetailRoute({required dynamic productModel, _i14.Key? key})
       : super(ProductDetailRoute.name,
@@ -329,22 +342,4 @@ class ProductDetailRouteArgs {
   String toString() {
     return 'ProductDetailRouteArgs{productModel: $productModel, key: $key}';
   }
-}
-
-/// generated route for
-/// [_i11.TrainingClothingView]
-class TrainingClothingRoute extends _i13.PageRouteInfo<void> {
-  const TrainingClothingRoute()
-      : super(TrainingClothingRoute.name, path: 'trainingClothing');
-
-  static const String name = 'TrainingClothingRoute';
-}
-
-/// generated route for
-/// [_i12.StaffTaskClothingView]
-class StaffTaskClothingRoute extends _i13.PageRouteInfo<void> {
-  const StaffTaskClothingRoute()
-      : super(StaffTaskClothingRoute.name, path: 'staffTaskClothing');
-
-  static const String name = 'StaffTaskClothingRoute';
 }

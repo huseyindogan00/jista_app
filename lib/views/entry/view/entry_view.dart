@@ -1,8 +1,10 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/route_manager.dart';
+import 'package:jista/core/router/auto_router/router.gr.dart';
 import 'package:jista/data/constant/style/const_text.dart';
 import 'package:jista/core/services/service_result/base/service_result.dart';
 import 'package:jista/core/utility/validation_utility/validation_controller.dart';
@@ -127,7 +129,8 @@ class EntryView extends StatelessWidget {
             ServiceResult result = await EntryViewModel.login(personModel);
             if (result.isSuccess) {
               // HOME SAYFASINA GEÇİŞŞŞŞ
-              Get.offAndToNamed(RouteName.homeView, arguments: result.data);
+              context.router.replace(BaseTabsRoute(personModel: result));
+              //Get.offAndToNamed(RouteName.homeView, arguments: result.data);
               //EasyLoading.showToast(result.dataInfo.toString(), duration: const Duration(milliseconds: 2000));
             } else {
               EasyLoading.showError(result.dataInfo.toString());

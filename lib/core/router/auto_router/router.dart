@@ -25,7 +25,7 @@ import 'package:jista/views/splash/view/splash_view.dart';
       page: EntryView,
     ),
     AutoRoute(
-      path: 'baseTabs/:personModel',
+      path: '/:personModel',
       page: BaseTabsView,
       children: [
         AutoRoute(
@@ -33,31 +33,17 @@ import 'package:jista/views/splash/view/splash_view.dart';
           name: 'HomeRouter',
           page: EmptyRouterPage,
           children: [
+            AutoRoute(path: 'home', page: HomeView),
             AutoRoute(
-              path: '',
-              page: HomeView,
-            ),
-            AutoRoute(
+              name: 'ServiceWearRouter',
               page: EmptyRouterPage,
               children: [
-                AutoRoute(
-                  path: '',
-                  page: ServiceWearView,
-                ),
-                AutoRoute(
-                  path: ':productModel',
-                  page: ProductDetailView,
-                ),
-                AutoRoute(
-                  path: 'trainingClothing',
-                  page: TrainingClothingView,
-                ),
-                AutoRoute(
-                  path: 'staffTaskClothing',
-                  page: StaffTaskClothingView,
-                ),
+                AutoRoute(path: '', page: ServiceWearView),
+                AutoRoute(path: ':productModel', page: ProductDetailView),
               ],
             ),
+            AutoRoute(page: TrainingClothingView),
+            AutoRoute(page: StaffTaskClothingView),
           ],
         ),
         AutoRoute(
@@ -80,3 +66,34 @@ import 'package:jista/views/splash/view/splash_view.dart';
   ],
 )
 class $AutoRouter {}
+
+
+/* AutoRoute(
+      path: '/',
+      page: HomePage,
+      children: [
+        AutoRoute(
+          path: 'posts',
+          name: 'PostsRouter',
+          page: EmptyRouterPage,
+          children: [
+            AutoRoute(path: '', page: PostsPage),
+            AutoRoute(path: ':postId', page: SinglePostPage),
+          ],
+        ),
+        AutoRoute(
+          path: 'users',
+          name: 'UsersRouter',
+          page: EmptyRouterPage,
+          children: [
+            AutoRoute(path: '', page: UsersPage),
+            AutoRoute(path: ':userId', page: UserProfilePage),
+          ],
+        ),
+        AutoRoute(
+          path: 'settings',
+          name: 'SettingsRouter',
+          page: SettingsPage,
+        )
+      ],
+    ) */

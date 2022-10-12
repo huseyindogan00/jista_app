@@ -4,6 +4,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:jista/core/services/service_result/base/service_result.dart';
 import 'package:jista/data/constant/appbar_text/appbar_title.dart';
 import 'package:jista/data/constant/pages/pages_list.dart';
 import 'package:jista/product/components/appbar.dart';
@@ -17,7 +18,6 @@ class BaseTabsView extends StatefulWidget {
   BaseTabsView({
     @PathParam() required this.personModel,
     Key? key,
-    //this.onModelRead,
   }) : super(key: key);
 
   // baseviewı kullanan widget, personelmodele ihtiyaç duyduğunda
@@ -42,7 +42,8 @@ class _BaseTabsViewState extends State<BaseTabsView> {
     super.initState();
     viewModel = Get.find<BaseModel>();
 
-    personModel = (widget.personModel as PersonModel) ?? getPersonel();
+    personModel = (widget.personModel as ServiceResult).data as PersonModel ??
+        getPersonel();
   }
 
   getPersonel() {
@@ -53,10 +54,13 @@ class _BaseTabsViewState extends State<BaseTabsView> {
   @override
   Widget build(BuildContext context) {
     return AutoTabsScaffold(
-      appBarBuilder: (context, tabsRouter) => MyAppBar.getAppBar(controllerBaseTabs),
-      drawer: NavigationDrawer(imagePath: 'assets/images/person.png', personModel: personModel!),
+      appBarBuilder: (context, tabsRouter) =>
+          MyAppBar.getAppBar(controllerBaseTabs),
+      drawer: NavigationDrawer(
+          imagePath: 'assets/images/person.png', personModel: personModel!),
       routes: PagesList.pagesList,
-      bottomNavigationBuilder: (_, tabsRouter) => _buildBottomNavigatonBar(tabsRouter),
+      bottomNavigationBuilder: (_, tabsRouter) =>
+          _buildBottomNavigatonBar(tabsRouter),
     );
   }
 

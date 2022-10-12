@@ -5,6 +5,8 @@ import 'package:jista/core/router/auto_router/router.gr.dart';
 import 'package:jista/core/router/route_name.dart';
 import 'package:jista/core/services/service/firebase_store_service.dart';
 import 'package:jista/core/services/service/hive_service.dart';
+import 'package:jista/core/services/service_result/base/service_result.dart';
+import 'package:jista/core/services/service_result/firebase_service_result_model.dart';
 import 'package:jista/product/models/person/person_model.dart';
 
 import '../../../main.dart';
@@ -22,10 +24,11 @@ class SplashViewModel {
         bool isPerson = box.isPersonBox();
         await Future.delayed(const Duration(seconds: 2));
         if (isPerson) {
-          final personModel = box.getBox('person');
-          //Get.offAndToNamed(RouteName.homeView, arguments: personModel);
+          final ServiceResult result =
+              FirebaseServiceResultModel(isSuccess: true);
+          result.data = box.getBox('person');
           context.router.replace(BaseTabsRoute(
-            personModel: personModel,
+            personModel: result,
           ));
         } else {
           context.router.replace(EntryRoute());
