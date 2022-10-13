@@ -6,10 +6,7 @@ import '../../../core/utility/appbarController/appbar_base_tabs_title.dart';
 import '../../base/base_model.dart';
 
 class CargoInfoView extends StatelessWidget {
-  CargoInfoView({super.key}) {
-    controller = Get.put<BaseModel>(BaseModel());
-    AppbarBaseTabsTitle.setAppTitle(1, controller);
-  }
+  CargoInfoView({super.key}) {}
 
   late final controller;
   InternetConnectionControl connection = InternetConnectionControl();

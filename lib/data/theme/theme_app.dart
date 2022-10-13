@@ -6,8 +6,10 @@ class ThemeApp extends GetxController {
 
   static final themeLight = ThemeData.light().copyWith(
     backgroundColor: bacgroundColorAPP,
-    primaryColor: bacgroundColorAPP,
-    iconTheme: const IconThemeData(color: Colors.black, size: 15),
+    splashColor: Colors.blueGrey.shade600,
+    primaryIconTheme: const IconThemeData(
+      color: Color.fromARGB(255, 19, 18, 59),
+    ),
     textTheme: const TextTheme(
       headline6: TextStyle(
         color: Color.fromARGB(255, 10, 7, 7),
@@ -32,8 +34,10 @@ class ThemeApp extends GetxController {
 
   static final themeDark = ThemeData.dark().copyWith(
     /** DARK THEME DE GÜCELLEMELER YAPILACAK */
-    primaryIconTheme: const IconThemeData(color: Colors.white, size: 15),
-    iconTheme: const IconThemeData(color: Colors.white, size: 15),
+    splashColor: const Color.fromARGB(255, 203, 206, 209),
+    primaryIconTheme: const IconThemeData(
+      color: Color.fromARGB(255, 52, 50, 173),
+    ),
     textTheme: const TextTheme(
       headline6: TextStyle(
         color: Colors.white,

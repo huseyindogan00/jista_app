@@ -136,6 +136,8 @@ class AutoRouter extends _i14.RootStackRouter {
                     path: 'trainingClothing', parent: HomeRouter.name),
                 _i14.RouteConfig(StaffTaskClothingRoute.name,
                     path: 'staffTaskClothing', parent: HomeRouter.name),
+                _i14.RouteConfig(StaffTaskClothingRoute.name,
+                    path: 'staffTaskClothing', parent: HomeRouter.name),
                 _i14.RouteConfig(ProductDetailRoute.name,
                     path: ':productModel', parent: HomeRouter.name)
               ]),

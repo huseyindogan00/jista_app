@@ -39,8 +39,7 @@ class NavigationDrawer extends StatelessWidget {
         ),
       );
 
-  Widget buildHeader(
-      BuildContext context, String imagePath, PersonModel personModel) {
+  Widget buildHeader(BuildContext context, String imagePath, PersonModel personModel) {
     return Container(
       color: Get.theme.primaryColor.withOpacity(0.8),
       padding: EdgeInsets.only(
@@ -56,18 +55,15 @@ class NavigationDrawer extends StatelessWidget {
           const SizedBox(height: 12),
           Text(
             '${personModel.name} ${personModel.lastName}',
-            style: const TextStyle(
-                fontSize: 28, color: Colors.white, fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 28, color: Colors.white, fontWeight: FontWeight.bold),
           ),
           Text(
             '${personModel.rank}',
-            style: const TextStyle(
-                fontSize: 16, color: Colors.white, fontStyle: FontStyle.italic),
+            style: const TextStyle(fontSize: 16, color: Colors.white, fontStyle: FontStyle.italic),
           ),
           Text(
             '${personModel.duty}',
-            style: const TextStyle(
-                fontSize: 16, color: Colors.white, fontStyle: FontStyle.italic),
+            style: const TextStyle(fontSize: 16, color: Colors.white, fontStyle: FontStyle.italic),
           ),
         ],
       ),
@@ -145,7 +141,6 @@ class NavigationDrawer extends StatelessWidget {
           () => Switch(
             value: theme.isDarkModeApp.value,
             onChanged: (value) {
-              print('Theme Modu $value');
               theme.isDarkModeApp.value = value;
               if (value) {
                 Get.changeThemeMode(ThemeMode.dark);

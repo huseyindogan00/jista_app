@@ -1,9 +1,11 @@
+import 'package:get/get.dart';
 import 'package:jista/views/base/base_model.dart';
 
 import '../../../data/constant/appbar_text/appbar_title.dart';
 
 class AppbarBaseTabsTitle {
-  static setAppTitle(int index, BaseModel ctrl) {
+  static final ctrl = Get.find<BaseModel>();
+  static setAppTitle(int index) {
     switch (index) {
       case 0:
         ctrl.appbarTitle.value = AppbarTitle.homePageTitle;

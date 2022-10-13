@@ -19,7 +19,7 @@ class MyAppBar {
     return AppBar(
       centerTitle: true,
       leading: const AutoLeadingButton(),
-      backgroundColor: Get.theme.backgroundColor,
+      //backgroundColor: Get.theme.backgroundColor,
       title: Obx(
         () => Text(
           controllerBaseModel.appbarTitle.value,

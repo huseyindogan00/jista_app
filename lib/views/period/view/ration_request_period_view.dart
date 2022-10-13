@@ -4,10 +4,7 @@ import 'package:jista/core/utility/appbarController/appbar_base_tabs_title.dart'
 import 'package:jista/views/base/base_model.dart';
 
 class RationRequestPeriodView extends StatelessWidget {
-  RationRequestPeriodView({super.key}) {
-    controller = Get.put(BaseModel());
-    setAppbarTitle();
-  }
+  RationRequestPeriodView({super.key}) {}
 
   late final controller;
 
@@ -17,9 +14,5 @@ class RationRequestPeriodView extends StatelessWidget {
       child: Text('İstek Dönemi'),
       alignment: Alignment.center,
     );
-  }
-
-  void setAppbarTitle() {
-    AppbarBaseTabsTitle.setAppTitle(3, controller);
   }
 }

@@ -11,10 +11,7 @@ import '../../../data/constant/const_assets_images.dart';
 import '../../base/base_model.dart';
 
 class HomeView extends StatelessWidget {
-  HomeView({super.key}) {
-    controller = Get.put(BaseModel());
-    AppbarBaseTabsTitle.setAppTitle(0, controller);
-  }
+  HomeView({super.key}) {}
 
   late final controller;
 
