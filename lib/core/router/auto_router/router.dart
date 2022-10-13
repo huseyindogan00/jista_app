@@ -55,6 +55,10 @@ import 'package:jista/views/splash/view/splash_view.dart';
               page: StaffTaskClothingView,
             ),
             AutoRoute(
+              path: 'staffTaskClothing',
+              page: StaffTaskClothingView,
+            ),
+            AutoRoute(
               path: ':productModel',
               page: ProductDetailView,
             ),

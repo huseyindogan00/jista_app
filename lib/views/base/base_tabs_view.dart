@@ -2,16 +2,16 @@
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:jista/core/services/service_result/base/service_result.dart';
-import 'package:jista/core/utility/appbarController/appbar_base_tabs_title.dart';
-import 'package:jista/data/constant/appbar_text/appbar_title.dart';
 import 'package:jista/data/constant/pages/pages_list.dart';
 import 'package:jista/product/components/appbar.dart';
 import 'package:jista/product/models/person/person_model.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
+import '../../core/router/auto_router/router.gr.dart';
+import '../../core/services/service/hive_service.dart';
+import '../../data/constant/style/const_button_style.dart';
 import '../../data/theme/theme_app.dart';
 import '../../product/widget/navigation_drawer_widget.dart';
 import 'base_model.dart';
@@ -43,8 +43,14 @@ class _BaseTabsViewState extends State<BaseTabsView> {
   void initState() {
     super.initState();
     viewModel = Get.find<BaseModel>();
+    print('initstate çallıştı');
 
-    personModel = (widget.personModel as ServiceResult).data as PersonModel ?? getPersonel();
+    personModel = (widget.personModel as ServiceResult).data as PersonModel ??
+        getPersonel();
+  }
+
+  themeDataAppUpdate() {
+    setState(() {});
   }
 
   getPersonel() {
@@ -54,24 +60,31 @@ class _BaseTabsViewState extends State<BaseTabsView> {
   /* BASEVİEWE BİR DEĞER GÖNDERİP SCAfFOLDUN OLUŞUP OLUŞMAYACAĞINI SORACAZ VE ONA GÖRE SCAFFOLDA VEYA DİREK SAYFAYI OLUŞTURCAZ*/
   @override
   Widget build(BuildContext context) {
+    print('build çalıştı');
     return GetMaterialApp(
       theme: ThemeApp.themeLight,
       darkTheme: ThemeApp.themeDark,
+      themeMode: ThemeMode.system,
       home: AutoTabsScaffold(
-        appBarBuilder: (context, tabsRouter) => MyAppBar.getAppBar(controllerBaseTabs),
-        drawer: NavigationDrawer(imagePath: 'assets/images/person.png', personModel: personModel!),
+        appBarBuilder: (context, tabsRouter) => MyAppBar().getAppBar(context),
+        drawer: NavigationDrawer(
+          imagePath: 'assets/images/person.png',
+          personModel: personModel!,
+        ),
         routes: PagesList.pagesList,
-        bottomNavigationBuilder: (_, tabsRouter) => _buildBottomNavigatonBar(tabsRouter),
+        bottomNavigationBuilder: (_, tabsRouter) =>
+            _buildBottomNavigatonBar(tabsRouter, context),
       ),
     );
   }
 
-  Widget _buildBottomNavigatonBar(TabsRouter tabsRouter) {
+  Widget _buildBottomNavigatonBar(TabsRouter tabsRouter, BuildContext context) {
+    print('bottom bar çalıştı');
     return SalomonBottomBar(
+      selectedItemColor: Get.theme.iconTheme.color?.withBlue(20),
+      unselectedItemColor: Get.theme.iconTheme.color,
       currentIndex: tabsRouter.activeIndex,
-      onTap: (index) {
-        tabsRouter.setActiveIndex(index);
-      },
+      onTap: (index) => tabsRouter.setActiveIndex(index),
       items: <SalomonBottomBarItem>[
         SalomonBottomBarItem(
           icon: const Icon(Icons.home),
