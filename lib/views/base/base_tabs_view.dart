@@ -37,14 +37,14 @@ class _BaseTabsViewState extends State<BaseTabsView> {
   final String sizeInfo = 'Ölçülerim';
   final String requestPeriod = 'İsteklerim';
 
-  BaseModel? viewModel;
   final controllerBaseTabs = Get.put<BaseModel>(BaseModel());
 
   @override
   void initState() {
     super.initState();
-    viewModel = Get.find<BaseModel>();
-    personModel = (widget.personModel as ServiceResult).data as PersonModel ?? getPersonel();
+    personModel = (widget.personModel as ServiceResult).data as PersonModel ??
+        getPersonel();
+    AppbarBaseTabsTitle.setAppTitle(0);
   }
 
   getPersonel() {
@@ -65,7 +65,8 @@ class _BaseTabsViewState extends State<BaseTabsView> {
           personModel: personModel!,
         ),
         routes: PagesList.pagesList,
-        bottomNavigationBuilder: (_, tabsRouter) => _buildBottomNavigatonBar(tabsRouter, context),
+        bottomNavigationBuilder: (_, tabsRouter) =>
+            _buildBottomNavigatonBar(tabsRouter, context),
       ),
     );
   }
@@ -76,7 +77,6 @@ class _BaseTabsViewState extends State<BaseTabsView> {
       currentIndex: tabsRouter.activeIndex,
       onTap: (index) {
         tabsRouter.setActiveIndex(index);
-        AppbarBaseTabsTitle.setAppTitle(index);
       },
       items: <SalomonBottomBarItem>[
         SalomonBottomBarItem(

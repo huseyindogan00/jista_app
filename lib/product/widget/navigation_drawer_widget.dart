@@ -10,8 +10,6 @@ import 'package:jista/data/theme/theme_app.dart';
 import 'package:jista/product/models/person/person_model.dart';
 import 'package:jista/views/base/base_model.dart';
 
-BaseModel? controller;
-
 class NavigationDrawer extends StatelessWidget {
   NavigationDrawer({
     Key? key,
@@ -20,6 +18,8 @@ class NavigationDrawer extends StatelessWidget {
   }) : super(key: key) {
     initializer();
   }
+
+  BaseModel? controller;
 
   String imagePath;
   PersonModel personModel;
@@ -39,9 +39,10 @@ class NavigationDrawer extends StatelessWidget {
         ),
       );
 
-  Widget buildHeader(BuildContext context, String imagePath, PersonModel personModel) {
+  Widget buildHeader(
+      BuildContext context, String imagePath, PersonModel personModel) {
     return Container(
-      color: Get.theme.primaryColor.withOpacity(0.8),
+      color: Get.theme.primaryColor.withOpacity(0.9),
       padding: EdgeInsets.only(
         top: 24 + MediaQuery.of(context).padding.top,
         bottom: 24,
@@ -55,15 +56,26 @@ class NavigationDrawer extends StatelessWidget {
           const SizedBox(height: 12),
           Text(
             '${personModel.name} ${personModel.lastName}',
-            style: const TextStyle(fontSize: 28, color: Colors.white, fontWeight: FontWeight.bold),
+            style: const TextStyle(
+                fontSize: 28,
+                color: Color.fromARGB(255, 66, 68, 230),
+                fontWeight: FontWeight.bold),
           ),
           Text(
             '${personModel.rank}',
-            style: const TextStyle(fontSize: 16, color: Colors.white, fontStyle: FontStyle.italic),
+            style: const TextStyle(
+                fontSize: 16,
+                color: Color.fromARGB(255, 87, 103, 136),
+                fontStyle: FontStyle.italic,
+                fontWeight: FontWeight.bold),
           ),
           Text(
             '${personModel.duty}',
-            style: const TextStyle(fontSize: 16, color: Colors.white, fontStyle: FontStyle.italic),
+            style: const TextStyle(
+                fontSize: 16,
+                color: Color.fromARGB(255, 163, 115, 12),
+                fontStyle: FontStyle.italic,
+                fontWeight: FontWeight.bold),
           ),
         ],
       ),
@@ -75,7 +87,7 @@ class NavigationDrawer extends StatelessWidget {
     ThemeApp theme = Get.put(ThemeApp());
     return Expanded(
       child: Container(
-        color: Get.theme.primaryColor.withOpacity(0.4),
+        color: Get.theme.primaryColor.withOpacity(0.2),
         padding: const EdgeInsets.all(10),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,

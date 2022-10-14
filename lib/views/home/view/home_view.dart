@@ -5,15 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jista/core/router/auto_router/router.gr.dart';
 import 'package:jista/data/constant/font/const_text_style.dart';
+import 'package:jista/views/home/view_model/home_view_model.dart';
 
-import '../../../core/utility/appbarController/appbar_base_tabs_title.dart';
 import '../../../data/constant/const_assets_images.dart';
-import '../../base/base_model.dart';
 
 class HomeView extends StatelessWidget {
-  HomeView({super.key}) {}
+  HomeView({super.key});
 
-  late final controller;
+  late final controller = Get.put<HomeViewModel>(HomeViewModel());
 
   final double imageLeftValue = 0;
   final double imageBottomValue = 0;
@@ -30,16 +29,31 @@ class HomeView extends StatelessWidget {
         runSpacing: 30,
         children: [
           GestureDetector(
-            onTap: () => context.router.push(const TrainingClothingRoute()),
-            child: _buildServiceWear(ConstAssetsImages.trainingClothing, 'EĞİTİM GİYECEĞİ'),
+            onTap: () async {
+              bool connection = await controller.internetControl();
+              if (connection) {
+                context.router.push(const TrainingClothingRoute());
+              }
+            },
+            child: _buildServiceWear(
+                ConstAssetsImages.trainingClothing, 'EĞİTİM GİYECEĞİ'),
           ),
           GestureDetector(
-            onTap: () => context.router.push(ServiceWearRoute()),
-            child: _buildServiceWear(ConstAssetsImages.serviceWear, 'HİZMET GİYECEĞİ'),
+            onTap: () async {
+              bool connection = await controller.internetControl();
+              if (connection) context.router.push(ServiceWearRoute());
+            },
+            child: _buildServiceWear(
+                ConstAssetsImages.serviceWear, 'HİZMET GİYECEĞİ'),
           ),
           GestureDetector(
-            onTap: () => context.router.push(const StaffTaskClothingRoute()),
-            child: _buildServiceWear(ConstAssetsImages.stafTaskClothing, 'KADRO GÖREV GİYECEĞİ'),
+            onTap: () async {
+              bool connection = await controller.internetControl();
+              if (connection)
+                context.router.push(const StaffTaskClothingRoute());
+            },
+            child: _buildServiceWear(
+                ConstAssetsImages.stafTaskClothing, 'KADRO GÖREV GİYECEĞİ'),
           ),
           /* GestureDetector(
             onTap: () => context.router.push(const ()),
@@ -92,7 +106,8 @@ class HomeView extends StatelessWidget {
             child: ListTile(
               title: Text(
                 title,
-                style: ConstTextStyle.categoriTextStyle.copyWith(fontSize: 14, color: Colors.white),
+                style: ConstTextStyle.categoriTextStyle
+                    .copyWith(fontSize: 14, color: Colors.white),
               ),
               subtitle: Text('Buraya açıklama girilecek'),
               trailing: Icon(Icons.arrow_forward_ios_outlined),
@@ -197,7 +212,9 @@ class HomeView extends StatelessWidget {
           width: double.infinity,
           height: 200,
           decoration: BoxDecoration(
-            boxShadow: const <BoxShadow>[BoxShadow(blurRadius: 2, color: Colors.blue, spreadRadius: 2)],
+            boxShadow: const <BoxShadow>[
+              BoxShadow(blurRadius: 2, color: Colors.blue, spreadRadius: 2)
+            ],
             image: DecorationImage(image: assetsImages, fit: BoxFit.fill),
             borderRadius: const BorderRadius.all(
               Radius.circular(10),

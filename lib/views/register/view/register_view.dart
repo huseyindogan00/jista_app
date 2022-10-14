@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:jista/core/services/service_result/firebase_service_result_model.dart';
@@ -127,25 +128,23 @@ class RegisterView extends StatelessWidget {
           onPressed: () async {
             if (formKey.currentState!.validate()) {
               EasyLoading.show();
-              bool isConnect = await RegisterViewModel.internetControl();
+              bool isConnect = await RegisterViewModel().internetControl();
               if (isConnect) {
                 formKey.currentState?.save();
                 /* AŞAĞIDAKİ Do not use BuildContexts across async gaps 
                 HATASINI GİDER İLERİDE PROBLEM ÇIKARABİLİR*/
-                FirebaseServiceResultModel result = await RegisterViewModel.savePerson(personModel);
+                FirebaseServiceResultModel result =
+                    await RegisterViewModel.savePerson(personModel);
                 if (result.isSuccess) {
                   EasyLoading.showSuccess(result.dataInfo.toString());
                 } else {
-                  ShowSnacbar.showInfoWithSnacbar(context, result.dataInfo!);
-
                   EasyLoading.showInfo(result.dataInfo.toString());
                 }
-              } else {
-                EasyLoading.showError('İnternet bağlantınızı kontrol edin!');
               }
             }
             EasyLoading.dismiss();
-            Navigator.of(context).pop();
+            //Navigator.of(context).pop();
+            context.router.pop();
           },
           child: Text(
             'Kaydet',

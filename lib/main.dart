@@ -10,6 +10,7 @@ import 'package:jista/core/services/service/firebase_auth_service.dart';
 import 'package:jista/core/services/service/firebase_store_service.dart';
 import 'package:jista/core/services/service/hive_service.dart';
 import 'package:jista/data/data_model/entities/cities.dart';
+import 'package:jista/product/components/appbar.dart';
 import 'package:jista/product/models/address/address_model.dart';
 import 'package:jista/product/models/order/order_model.dart';
 import 'package:jista/product/models/person/person_model.dart';
@@ -25,7 +26,8 @@ late AnimationController animationController;
 
 void main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+  SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
   await Firebase.initializeApp();
   await setupHive();
   setupLocator();
