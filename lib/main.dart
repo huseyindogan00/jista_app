@@ -26,14 +26,13 @@ late AnimationController animationController;
 
 void main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
   await Firebase.initializeApp();
   await setupHive();
   setupLocator();
   easyloadingConfig();
 
-  final _appRouter = AutoRouter();
+  final _appRouter = locator<AutoRouter>();
 
   runApp(MaterialApp.router(
     builder: EasyLoading.init(),
@@ -49,6 +48,7 @@ setupLocator() {
   locator.registerLazySingleton(() => FirebaseStoreService());
   locator.registerLazySingleton(() => HiveService());
   locator.registerLazySingleton(() => Cities());
+  locator.registerLazySingleton<AutoRouter>(() => AutoRouter());
 }
 
 // UYARI PENCERESİNİN AYARLARI YAPILIYOR

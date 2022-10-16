@@ -20,7 +20,7 @@ class NavigationDrawer extends StatelessWidget {
   }
 
   BaseModel? controller;
-
+  final ThemeApp theme = Get.put(ThemeApp());
   String imagePath;
   PersonModel personModel;
 
@@ -39,10 +39,10 @@ class NavigationDrawer extends StatelessWidget {
         ),
       );
 
-  Widget buildHeader(
-      BuildContext context, String imagePath, PersonModel personModel) {
+  Widget buildHeader(BuildContext context, String imagePath, PersonModel personModel) {
+    Color textColor = const Color.fromARGB(255, 230, 230, 236);
     return Container(
-      color: Get.theme.primaryColor.withOpacity(0.9),
+      color: Get.theme.backgroundColor.withOpacity(0.9),
       padding: EdgeInsets.only(
         top: 24 + MediaQuery.of(context).padding.top,
         bottom: 24,
@@ -56,26 +56,15 @@ class NavigationDrawer extends StatelessWidget {
           const SizedBox(height: 12),
           Text(
             '${personModel.name} ${personModel.lastName}',
-            style: const TextStyle(
-                fontSize: 28,
-                color: Color.fromARGB(255, 66, 68, 230),
-                fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 28, color: textColor, fontWeight: FontWeight.bold),
           ),
           Text(
             '${personModel.rank}',
-            style: const TextStyle(
-                fontSize: 16,
-                color: Color.fromARGB(255, 87, 103, 136),
-                fontStyle: FontStyle.italic,
-                fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 16, color: textColor, fontStyle: FontStyle.italic, fontWeight: FontWeight.bold),
           ),
           Text(
             '${personModel.duty}',
-            style: const TextStyle(
-                fontSize: 16,
-                color: Color.fromARGB(255, 163, 115, 12),
-                fontStyle: FontStyle.italic,
-                fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 16, color: textColor, fontStyle: FontStyle.italic, fontWeight: FontWeight.bold),
           ),
         ],
       ),
@@ -84,16 +73,16 @@ class NavigationDrawer extends StatelessWidget {
 
   Widget buildMenuItem(BuildContext context) {
     TextStyle? textStyle = Get.theme.textTheme.headline6;
-    ThemeApp theme = Get.put(ThemeApp());
+    double iconSize = 38;
     return Expanded(
       child: Container(
-        color: Get.theme.primaryColor.withOpacity(0.2),
+        color: Get.theme.backgroundColor.withOpacity(0.3),
         padding: const EdgeInsets.all(10),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             ListTile(
-              leading: const Icon(Icons.supervised_user_circle),
+              leading: Icon(Icons.supervised_user_circle, size: iconSize),
               title: Text(
                 'Mutemet İşlemlerim',
                 style: textStyle,
@@ -101,7 +90,7 @@ class NavigationDrawer extends StatelessWidget {
               onTap: () {},
             ),
             ListTile(
-              leading: const Icon(Icons.boy_outlined),
+              leading: Icon(Icons.boy_outlined, size: iconSize),
               title: Text(
                 'Beden Ölçüleri Tespit Broşürü',
                 style: textStyle,
@@ -109,33 +98,34 @@ class NavigationDrawer extends StatelessWidget {
               onTap: () {},
             ),
             ListTile(
-              leading: const Icon(Icons.plagiarism),
-              title: Text(
-                'İstihkak Kargo İhalesi Fiyat Cetveli',
-                style: textStyle,
-              ),
+              leading: Icon(Icons.plagiarism, size: iconSize),
+              title: Text('İstihkak Kargo İhalesi Fiyat Cetveli', style: textStyle),
               onTap: () {},
             ),
-            const SizedBox(
-              height: 20,
-            ),
+            const SizedBox(height: 20),
             selectThemeMode(theme),
-            const Divider(
-              height: 11,
-              color: Colors.grey,
-            ),
-            Center(
-              child: SizedBox(
-                width: 150,
-                child: ElevatedButton(
-                  onPressed: () {
-                    HiveService().deleteUserBox('personBox');
-                    context.router.replace(EntryRoute());
-                  },
-                  style: ConstButtonStyle.commonButtonStyle(context),
-                  child: const Text('ÇIKIŞ'),
-                ),
-              ),
+            const Divider(height: 11, color: Colors.grey),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Stack(
+                  alignment: AlignmentDirectional.centerStart,
+                  children: [
+                    SizedBox(
+                      width: 190,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          HiveService().deleteUserBox('personBox');
+                          context.router.replace(EntryRoute());
+                        },
+                        style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                        child: const Text('Oturumu Kapat', textAlign: TextAlign.end),
+                      ),
+                    ),
+                    const Positioned(left: 10, child: Icon(Icons.exit_to_app)),
+                  ],
+                )
+              ],
             ),
           ],
         ),
@@ -159,6 +149,7 @@ class NavigationDrawer extends StatelessWidget {
               } else {
                 Get.changeThemeMode(ThemeMode.light);
               }
+              Get.back();
             },
           ),
         ),

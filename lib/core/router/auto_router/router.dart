@@ -1,14 +1,13 @@
 import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:auto_route/empty_router_widgets.dart';
 import 'package:jista/views/base/base_tabs_view.dart';
 import 'package:jista/views/cargo/view/cargo_info_view.dart';
-import 'package:jista/views/category_module/service_page/view/service_wear_view.dart';
-import 'package:jista/views/category_module/staff_page/view/staff_task_clothing_view.dart';
-import 'package:jista/views/category_module/training_page/view/training_clothing_view.dart';
+import 'package:jista/views/product/view/products_view.dart';
 import 'package:jista/views/entry/view/entry_view.dart';
 import 'package:jista/views/home/view/home_view.dart';
 import 'package:jista/views/period/view/ration_request_period_view.dart';
-import 'package:jista/views/products/view/product_details_view.dart';
+import 'package:jista/views/product/view/product_details_view.dart';
 import 'package:jista/views/register/view/register_view.dart';
 import 'package:jista/views/size/view/size_info.dart';
 import 'package:jista/views/splash/view/splash_view.dart';
@@ -43,20 +42,8 @@ import 'package:jista/views/splash/view/splash_view.dart';
               page: HomeView,
             ),
             AutoRoute(
-              path: 'serviceWear',
-              page: ServiceWearView,
-            ),
-            AutoRoute(
-              path: 'trainingClothing',
-              page: TrainingClothingView,
-            ),
-            AutoRoute(
-              path: 'staffTaskClothing',
-              page: StaffTaskClothingView,
-            ),
-            AutoRoute(
-              path: 'staffTaskClothing',
-              page: StaffTaskClothingView,
+              path: ':productTypeName',
+              page: ProductsView,
             ),
             AutoRoute(
               path: ':productModel',
@@ -85,6 +72,7 @@ import 'package:jista/views/splash/view/splash_view.dart';
 )
 class $AutoRouter {}
 
+     
 
 /* AutoRoute(
           path: '',

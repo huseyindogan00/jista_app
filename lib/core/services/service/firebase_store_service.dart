@@ -11,10 +11,15 @@ class FirebaseStoreService implements IFirebaseStoreService {
   static final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
   @override
-  Future<FirebaseServiceResultModel<List<ProductModel>>> getAllCategory(String collectionName) async {
+  Future<FirebaseServiceResultModel<List<ProductModel>>> getFilterProducts(String season, String typeName) async {
     List<ProductModel> productList = [];
     try {
-      QuerySnapshot<Map<String, dynamic>> snapshot = await _firebaseFirestore.collection(collectionName).get();
+      QuerySnapshot<Map<String, dynamic>> snapshot = await _firebaseFirestore
+          .collection('product')
+          .where('season', isEqualTo: season)
+          .where('type', isEqualTo: typeName)
+          .get();
+
       if (snapshot.docs.isNotEmpty) {
         for (QueryDocumentSnapshot<Map<String, dynamic>> doc in snapshot.docs) {
           Map<String, dynamic> product = doc.data();
@@ -31,12 +36,12 @@ class FirebaseStoreService implements IFirebaseStoreService {
   }
 
   @override
-  Future<FirebaseServiceResultModel<List<ProductModel>>> getToCategory(String type) async {
+  Future<FirebaseServiceResultModel<List<ProductModel>>> getAllProduct(String typeName) async {
     List<ProductModel> productList = [];
 
     try {
       QuerySnapshot<Map<String, dynamic>> snapshot =
-          await _firebaseFirestore.collection('product').where('type', isEqualTo: type).get();
+          await _firebaseFirestore.collection('product').where('type', isEqualTo: typeName).get();
 
       if (snapshot.docs.isNotEmpty) {
         for (QueryDocumentSnapshot<Map<String, dynamic>> doc in snapshot.docs) {
@@ -120,14 +125,4 @@ class FirebaseStoreService implements IFirebaseStoreService {
   update(PersonModel personModel) {}
   @override
   delete(PersonModel personModel) {}
-
-  /* Future<FirebaseServiceResultModel<List<ProductModel>>> getAllProductFilter(List<String> filters,String type){
-     List<ProductModel> productList = [];
-    try {
-      _firebaseFirestore.collection('product').where(type,isEqualTo: type).where()
-
-    } catch (_) {
-      
-    }
-  } */
 }

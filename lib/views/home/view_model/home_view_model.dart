@@ -8,15 +8,4 @@ import '../../../product/models/product/product_model.dart';
 
 class HomeViewModel extends BaseModel {
   static final _firebaseStorage = locator<FirebaseStoreService>();
-  final productModel = Rxn<ProductModel>().obs;
-
-  static Future<FirebaseServiceResultModel<List<ProductModel>>>
-      getAllProduct() async {
-    return await _firebaseStorage.getAllCategory('product');
-  }
-
-  RxInt categoryIndex = 0.obs;
-  getCategory(int index) {
-    categoryIndex.value = index;
-  }
 }

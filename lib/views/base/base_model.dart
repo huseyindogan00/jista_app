@@ -1,5 +1,4 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:jista/core/enums/view_state.dart';
@@ -10,38 +9,44 @@ import '../../core/utility/internet_connection_control.dart';
 import '../../product/models/person/person_model.dart';
 
 class BaseModel extends GetxController {
-//**************************************************
   // Çıkışın yapılıp yapılmadığını kontrol eder, duruma göre kullanıcı verilerini
   // silmek için kullanılır
+  //--------------------------------------------------
   RxBool isExit = false.obs;
 
-  //**************************************************
-  // BASEMODELİ extend eden widgetlardan sepet güncellenicek
+  // APPBAR TITLE
+  //--------------------------------------------------
   RxString appbarTitle = ''.obs;
-  RxList<ProductModel> productList = <ProductModel>[].obs;
 
-  //**************************************************
+  // SEPETTE TUTULACAK PRODUCT LİST
+  //--------------------------------------------------
+  RxList<ProductModel> products = <ProductModel>[].obs;
+
+  // SEPET GÜNCELLEME
+  //--------------------------------------------------
+  Rx<int> cartTotal = 11.obs;
+
   // SAYFA İŞLEM YAPTIĞINDA BEKLEME DURUMUNU BELİRTİR
-  final Rx<ViewState> _viewState = ViewState.Idle.obs;
+  //--------------------------------------------------
+  final Rx<ViewState> _viewState = ViewState.IDLE.obs;
   ViewState get viewState => _viewState.value;
   void setViewState(ViewState viewState) {
     _viewState.value = viewState;
   }
 
-  //**************************************************
+  //--------------------------------------------------
   // BOTTOMBAR DA İNDEX DEĞİŞİMİ İÇİN DURUM GÜNCELLER
-  RxInt _selectedBottomIndex = 0.obs;
+  /* RxInt _selectedBottomIndex = 0.obs;
   int get selectedBottomIndex => _selectedBottomIndex.value;
   set selectedBottomIndex(int selectedBottomIndex) {
     _selectedBottomIndex = selectedBottomIndex as RxInt;
-  }
-
+  } 
   selectIndex(int index) {
     _selectedBottomIndex.value = index;
-  }
+  } */
 
-  //**************************************************
   // TELEFONA KAYDEDİLEN PERSONELİ DRAWERDA GÖSTERMEK İÇİN HAFIZADAN GETİRİLİYOR
+  //--------------------------------------------------
   PersonModel? getPersonHive() {
     PersonModel? person = HiveService().getBox('person');
     if (person != null) {
@@ -50,28 +55,27 @@ class BaseModel extends GetxController {
     return null;
   }
 
-  //**************************************************
-  // BASEMODELİ extend eden widgetlardan sepet güncellenicek
-  Rx<int> cartTotal = 0.obs;
-
-  //**************************************************
-  // BASEMODELİ extend eden widgetlardan sepet güncellenicek
-  Rx<bool> isConnection = true.obs;
-  // BU METHOD CİHAZI İNTERNETE BAĞLAYAN WİFİ, MOBİL VERİ VS OLAN UÇLARINI KONTROL EDER
+  // CİHAZI İNTERNETE BAĞLAYAN WİFİ, MOBİL VERİ VS OLAN UÇLARINI KONTROL EDER
+  //--------------------------------------------------
   Future<bool> internetControl() async {
+    setViewState(ViewState.BUSY);
     bool hasDeviceConnected = await _isDeviceConnected();
     if (hasDeviceConnected) {
       InternetConnectionControl connection = InternetConnectionControl();
       ConnectivityResult status = await connection.connectionStatus();
       if (status != ConnectivityResult.none) {
+        setViewState(ViewState.IDLE);
         return true;
       }
     }
-    Get.showSnackbar(const GetSnackBar(
-      duration: Duration(seconds: 2),
-      snackPosition: SnackPosition.BOTTOM,
-      message: 'İnternet bağlantınızı kontrol ediniz.',
-    ));
+    setViewState(ViewState.IDLE);
+    Get.showSnackbar(
+      const GetSnackBar(
+        duration: Duration(seconds: 3),
+        snackPosition: SnackPosition.TOP,
+        message: 'Lütfen internet bağlantınızı kontrol ediniz.',
+      ),
+    );
     return false;
   }
 
