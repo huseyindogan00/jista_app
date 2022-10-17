@@ -4,5 +4,5 @@ import 'package:jista/views/base/base_model.dart';
 
 class CargoInfoViewModel extends BaseModel {
   RxList<DropdownMenuItem<String>>? townList = <DropdownMenuItem<String>>[].obs;
-  RxString cityId = ''.obs;
+  RxString townFirstValue = ''.obs;
 }

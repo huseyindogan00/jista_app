@@ -31,4 +31,28 @@ class ValidationController {
       return 'isim en az 3 karakte olmalıdır';
     }
   }
+
+  static String? fullAddressValidation(String? fullAddress) {
+    if (fullAddress != null && fullAddress.isNotEmpty && fullAddress.length > 15) {
+      return null;
+    } else {
+      return 'adres en az 15 karakterden oluşmalıdır';
+    }
+  }
+
+  static String? postaCodeValidation(String? postaCode) {
+    if (postaCode != null && postaCode.isNotEmpty && postaCode.length == 5) {
+      return null;
+    } else {
+      return 'Posta Kodu 5 karakterden oluşmalıdır';
+    }
+  }
+
+  static String? telephoneValidation(String? telephoneNumber) {
+    if (telephoneNumber != null && telephoneNumber.isNotEmpty && telephoneNumber.length == 11) {
+      return null;
+    } else {
+      return 'Telefon 11 haneden oluşmalıdır';
+    }
+  }
 }

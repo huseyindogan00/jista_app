@@ -50,9 +50,7 @@ class RegisterView extends StatelessWidget {
         autofocus: true,
         controller: nameController,
         decoration: InputDecoration(
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
           label: Text(
             'Ad-Soyad',
             style: TextStyle(fontSize: ConstFontSize.textFieldFS),
@@ -133,8 +131,7 @@ class RegisterView extends StatelessWidget {
                 formKey.currentState?.save();
                 /* AŞAĞIDAKİ Do not use BuildContexts across async gaps 
                 HATASINI GİDER İLERİDE PROBLEM ÇIKARABİLİR*/
-                FirebaseServiceResultModel result =
-                    await RegisterViewModel.savePerson(personModel);
+                FirebaseServiceResultModel result = await RegisterViewModel.savePerson(personModel);
                 if (result.isSuccess) {
                   EasyLoading.showSuccess(result.dataInfo.toString());
                 } else {
