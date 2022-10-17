@@ -8,33 +8,31 @@ class CargoInfoView extends StatelessWidget {
   CargoInfoView({super.key});
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  CargoInfoViewModel controller = Get.put<CargoInfoViewModel>(CargoInfoViewModel());
+  CargoInfoViewModel controller =
+      Get.put<CargoInfoViewModel>(CargoInfoViewModel());
 
-  buildCity() {
+  List<DropdownMenuItem<String>> getCity() {
     return Cities.citiesList.entries.map(
-      (e) {
+      (cityMap) {
         return DropdownMenuItem(
-          value: e.key,
-          child: Text('${e.key} - ${e.value}'),
+          value: cityMap.key,
+          child: Text(
+            '${cityMap.key}-${cityMap.value}',
+            style: Get.theme.textTheme.headline6
+                ?.copyWith(fontSize: 16, color: Colors.black),
+          ),
         );
       },
     ).toList();
   }
 
-  /*  buildTown(String cityKey) {
-    controller.townList.value = Towns.townsList.entries.map(
-      (e) {
-        if (e.key == cityKey) {
-          return DropdownMenuItem(
-            value: e.key,
-            child: Text('${e.key} - ${e.value}'),
-          );
-        }
-      },
-    ).toList();
-  } */
-
-  getTown(String cityId) {}
+  getTown(String cityId) {
+    Towns.townsList.entries
+        .where((entries) => entries.key == cityId)
+        .map<List<String>>((townList) {
+      return controller.townList?.value = townList.value;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,27 +40,20 @@ class CargoInfoView extends StatelessWidget {
       key: formKey,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
-        child: Wrap(
-          runSpacing: 20,
-          runAlignment: WrapAlignment.end,
+        child: Column(
           children: <Widget>[
-            Row(
-              children: [
-                /* DropdownButton<String>(
-                  hint: const Text('Şehir Seçiniz'),
-                  items: getCityAll(),
-                  onChanged: (city) {
-                    getTown(city!);
-                  },
-                ), */
-                /* DropdownButton<String>(
-                  hint: const Text('Şehir Seçiniz'),
-                  items: getTown(),
-                  onChanged: (city) {
-                    getTown(city!);
-                  },
-                ), */
-              ],
+            DropdownButton<String>(
+              hint: const Text('Şehir Seçiniz'),
+              items: getCity(),
+              onChanged: (cityId) {
+                print(cityId);
+                getTown(controller.cityId.value);
+              },
+            ),
+            DropdownButton<String>(
+              hint: const Text('Şehir Seçiniz'),
+              items: controller.townList?.value,
+              onChanged: (city) {},
             ),
             TextFormField(
               decoration: const InputDecoration(
@@ -94,7 +85,7 @@ class CargoInfoView extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {},
-              child: Text('Kaydet'),
+              child: const Text('Kaydet'),
             )
           ],
         ),
