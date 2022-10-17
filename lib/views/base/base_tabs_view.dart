@@ -39,7 +39,8 @@ class _BaseTabsViewState extends State<BaseTabsView> {
   @override
   void initState() {
     super.initState();
-    personModel = (widget.personModel as ServiceResult).data as PersonModel ?? getPersonel();
+    personModel = (widget.personModel as ServiceResult).data as PersonModel ??
+        getPersonel();
     AppbarBaseTabsTitle.setAppTitleWithIndex(0);
   }
 
@@ -56,13 +57,15 @@ class _BaseTabsViewState extends State<BaseTabsView> {
       themeMode: ThemeMode.system,
       home: AutoTabsScaffold(
         backgroundColor: const Color.fromARGB(255, 16, 66, 68).withOpacity(0.7),
-        appBarBuilder: (context, tabsRouter) => MyAppBar.getAppBar(context, tabsRouter),
+        appBarBuilder: (context, tabsRouter) =>
+            MyAppBar.getAppBar(context, tabsRouter),
         drawer: NavigationDrawer(
           imagePath: 'assets/images/person.png',
           personModel: personModel!,
         ),
         routes: PagesList.pagesList,
-        bottomNavigationBuilder: (_, tabsRouter) => _buildBottomNavigatonBar(tabsRouter, context),
+        bottomNavigationBuilder: (_, tabsRouter) =>
+            _buildBottomNavigatonBar(tabsRouter, context),
       ),
     );
   }

@@ -6,3 +6,5 @@
 Bütün sayfaların isimlerini tanımlayacağım bir enuma at ENUM
 Baseview içinde tanımlanan ENUMları gözle
 Değişen enumlara göre body de sayfaları değiştir.
+
+appbar da sayfa isimlerini AutoRouteObserver ile gözleyip title yazdıracaz

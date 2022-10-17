@@ -15,6 +15,7 @@ import 'package:jista/product/models/address/address_model.dart';
 import 'package:jista/product/models/order/order_model.dart';
 import 'package:jista/product/models/person/person_model.dart';
 import 'package:jista/product/models/product/product_model.dart';
+import 'package:jista/views/home/view/home_view.dart';
 
 import 'core/router/auto_router/router.gr.dart';
 
@@ -26,7 +27,8 @@ late AnimationController animationController;
 
 void main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+  SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
   await Firebase.initializeApp();
   await setupHive();
   setupLocator();
@@ -37,7 +39,11 @@ void main(List<String> args) async {
   runApp(MaterialApp.router(
     builder: EasyLoading.init(),
     title: 'JİSTA',
-    routerDelegate: _appRouter.delegate(),
+    routerDelegate: _appRouter.delegate(
+      navigatorObservers: () => [
+        MyAppBar(),
+      ],
+    ),
     routeInformationParser: _appRouter.defaultRouteParser(),
   ));
 }

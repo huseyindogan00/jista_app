@@ -4,10 +4,45 @@ import 'package:auto_route/auto_route.dart';
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jista/core/utility/appbarController/appbar_base_tabs_title.dart';
 import '../../views/base/base_model.dart';
 
-class MyAppBar {
-  static final BaseModel controllerBaseModel = Get.put<BaseModel>(BaseModel());
+class MyAppBar extends AutoRouteObserver {
+  //MyAppBar._singleInstance();
+
+  @override
+  void didPush(Route route, Route? previousRoute) {
+    // TODO: implement didPush
+    print(
+        'didPush Methodu - Gösterilen sayfa*****************************************************');
+    print(route.settings.name);
+    print(
+        'didPush - Bir önceki sayfa*****************************************************');
+    print(previousRoute?.settings.name.toString());
+  }
+
+  @override
+  void didPop(Route route, Route? previousRoute) {
+    // TODO: implement didPop
+    print(
+        'didPop Method - Gösterilen sayfa*****************************************************');
+    print(route.settings.name);
+    print(
+        'didPush - Bir önceki sayfa*****************************************************');
+    print(previousRoute?.settings.name.toString());
+
+    super.didPop(route, previousRoute);
+  }
+
+  @override
+  void didChangeTabRoute(TabPageRoute route, TabPageRoute previousRoute) {
+    // TODO: implement didChangeTabRoute
+    print(route.name);
+    print(route.index);
+    super.didChangeTabRoute(route, previousRoute);
+  }
+
+  static final BaseModel _controllerBaseModel = Get.put<BaseModel>(BaseModel());
 
   static AppBar getAppBar(BuildContext context, TabsRouter tabsRouter) {
     /* print('****************************************************************************');
@@ -17,9 +52,10 @@ class MyAppBar {
       centerTitle: true,
       leading: const AutoLeadingButton(),
       //backgroundColor: Get.theme.backgroundColor,
+
       title: Obx(
         () => Text(
-          controllerBaseModel.appbarTitle.value,
+          _controllerBaseModel.appbarTitle.value,
           style: Get.theme.textTheme.headline5,
         ),
       ),
@@ -37,8 +73,9 @@ class MyAppBar {
               alignment: const Alignment(0, 0.3),
               badgeContent: Obx(
                 () => Text(
-                  controllerBaseModel.cartTotal.value.toString(),
-                  style: Get.theme.textTheme.headline6?.copyWith(color: Colors.red),
+                  _controllerBaseModel.cartTotal.value.toString(),
+                  style: Get.theme.textTheme.headline6
+                      ?.copyWith(color: Colors.red),
                 ),
               ),
               child: const Icon(Icons.add_shopping_cart_sharp),
