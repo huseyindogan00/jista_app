@@ -22,21 +22,31 @@ class _CargoInfoViewState extends State<CargoInfoView> {
   TextEditingController townController = TextEditingController();
   TextEditingController postCodeController = TextEditingController();
   TextEditingController fullAddressController = TextEditingController();
-  TextEditingController mobileTelephoneNumberController = TextEditingController();
+  TextEditingController mobileTelephoneNumberController =
+      TextEditingController();
   TextEditingController telephoneNumberController = TextEditingController();
 
-  TextStyle hintTextStyle = TextStyle(color: Colors.cyan.shade400, fontSize: 20);
-  TextStyle dropdownTextStyle = const TextStyle(fontSize: 17, color: Colors.black);
+  TextStyle hintTextStyle =
+      TextStyle(color: Colors.cyan.shade400, fontSize: 18);
+  TextStyle dropdownTextStyle = const TextStyle(
+      fontSize: 17, color: Colors.black, fontWeight: FontWeight.bold);
   Color dropdownColor = const Color.fromARGB(255, 50, 197, 197);
   Color iconDisabledColor = Colors.grey;
   Color iconEnabledColor = const Color.fromARGB(255, 24, 10, 182);
-  BorderRadius dropdownBorderRadius = const BorderRadius.all(Radius.circular(20));
+  BorderRadius dropdownBorderRadius =
+      const BorderRadius.all(Radius.circular(20));
   BorderRadius inputBorderRadius = const BorderRadius.all(Radius.circular(10));
-  List<TextInputFormatter> textInputFormatter = <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly];
+  List<TextInputFormatter> textInputFormatter = <TextInputFormatter>[
+    FilteringTextInputFormatter.digitsOnly
+  ];
+  TextStyle inputErrorTextStyle =
+      const TextStyle(color: Colors.amber, fontSize: 14);
+  TextStyle inputTextStyle = const TextStyle(color: Colors.black, fontSize: 17);
 
   late AddressModel addressModel;
 
-  CargoInfoViewModel viewController = Get.put<CargoInfoViewModel>(CargoInfoViewModel());
+  CargoInfoViewModel viewController =
+      Get.put<CargoInfoViewModel>(CargoInfoViewModel());
 
   @override
   Widget build(BuildContext context) {
@@ -56,29 +66,33 @@ class _CargoInfoViewState extends State<CargoInfoView> {
               _buildPostCodeTextField(),
               _buildPhoneTextField(),
               _buildMobilePhoneTextField(),
-              ElevatedButton(
-                onPressed: () {
-                  if (formKey.currentState!.validate()) {
-                    formKey.currentState?.save();
-                    AddressModel addres = AddressModel(
-                      id: null,
-                      city: cityController.text,
-                      town: townController.text,
-                      telephoneNumber: telephoneNumberController.text.trim(),
-                      mobileTelephoneNumber: mobileTelephoneNumberController.text.trim(),
-                      fullAddress: fullAddressController.text.trim(),
-                      postCode: postCodeController.text.trim(),
-                    );
-
-                    print(addres.toString());
-                  }
-                },
-                child: const Text('Kaydet'),
-              )
+              _buildSaveButton()
             ],
           ),
         ),
       ),
+    );
+  }
+
+  ElevatedButton _buildSaveButton() {
+    return ElevatedButton(
+      onPressed: () {
+        if (formKey.currentState!.validate()) {
+          formKey.currentState?.save();
+          AddressModel addres = AddressModel(
+            id: null,
+            city: cityController.text,
+            town: townController.text,
+            telephoneNumber: telephoneNumberController.text.trim(),
+            mobileTelephoneNumber: mobileTelephoneNumberController.text.trim(),
+            fullAddress: fullAddressController.text.trim(),
+            postCode: postCodeController.text.trim(),
+          );
+
+          print(addres.toString());
+        }
+      },
+      child: const Text('Kaydet'),
     );
   }
 
@@ -88,6 +102,7 @@ class _CargoInfoViewState extends State<CargoInfoView> {
       controller: mobileTelephoneNumberController,
       keyboardType: TextInputType.phone,
       decoration: InputDecoration(
+        errorStyle: inputErrorTextStyle,
         prefixIcon: const Icon(Icons.phone),
         label: Text('Cep Telefonu', style: hintTextStyle),
         border: OutlineInputBorder(
@@ -110,6 +125,7 @@ class _CargoInfoViewState extends State<CargoInfoView> {
       keyboardType: TextInputType.phone,
       inputFormatters: textInputFormatter,
       decoration: InputDecoration(
+        errorStyle: inputErrorTextStyle,
         prefixIcon: const Icon(Icons.phone),
         label: Text('Telefon', style: hintTextStyle),
         border: OutlineInputBorder(
@@ -130,6 +146,7 @@ class _CargoInfoViewState extends State<CargoInfoView> {
       style: const TextStyle(color: Colors.black),
       controller: postCodeController,
       decoration: InputDecoration(
+        errorStyle: inputErrorTextStyle,
         prefixIcon: const Icon(Icons.local_post_office_sharp),
         label: Text('Posta Kodu', style: hintTextStyle),
         border: OutlineInputBorder(
@@ -147,10 +164,11 @@ class _CargoInfoViewState extends State<CargoInfoView> {
 
   TextFormField _buildAddressTextField() {
     return TextFormField(
-      style: const TextStyle(color: Colors.black),
+      style: inputTextStyle,
       controller: fullAddressController,
       maxLines: 5,
       decoration: InputDecoration(
+        errorStyle: inputErrorTextStyle,
         prefixIcon: const Icon(Icons.home_filled),
         alignLabelWithHint: true,
         label: Text('Adres', style: hintTextStyle),

@@ -23,7 +23,5 @@ class AppbarBaseTabsTitle {
     }
   }
 
-  static setAppTitleWithString(String title) {
-    _ctrl.appbarTitle.value = title;
-  }
+  static setAppTitleWithString(String title) {}
 }

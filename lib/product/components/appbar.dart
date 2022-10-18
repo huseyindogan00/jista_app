@@ -10,38 +10,6 @@ import '../../views/base/base_model.dart';
 class MyAppBar extends AutoRouteObserver {
   //MyAppBar._singleInstance();
 
-  @override
-  void didPush(Route route, Route? previousRoute) {
-    // TODO: implement didPush
-    print(
-        'didPush Methodu - Gösterilen sayfa*****************************************************');
-    print(route.settings.name);
-    print(
-        'didPush - Bir önceki sayfa*****************************************************');
-    print(previousRoute?.settings.name.toString());
-  }
-
-  @override
-  void didPop(Route route, Route? previousRoute) {
-    // TODO: implement didPop
-    print(
-        'didPop Method - Gösterilen sayfa*****************************************************');
-    print(route.settings.name);
-    print(
-        'didPush - Bir önceki sayfa*****************************************************');
-    print(previousRoute?.settings.name.toString());
-
-    super.didPop(route, previousRoute);
-  }
-
-  @override
-  void didChangeTabRoute(TabPageRoute route, TabPageRoute previousRoute) {
-    // TODO: implement didChangeTabRoute
-    print(route.name);
-    print(route.index);
-    super.didChangeTabRoute(route, previousRoute);
-  }
-
   static final BaseModel _controllerBaseModel = Get.put<BaseModel>(BaseModel());
 
   static AppBar getAppBar(BuildContext context, TabsRouter tabsRouter) {
@@ -86,5 +54,35 @@ class MyAppBar extends AutoRouteObserver {
         const SizedBox(width: 10),
       ],
     );
+  }
+
+  @override
+  void didPush(Route route, Route? previousRoute) {
+    // TODO: implement didPush
+    print(
+        'didPush Methodu - Gösterilen sayfa*****************************************************');
+    print(route.settings.name);
+    print(
+        'didPush - Bir önceki sayfa*****************************************************');
+    print(previousRoute?.settings.name.toString());
+  }
+
+  @override
+  void didPop(Route route, Route? previousRoute) {
+    // TODO: implement didPop
+    print(
+        'didPop Method - Gösterilen sayfa*****************************************************');
+    print(route.settings.name);
+    print(
+        'didPush - Bir önceki sayfa*****************************************************');
+    print(previousRoute?.settings.name.toString());
+
+    super.didPop(route, previousRoute);
+  }
+
+  @override
+  void didChangeTabRoute(TabPageRoute route, TabPageRoute previousRoute) {
+    super.didChangeTabRoute(route, previousRoute);
+    AppbarBaseTabsTitle.setAppTitleWithIndex(route.index);
   }
 }

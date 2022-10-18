@@ -41,7 +41,7 @@ class _BaseTabsViewState extends State<BaseTabsView> {
     super.initState();
     personModel = (widget.personModel as ServiceResult).data as PersonModel ??
         getPersonel();
-    AppbarBaseTabsTitle.setAppTitleWithIndex(0);
+    //AppbarBaseTabsTitle.setAppTitleWithIndex(0);
   }
 
   getPersonel() {
@@ -84,10 +84,10 @@ class _BaseTabsViewState extends State<BaseTabsView> {
         itemPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
         currentIndex: tabsRouter.activeIndex,
         onTap: (index) {
-          AppbarBaseTabsTitle.setAppTitleWithIndex(index);
+          //AppbarBaseTabsTitle.setAppTitleWithIndex(index);
           tabsRouter.setActiveIndex(index);
 
-          AppbarBaseTabsTitle.setAppTitleWithIndex(index);
+          //AppbarBaseTabsTitle.setAppTitleWithIndex(index);
         },
         items: <SalomonBottomBarItem>[
           SalomonBottomBarItem(

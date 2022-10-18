@@ -10,7 +10,7 @@ Değişen enumlara göre body de sayfaları değiştir.
 appbar da sayfa isimlerini AutoRouteObserver ile gözleyip title yazdıracaz
 
 17 Ekim 2022 
--cargoview ekranında kontroller gözden geçirilecek. Kargo Bilgileriin güncellenmesi cargoview üzerinden ayrı bir ekranda yapılabilir
+-cargoview ekranında kontroller gözden geçirilecek. Kargo Bilgilerinin güncellenmesi cargoview üzerinden ayrı bir ekranda yapılabilir
 -eğer personelin kargo adresi girilmemişse bottombarda uyarı verilecek. kırmızı ünlem şeklinde olabilir. 
 -Appbar titleları AutoRouteObserver ile gözlenip Appbarın titlenına yazılacak
 -Ölçü bilgileri ekranı yerine sipariş takibi gibi bir sayfa yapılabilir. Ölçü bilgilerini drawerı koy, bottomda sipariş die bir ekran ekle 
