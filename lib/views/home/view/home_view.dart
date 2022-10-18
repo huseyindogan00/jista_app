@@ -45,49 +45,37 @@ class HomeView extends StatelessWidget {
   _buildCategoryList(BuildContext context) {
     return [
       GestureDetector(
-        child: _buildProductCard(
-            ConstAssetsImages.trainingClothing, 'EĞİTİM GİYECEĞİ'),
+        child: _buildProductCard(ConstAssetsImages.trainingClothing, 'EĞİTİM GİYECEĞİ'),
         onTap: () async {
           bool connection = await controller.internetControl();
           AppbarBaseTabsTitle.setAppTitleWithString('EĞİTİM GİYECEĞİ');
-          if (connection)
-            context.router
-                .push(ProductsRoute(productTypeName: TypeName.egitimGiyecegi));
+          if (connection) context.router.push(ProductsRoute(productTypeName: TypeName.egitimGiyecegi));
         },
       ),
       GestureDetector(
-        child:
-            _buildProductCard(ConstAssetsImages.serviceWear, 'HİZMET GİYECEĞİ'),
+        child: _buildProductCard(ConstAssetsImages.serviceWear, 'HİZMET GİYECEĞİ'),
         onTap: () async {
           bool connection = await controller.internetControl();
           AppbarBaseTabsTitle.setAppTitleWithString('HİZMET GİYECEĞİ');
-          if (connection)
-            context.router
-                .push(ProductsRoute(productTypeName: TypeName.hizmetGiyecegi));
+          if (connection) context.router.push(ProductsRoute(productTypeName: TypeName.hizmetGiyecegi));
         },
       ),
       GestureDetector(
-        child: _buildProductCard(
-            ConstAssetsImages.stafTaskClothing, 'KADRO GÖREV GİYECEĞİ'),
+        child: _buildProductCard(ConstAssetsImages.stafTaskClothing, 'KADRO GÖREV GİYECEĞİ'),
         onTap: () async {
           bool connection = await controller.internetControl();
           AppbarBaseTabsTitle.setAppTitleWithString('KADRO GÖREV GİYECEĞİ');
           if (connection) {
-            bool? result = await context.router.push<bool>(
-                ProductsRoute(productTypeName: TypeName.kadroGorevKiyafeti));
-            if (result!) {}
+            await context.router.push(ProductsRoute(productTypeName: TypeName.kadroGorevKiyafeti));
           }
         },
       ),
       GestureDetector(
-        child: _buildProductCard(
-            ConstAssetsImages.coldClimateClothing, 'SOĞUK İKLİM'),
+        child: _buildProductCard(ConstAssetsImages.coldClimateClothing, 'SOĞUK İKLİM'),
         onTap: () async {
           bool connection = await controller.internetControl();
           AppbarBaseTabsTitle.setAppTitleWithString('SOĞUK İKLİM');
-          if (connection)
-            context.router.push(
-                ProductsRoute(productTypeName: TypeName.sogukIklimGiyecgi));
+          if (connection) context.router.push(ProductsRoute(productTypeName: TypeName.sogukIklimGiyecgi));
         },
       ),
       Obx(
@@ -162,8 +150,7 @@ class HomeView extends StatelessWidget {
         child: ListTile(
           title: Text(
             title,
-            style: ConstTextStyle.categoriTextStyle
-                .copyWith(fontSize: 14, color: Colors.white),
+            style: ConstTextStyle.categoriTextStyle.copyWith(fontSize: 14, color: Colors.white),
           ),
           subtitle: const Text('Buraya açıklama girilecek'),
           trailing: const Icon(Icons.arrow_forward_ios_outlined),

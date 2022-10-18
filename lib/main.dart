@@ -27,8 +27,7 @@ late AnimationController animationController;
 
 void main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
   await Firebase.initializeApp();
   await setupHive();
   setupLocator();
@@ -41,7 +40,7 @@ void main(List<String> args) async {
     title: 'JİSTA',
     routerDelegate: _appRouter.delegate(
       navigatorObservers: () => [
-        MyAppBar(),
+        MyAppbarObserver(),
       ],
     ),
     routeInformationParser: _appRouter.defaultRouteParser(),

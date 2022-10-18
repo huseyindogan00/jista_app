@@ -4,7 +4,8 @@ import 'package:jista/views/base/base_model.dart';
 import '../../../data/constant/appbar_text/appbar_title.dart';
 
 class AppbarBaseTabsTitle {
-  static final _ctrl = Get.find<BaseModel>();
+  static final _ctrl = Get.put<BaseModel>(BaseModel());
+
   static setAppTitleWithIndex(int index) {
     switch (index) {
       case 0:
@@ -23,5 +24,15 @@ class AppbarBaseTabsTitle {
     }
   }
 
-  static setAppTitleWithString(String title) {}
+  static setAppTitleWithString(String? title) {
+    switch (title) {
+      case 'ProductDetailRoute':
+        _ctrl.appbarTitle.value = 'Ürünler';
+        break;
+      case 'ProductsRoute':
+        _ctrl.appbarTitle.value = 'Ürün Detayı';
+        break;
+      default:
+    }
+  }
 }

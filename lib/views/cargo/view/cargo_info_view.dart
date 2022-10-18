@@ -22,31 +22,23 @@ class _CargoInfoViewState extends State<CargoInfoView> {
   TextEditingController townController = TextEditingController();
   TextEditingController postCodeController = TextEditingController();
   TextEditingController fullAddressController = TextEditingController();
-  TextEditingController mobileTelephoneNumberController =
-      TextEditingController();
+  TextEditingController mobileTelephoneNumberController = TextEditingController();
   TextEditingController telephoneNumberController = TextEditingController();
 
-  TextStyle hintTextStyle =
-      TextStyle(color: Colors.cyan.shade400, fontSize: 18);
-  TextStyle dropdownTextStyle = const TextStyle(
-      fontSize: 17, color: Colors.black, fontWeight: FontWeight.bold);
+  TextStyle hintTextStyle = TextStyle(color: Colors.cyan.shade400, fontSize: 18);
+  TextStyle dropdownTextStyle = const TextStyle(fontSize: 17, color: Colors.black, fontWeight: FontWeight.bold);
   Color dropdownColor = const Color.fromARGB(255, 50, 197, 197);
   Color iconDisabledColor = Colors.grey;
   Color iconEnabledColor = const Color.fromARGB(255, 24, 10, 182);
-  BorderRadius dropdownBorderRadius =
-      const BorderRadius.all(Radius.circular(20));
+  BorderRadius dropdownBorderRadius = const BorderRadius.all(Radius.circular(20));
   BorderRadius inputBorderRadius = const BorderRadius.all(Radius.circular(10));
-  List<TextInputFormatter> textInputFormatter = <TextInputFormatter>[
-    FilteringTextInputFormatter.digitsOnly
-  ];
-  TextStyle inputErrorTextStyle =
-      const TextStyle(color: Colors.amber, fontSize: 14);
+  List<TextInputFormatter> textInputFormatter = <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly];
+  TextStyle inputErrorTextStyle = const TextStyle(color: Colors.amber, fontSize: 14);
   TextStyle inputTextStyle = const TextStyle(color: Colors.black, fontSize: 17);
 
   late AddressModel addressModel;
 
-  CargoInfoViewModel viewController =
-      Get.put<CargoInfoViewModel>(CargoInfoViewModel());
+  CargoInfoViewModel viewController = Get.put<CargoInfoViewModel>(CargoInfoViewModel());
 
   @override
   Widget build(BuildContext context) {
@@ -231,11 +223,9 @@ class _CargoInfoViewState extends State<CargoInfoView> {
         items: getCity(),
         onChanged: (cityKey) {
           getTowns(cityKey!);
-          print(viewController.townList?.value);
         },
         onSaved: (newValue) {
           cityController.text = newValue ?? '';
-          print(newValue);
         },
       ),
     );

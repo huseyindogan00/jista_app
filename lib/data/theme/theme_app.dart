@@ -7,7 +7,7 @@ class ThemeApp extends GetxController {
 
   static final themeLight = ThemeData.light().copyWith(
     backgroundColor: bacgroundColorAPP,
-    splashColor: const Color.fromARGB(255, 230, 66, 54),
+    splashColor: Colors.transparent,
     bottomAppBarColor: bottomAppBarColor,
     primaryIconTheme: const IconThemeData(
       color: Color.fromARGB(255, 19, 18, 59),

@@ -27,7 +27,7 @@ class BaseTabsView extends StatefulWidget {
   _BaseTabsViewState createState() => _BaseTabsViewState();
 }
 
-class _BaseTabsViewState extends State<BaseTabsView> {
+class _BaseTabsViewState extends State<BaseTabsView> with AutoRouteAwareStateMixin {
   PersonModel? personModel;
   final String home = 'Anasayfa';
   final String cargoInfo = 'Kargo Bilgileri';
@@ -39,8 +39,7 @@ class _BaseTabsViewState extends State<BaseTabsView> {
   @override
   void initState() {
     super.initState();
-    personModel = (widget.personModel as ServiceResult).data as PersonModel ??
-        getPersonel();
+    personModel = (widget.personModel as ServiceResult).data as PersonModel ?? getPersonel();
     //AppbarBaseTabsTitle.setAppTitleWithIndex(0);
   }
 
@@ -56,16 +55,15 @@ class _BaseTabsViewState extends State<BaseTabsView> {
       darkTheme: ThemeApp.themeDark,
       themeMode: ThemeMode.system,
       home: AutoTabsScaffold(
+        primary: true,
         backgroundColor: const Color.fromARGB(255, 16, 66, 68).withOpacity(0.7),
-        appBarBuilder: (context, tabsRouter) =>
-            MyAppBar.getAppBar(context, tabsRouter),
+        appBarBuilder: (context, tabsRouter) => MyAppbar.getAppBar(context, tabsRouter),
         drawer: NavigationDrawer(
           imagePath: 'assets/images/person.png',
           personModel: personModel!,
         ),
         routes: PagesList.pagesList,
-        bottomNavigationBuilder: (_, tabsRouter) =>
-            _buildBottomNavigatonBar(tabsRouter, context),
+        bottomNavigationBuilder: (_, tabsRouter) => _buildBottomNavigatonBar(tabsRouter, context),
       ),
     );
   }
@@ -84,7 +82,7 @@ class _BaseTabsViewState extends State<BaseTabsView> {
         itemPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
         currentIndex: tabsRouter.activeIndex,
         onTap: (index) {
-          //AppbarBaseTabsTitle.setAppTitleWithIndex(index);
+          AppbarBaseTabsTitle.setAppTitleWithIndex(index);
           tabsRouter.setActiveIndex(index);
 
           //AppbarBaseTabsTitle.setAppTitleWithIndex(index);
