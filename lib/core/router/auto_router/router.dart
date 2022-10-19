@@ -3,6 +3,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:auto_route/empty_router_widgets.dart';
 import 'package:jista/views/base/base_tabs_view.dart';
 import 'package:jista/views/cargo/view/cargo_info_view.dart';
+import 'package:jista/views/cart/view/cart_view.dart';
+import 'package:jista/views/order/view/order_view.dart';
 import 'package:jista/views/product/view/products_view.dart';
 import 'package:jista/views/entry/view/entry_view.dart';
 import 'package:jista/views/home/view/home_view.dart';
@@ -57,16 +59,26 @@ import 'package:jista/views/splash/view/splash_view.dart';
           page: CargoInfoView,
         ),
         AutoRoute(
+          path: 'orderView',
+          name: 'OrderRouter',
+          page: OrderView,
+        ),
+        AutoRoute(
           path: 'rationRequestPeriodView',
           name: 'RationRequestPeriodRouter',
           page: RationRequestPeriodView,
         ),
-        AutoRoute(
+
+        /* AutoRoute(
           path: 'sizeInfoView',
           name: 'SizeInfoRouter',
           page: SizeInfoView,
-        ),
+        ), */
       ],
+    ),
+    AutoRoute(
+      path: 'cart',
+      page: CartView,
     ),
   ],
 )

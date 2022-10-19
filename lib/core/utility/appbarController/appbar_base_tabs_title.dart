@@ -25,6 +25,7 @@ class AppbarBaseTabsTitle {
   }
 
   static setAppTitleWithString(String? title) {
+    _ctrl.appbarTitle.value = title!;
     /* switch (title) {
       case 'ProductDetailRoute':
         _ctrl.appbarTitle.value = 'Ürünler';

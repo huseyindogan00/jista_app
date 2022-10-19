@@ -9,6 +9,7 @@ import 'package:jista/core/utility/appbarController/appbar_base_tabs_title.dart'
 import 'package:jista/data/constant/pages/pages_list.dart';
 import 'package:jista/product/components/appbar.dart';
 import 'package:jista/product/models/person/person_model.dart';
+import 'package:jista/views/order/view/order_view.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import '../../data/theme/theme_app.dart';
 import '../../product/widget/navigation_drawer_widget.dart';
@@ -27,12 +28,11 @@ class BaseTabsView extends StatefulWidget {
   _BaseTabsViewState createState() => _BaseTabsViewState();
 }
 
-class _BaseTabsViewState extends State<BaseTabsView>
-    with AutoRouteAwareStateMixin {
+class _BaseTabsViewState extends State<BaseTabsView> with AutoRouteAwareStateMixin {
   PersonModel? personModel;
   final String home = 'Anasayfa';
   final String cargoInfo = 'Kargo Bilgileri';
-  final String sizeInfo = 'Ölçülerim';
+  final String myOrders = 'Siparişlerim';
   final String requestPeriod = 'İsteklerim';
 
   final controllerBaseTabs = Get.put<BaseModel>(BaseModel());
@@ -40,8 +40,7 @@ class _BaseTabsViewState extends State<BaseTabsView>
   @override
   void initState() {
     super.initState();
-    personModel = (widget.personModel as ServiceResult).data as PersonModel ??
-        getPersonel();
+    personModel = (widget.personModel as ServiceResult).data as PersonModel ?? getPersonel();
     //AppbarBaseTabsTitle.setAppTitleWithIndex(0);
   }
 
@@ -57,20 +56,20 @@ class _BaseTabsViewState extends State<BaseTabsView>
       themeMode: ThemeMode.system,
       home: AutoTabsScaffold(
         backgroundColor: const Color.fromARGB(255, 16, 66, 68).withOpacity(0.7),
-        appBarBuilder: (context, tabsRouter) =>
-            MyAppbar().getAppBar(context, tabsRouter),
-        drawer: NavigationDrawer(
-            imagePath: 'assets/images/person.png', personModel: personModel!),
-        routes: PagesList.pagesList,
-        bottomNavigationBuilder: (_, tabsRouter) =>
-            _buildBottomNavigatonBar(tabsRouter, context),
+        appBarBuilder: (context, tabsRouter) => MyAppbar().getAppBar(context, tabsRouter),
+        drawer: NavigationDrawer(imagePath: 'assets/images/person.png', personModel: personModel!),
+        routes: <PageRouteInfo>[
+          HomeRouter(),
+          CargoInfoRouter(),
+          OrderRouter(),
+          RationRequestPeriodRouter(),
+        ],
+        bottomNavigationBuilder: (_, tabsRouter) => _buildBottomNavigatonBar(tabsRouter, context),
       ),
     );
   }
 
   Widget _buildBottomNavigatonBar(TabsRouter tabsRouter, BuildContext context) {
-    const Color iconColor = Color.fromARGB(255, 255, 255, 255);
-    const Color selectedIcon = Color.fromARGB(158, 57, 179, 184);
     return Material(
       elevation: 5,
       shadowColor: Colors.grey,
@@ -85,41 +84,47 @@ class _BaseTabsViewState extends State<BaseTabsView>
           tabsRouter.setActiveIndex(index);
           //AppbarBaseTabsTitle.setAppTitleWithIndex(index);
         },
-        items: <SalomonBottomBarItem>[
-          SalomonBottomBarItem(
-            selectedColor: selectedIcon,
-            icon: const Icon(
-              Icons.home,
-              color: iconColor,
-            ),
-            title: Text(home, style: Get.theme.textTheme.bodyText1),
-          ),
-          SalomonBottomBarItem(
-            selectedColor: selectedIcon,
-            icon: const Icon(
-              Icons.local_shipping_outlined,
-              color: iconColor,
-            ),
-            title: Text(cargoInfo, style: Get.theme.textTheme.bodyText1),
-          ),
-          SalomonBottomBarItem(
-            selectedColor: selectedIcon,
-            icon: const Icon(
-              Icons.square_foot_outlined,
-              color: iconColor,
-            ),
-            title: Text(sizeInfo, style: Get.theme.textTheme.bodyText1),
-          ),
-          SalomonBottomBarItem(
-            selectedColor: selectedIcon,
-            icon: const Icon(
-              Icons.calendar_month_outlined,
-              color: iconColor,
-            ),
-            title: Text(requestPeriod, style: Get.theme.textTheme.bodyText1),
-          ),
-        ],
+        items: buildBottomBar(),
       ),
     );
+  }
+
+  List<SalomonBottomBarItem> buildBottomBar() {
+    const Color iconColor = Color.fromARGB(255, 255, 255, 255);
+    const Color selectedIcon = Color.fromARGB(158, 57, 179, 184);
+    return <SalomonBottomBarItem>[
+      SalomonBottomBarItem(
+        selectedColor: selectedIcon,
+        icon: const Icon(
+          Icons.home,
+          color: iconColor,
+        ),
+        title: Text(home, style: Get.theme.textTheme.bodyText1),
+      ),
+      SalomonBottomBarItem(
+        selectedColor: selectedIcon,
+        icon: const Icon(
+          Icons.local_shipping_outlined,
+          color: iconColor,
+        ),
+        title: Text(cargoInfo, style: Get.theme.textTheme.bodyText1),
+      ),
+      SalomonBottomBarItem(
+        selectedColor: selectedIcon,
+        icon: const Icon(
+          Icons.circle_notifications_sharp,
+          color: iconColor,
+        ),
+        title: Text(myOrders, style: Get.theme.textTheme.bodyText1),
+      ),
+      SalomonBottomBarItem(
+        selectedColor: selectedIcon,
+        icon: const Icon(
+          Icons.calendar_month_outlined,
+          color: iconColor,
+        ),
+        title: Text(requestPeriod, style: Get.theme.textTheme.bodyText1),
+      ),
+    ];
   }
 }

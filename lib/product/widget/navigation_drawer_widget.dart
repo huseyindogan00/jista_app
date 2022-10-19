@@ -82,6 +82,14 @@ class NavigationDrawer extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             ListTile(
+              leading: Icon(Icons.square_foot_outlined, size: iconSize),
+              title: Text(
+                'Ölçü Bilgilerim',
+                style: textStyle,
+              ),
+              onTap: () {},
+            ),
+            ListTile(
               leading: Icon(Icons.supervised_user_circle, size: iconSize),
               title: Text(
                 'Mutemet İşlemlerim',

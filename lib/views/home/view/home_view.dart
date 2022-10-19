@@ -48,7 +48,7 @@ class HomeView extends StatelessWidget {
         child: _buildProductCard(ConstAssetsImages.trainingClothing, 'EĞİTİM GİYECEĞİ'),
         onTap: () async {
           bool connection = await controller.internetControl();
-          AppbarBaseTabsTitle.setAppTitleWithString('EĞİTİM GİYECEĞİ');
+          //AppbarBaseTabsTitle.setAppTitleWithString('EĞİTİM GİYECEĞİ');
           if (connection) context.router.push(ProductsRoute(productTypeName: TypeName.egitimGiyecegi));
         },
       ),

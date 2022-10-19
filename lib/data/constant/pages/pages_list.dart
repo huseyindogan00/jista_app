@@ -6,7 +6,7 @@ class PagesList {
     return <PageRouteInfo>[
       const HomeRouter(),
       CargoInfoRouter(),
-      SizeInfoRouter(),
+      const OrderRouter(),
       RationRequestPeriodRouter(),
     ];
   }

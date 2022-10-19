@@ -19,14 +19,13 @@ class ProductsView extends StatefulWidget {
   State<ProductsView> createState() => _ProductsViewState();
 }
 
-class _ProductsViewState extends State<ProductsView> {
+class _ProductsViewState extends State<ProductsView> with AutoRouteAwareStateMixin {
   String winter = 'KIŞ';
   String summer = 'YAZ';
   String all = 'HEPSİ';
   String separator = '/';
   String productTypeName = '';
-  TextStyle? textStyle =
-      Get.theme.textTheme.headline6?.copyWith(color: Get.theme.primaryColor);
+  TextStyle? textStyle = Get.theme.textTheme.headline6?.copyWith(color: Get.theme.primaryColor);
   Color selectedColor = Get.theme.backgroundColor;
   Color unSelectedColor = Colors.white;
   //late FirebaseServiceResultModel<List<ProductModel>> serviceResultModel;
@@ -43,36 +42,11 @@ class _ProductsViewState extends State<ProductsView> {
     getAllProduct(productTypeName);
   }
 
-  getAllProduct(String productTypeName) {
-    controller
-        .getAllProduct(productTypeName)
-        .then<FirebaseServiceResultModel<List<ProductModel>>?>((serviceResult) {
-      controller.serviceResultModel.value = serviceResult!;
-      return null;
-    });
-    return null;
-    //controller.serviceResultModel.value = serviceResult!;
-  }
-
-  getFilterProduct(String seasonName) {
-    controller
-        .getFilterProducts(seasonName, productTypeName)
-        .then<FirebaseServiceResultModel<List<ProductModel>>?>((serviceResult) {
-      controller.serviceResultModel.value = serviceResult!;
-      return null;
-    });
-    return null;
-    //controller.serviceResultModel.value = serviceResult!;
-  }
-
-  getFilter(String seasonFilter) {
-    List<ProductModel> productFilter = [];
-    for (var product in controller.serviceResultModel.value.data!) {
-      if (product.season == seasonFilter) {
-        productFilter.add(product);
-      }
-    }
-    controller.serviceResultModel.value.data = productFilter;
+  @override
+  void didPush() {
+    // TODO: implement didPush
+    super.didPush();
+    print('product sayfası girdi ***************************** ');
   }
 
   @override
@@ -111,8 +85,7 @@ class _ProductsViewState extends State<ProductsView> {
     return Expanded(
       child: GridView.builder(
         itemCount: controller.serviceResultModel.value.data?.length,
-        gridDelegate:
-            const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
         itemBuilder: (context, index) {
           var product = controller.serviceResultModel.value.data![index];
           return InkWell(
@@ -134,22 +107,22 @@ class _ProductsViewState extends State<ProductsView> {
                     ),
                   ),
                   Expanded(
-                    child: Container(
-                      margin: const EdgeInsets.all(10),
-                      child: const Image(
-                        image: AssetImage('assets/images/jandarma_logo.jpg'),
-                        fit: BoxFit.cover,
+                    child: Hero(
+                      tag: product.id,
+                      child: Container(
+                        margin: const EdgeInsets.all(10),
+                        child: const Image(
+                          image: NetworkImage(
+                              'https://firebasestorage.googleapis.com/v0/b/jista-81374.appspot.com/o/hizmet_kiyafeti%2Fhizmet_kiyafeti.png?alt=media&token=ff60b28b-7be1-47d2-96da-89000721d5b7'),
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                   ),
-                  Expanded(
-                      child: Text(product.season,
-                          style: const TextStyle(fontSize: 10))),
+                  Expanded(child: Text(product.season, style: const TextStyle(fontSize: 10))),
                   Row(
                     children: [
-                      Expanded(
-                          child: Text(product.point.toString(),
-                              style: const TextStyle(fontSize: 10))),
+                      Expanded(child: Text(product.point.toString(), style: const TextStyle(fontSize: 10))),
                       SizedBox(
                         width: 60,
                         height: 20,
@@ -158,9 +131,7 @@ class _ProductsViewState extends State<ProductsView> {
                             /****************************************/
                             // SEPETE EKLEME YAPILACAK
                           },
-                          child: Text('EKLE',
-                              style: TextStyle(
-                                  fontSize: 10, color: Colors.green.shade900)),
+                          child: Text('EKLE', style: TextStyle(fontSize: 10, color: Colors.green.shade900)),
                         ),
                       ),
                     ],
@@ -172,6 +143,36 @@ class _ProductsViewState extends State<ProductsView> {
         },
       ),
     );
+  }
+
+  getAllProduct(String productTypeName) {
+    controller.getAllProduct(productTypeName).then<FirebaseServiceResultModel<List<ProductModel>>?>((serviceResult) {
+      controller.serviceResultModel.value = serviceResult!;
+      return null;
+    });
+    return null;
+    //controller.serviceResultModel.value = serviceResult!;
+  }
+
+  getFilterProduct(String seasonName) {
+    controller
+        .getFilterProducts(seasonName, productTypeName)
+        .then<FirebaseServiceResultModel<List<ProductModel>>?>((serviceResult) {
+      controller.serviceResultModel.value = serviceResult!;
+      return null;
+    });
+    return null;
+    //controller.serviceResultModel.value = serviceResult!;
+  }
+
+  getFilter(String seasonFilter) {
+    List<ProductModel> productFilter = [];
+    for (var product in controller.serviceResultModel.value.data!) {
+      if (product.season == seasonFilter) {
+        productFilter.add(product);
+      }
+    }
+    controller.serviceResultModel.value.data = productFilter;
   }
 
   Row _buildRowFilter() {
@@ -189,8 +190,7 @@ class _ProductsViewState extends State<ProductsView> {
               child: Chip(
                 label: Text(all, style: textStyle),
                 elevation: 3,
-                backgroundColor:
-                    controller.isAll.value ? selectedColor : unSelectedColor,
+                backgroundColor: controller.isAll.value ? selectedColor : unSelectedColor,
               ),
               onTap: () {
                 controller.isAll.value = !controller.isAll.value;
@@ -208,8 +208,7 @@ class _ProductsViewState extends State<ProductsView> {
               child: Chip(
                 label: Text(winter, style: textStyle),
                 elevation: 3,
-                backgroundColor:
-                    controller.isWinter.value ? selectedColor : unSelectedColor,
+                backgroundColor: controller.isWinter.value ? selectedColor : unSelectedColor,
               ),
               onTap: () {
                 controller.isWinter.value = !controller.isWinter.value;
@@ -232,8 +231,7 @@ class _ProductsViewState extends State<ProductsView> {
               child: Chip(
                 label: Text(summer, style: textStyle),
                 elevation: 3,
-                backgroundColor:
-                    controller.isSummer.value ? selectedColor : unSelectedColor,
+                backgroundColor: controller.isSummer.value ? selectedColor : unSelectedColor,
               ),
               onTap: () {
                 controller.isSummer.value = !controller.isSummer.value;
