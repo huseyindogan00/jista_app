@@ -1,9 +1,10 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:jista/core/utility/appbarController/appbar_base_tabs_title.dart';
 
-class ProductDetailView extends StatelessWidget {
-  ProductDetailView({@PathParam() required this.productModel, super.key});
+class ProductDetailsView extends StatelessWidget {
+  ProductDetailsView({@PathParam() required this.productModel, super.key});
 
   dynamic productModel;
 
@@ -15,18 +16,16 @@ class ProductDetailView extends StatelessWidget {
         child: Column(
           textDirection: TextDirection.ltr,
           children: [
-            Text(
-              productModel.title,
-            ),
+            Text(productModel.title),
             Container(
                 margin: const EdgeInsets.all(20),
-                child: const Image(image: AssetImage('assets/images/jandarma_logo.jpg'), fit: BoxFit.cover)),
+                child: const Image(
+                    image: AssetImage('assets/images/jandarma_logo.jpg'),
+                    fit: BoxFit.cover)),
             Text(productModel.title),
             OverflowBar(
               children: [
-                Text(
-                  productModel.point.toString(),
-                ),
+                Text(productModel.point.toString()),
                 TextButton(
                   onPressed: () {
                     /****************************************/
@@ -34,7 +33,8 @@ class ProductDetailView extends StatelessWidget {
                   },
                   child: Text(
                     'EKLE',
-                    style: TextStyle(fontSize: 18, color: Colors.green.shade900),
+                    style:
+                        TextStyle(fontSize: 18, color: Colors.green.shade900),
                   ),
                 )
               ],

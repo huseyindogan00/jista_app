@@ -25,7 +25,7 @@ class AppbarBaseTabsTitle {
   }
 
   static setAppTitleWithString(String? title) {
-    switch (title) {
+    /* switch (title) {
       case 'ProductDetailRoute':
         _ctrl.appbarTitle.value = 'Ürünler';
         break;
@@ -33,6 +33,6 @@ class AppbarBaseTabsTitle {
         _ctrl.appbarTitle.value = 'Ürün Detayı';
         break;
       default:
-    }
+    } */
   }
 }
