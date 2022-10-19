@@ -18,4 +18,12 @@ ve o ekran üzerinden mevcutta bulanan siparişlerin takibi yapılsın
 
 19 Ekim 2022
 * appbar title değiştirme olmadı. Diğer işlere devam edilecek. Daha sonra appbartitle değiştirmeye bakılacak
- 
+* 
+
+
+20 Ekim 2022 YAPILACAKLAR
+1. imageler firebase eklendikten sonra url leri sabitlerde tutulacak ve resimler o sabitler üzerinden network image ile çağrılacak.
+2. product ve productView ekranları son halini yap
+3. EKLE butonunu aktif et ve eklenilen ürünleri cartView ekranında göster
+4. sepetin onaylanmasından önce cargo ve mutemetlik verilerini kontrol et, eğer girilmemişse sırasıyla cargo ve mutemetlik ekranlarına yönlendir. Veriler girildikten sonra tekrar sepet ekranına döndür.
+5. 
