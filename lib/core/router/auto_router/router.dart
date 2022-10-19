@@ -47,7 +47,7 @@ import 'package:jista/views/splash/view/splash_view.dart';
             ),
             AutoRoute(
               path: ':productModel',
-              page: ProductDetailView,
+              page: ProductDetailsView,
             ),
           ],
         ),

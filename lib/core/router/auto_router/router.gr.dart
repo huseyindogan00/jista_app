@@ -94,14 +94,14 @@ class AutoRouter extends _i12.RootStackRouter {
           child: _i10.ProductsView(
               key: args.key, productTypeName: args.productTypeName));
     },
-    ProductDetailRoute.name: (routeData) {
+    ProductDetailsRoute.name: (routeData) {
       final pathParams = routeData.inheritedPathParams;
-      final args = routeData.argsAs<ProductDetailRouteArgs>(
-          orElse: () => ProductDetailRouteArgs(
+      final args = routeData.argsAs<ProductDetailsRouteArgs>(
+          orElse: () => ProductDetailsRouteArgs(
               productModel: pathParams.get('productModel')));
       return _i12.MaterialPageX<dynamic>(
           routeData: routeData,
-          child: _i11.ProductDetailView(
+          child: _i11.ProductDetailsView(
               productModel: args.productModel, key: args.key));
     }
   };
@@ -120,7 +120,7 @@ class AutoRouter extends _i12.RootStackRouter {
                     path: '', parent: HomeRouter.name),
                 _i12.RouteConfig(ProductsRoute.name,
                     path: ':productTypeName', parent: HomeRouter.name),
-                _i12.RouteConfig(ProductDetailRoute.name,
+                _i12.RouteConfig(ProductDetailsRoute.name,
                     path: ':productModel', parent: HomeRouter.name)
               ]),
           _i12.RouteConfig(CargoInfoRouter.name,
@@ -332,19 +332,19 @@ class ProductsRouteArgs {
 }
 
 /// generated route for
-/// [_i11.ProductDetailView]
-class ProductDetailRoute extends _i12.PageRouteInfo<ProductDetailRouteArgs> {
-  ProductDetailRoute({required dynamic productModel, _i13.Key? key})
-      : super(ProductDetailRoute.name,
+/// [_i11.ProductDetailsView]
+class ProductDetailsRoute extends _i12.PageRouteInfo<ProductDetailsRouteArgs> {
+  ProductDetailsRoute({required dynamic productModel, _i13.Key? key})
+      : super(ProductDetailsRoute.name,
             path: ':productModel',
-            args: ProductDetailRouteArgs(productModel: productModel, key: key),
+            args: ProductDetailsRouteArgs(productModel: productModel, key: key),
             rawPathParams: {'productModel': productModel});
 
-  static const String name = 'ProductDetailRoute';
+  static const String name = 'ProductDetailsRoute';
 }
 
-class ProductDetailRouteArgs {
-  const ProductDetailRouteArgs({required this.productModel, this.key});
+class ProductDetailsRouteArgs {
+  const ProductDetailsRouteArgs({required this.productModel, this.key});
 
   final dynamic productModel;
 
@@ -352,6 +352,6 @@ class ProductDetailRouteArgs {
 
   @override
   String toString() {
-    return 'ProductDetailRouteArgs{productModel: $productModel, key: $key}';
+    return 'ProductDetailsRouteArgs{productModel: $productModel, key: $key}';
   }
 }

@@ -7,17 +7,37 @@ import 'package:get/get.dart';
 import 'package:jista/core/utility/appbarController/appbar_base_tabs_title.dart';
 import '../../views/base/base_model.dart';
 
-class MyAppbar {
-  static final BaseModel _controllerBaseModel = Get.put<BaseModel>(BaseModel());
+class MyAppbar extends AutoRouterObserver {
+  final BaseModel _controllerBaseModel = Get.put<BaseModel>(BaseModel());
 
-  static AppBar getAppBar(BuildContext context, TabsRouter tabsRouter) {
+  setAppbarTitle(String routeName) {
+    switch (routeName) {
+      case 'HomeRoute':
+        _controllerBaseModel.appbarTitle.value = 'Anasayfa';
+        break;
+      case 'ProductsRoute':
+        _controllerBaseModel.appbarTitle.value = 'Ürünler';
+        break;
+      case 'ProductsDetailsRoute':
+        _controllerBaseModel.appbarTitle.value = 'ÜrünlerDetayı';
+        break;
+      default:
+    }
+  }
+
+  @override
+  void didPush(Route route, Route? previousRoute) {
+    // TODO: implement didPush
+    super.didPush(route, previousRoute);
+    print('itilen sayfa -----------------> ${route.settings.name}');
+    //setAppbarTitle(route.settings.name.toString());
+  }
+
+  PreferredSizeWidget getAppBar(BuildContext context, TabsRouter tabsRouter) {
     print('Appbar sınıfı çağrıldı ');
-
     return AppBar(
       centerTitle: true,
       leading: const AutoLeadingButton(),
-      //backgroundColor: Get.theme.backgroundColor,
-
       title: Obx(
         () => Text(
           _controllerBaseModel.appbarTitle.value,
@@ -39,7 +59,8 @@ class MyAppbar {
               badgeContent: Obx(
                 () => Text(
                   _controllerBaseModel.cartTotal.value.toString(),
-                  style: Get.theme.textTheme.headline6?.copyWith(color: Colors.red),
+                  style: Get.theme.textTheme.headline6
+                      ?.copyWith(color: Colors.red),
                 ),
               ),
               child: const Icon(Icons.add_shopping_cart_sharp),
@@ -97,14 +118,33 @@ class MyAppbar {
   NavigatorState? get navigator =>  ; */
 }
 
-class MyAppbarObserver extends AutoRouteObserver {
+
+
+
+/* class MyAppbarObserver extends AutoRouteObserver {
   @override
   void didPush(Route route, Route? previousRoute) {
     print('didPush değerii ------> ${route.settings.name}');
-    AppbarBaseTabsTitle.setAppTitleWithString(route.settings.name);
+    switch (route.settings.name) {
+      case 'ProductsRoute':
+        titleAppbar = 'Ürünlerss';
+        break;
+      case 'ProductsDetailsRoute':
+        titleAppbar = 'ÜrünlerDetayı';
+        break;
+      default:
+    }
     super.didPop(route, previousRoute);
   }
 }
+ */
+
+
+
+
+
+
+
 
 /* class MyAppBar extends AutoRouterObserver {
   //MyAppBar._singleInstance();

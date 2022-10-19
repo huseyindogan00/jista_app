@@ -25,7 +25,8 @@ class _ProductsViewState extends State<ProductsView> {
   String all = 'HEPSİ';
   String separator = '/';
   String productTypeName = '';
-  TextStyle? textStyle = Get.theme.textTheme.headline6?.copyWith(color: Get.theme.primaryColor);
+  TextStyle? textStyle =
+      Get.theme.textTheme.headline6?.copyWith(color: Get.theme.primaryColor);
   Color selectedColor = Get.theme.backgroundColor;
   Color unSelectedColor = Colors.white;
   //late FirebaseServiceResultModel<List<ProductModel>> serviceResultModel;
@@ -43,7 +44,9 @@ class _ProductsViewState extends State<ProductsView> {
   }
 
   getAllProduct(String productTypeName) {
-    controller.getAllProduct(productTypeName).then<FirebaseServiceResultModel<List<ProductModel>>?>((serviceResult) {
+    controller
+        .getAllProduct(productTypeName)
+        .then<FirebaseServiceResultModel<List<ProductModel>>?>((serviceResult) {
       controller.serviceResultModel.value = serviceResult!;
       return null;
     });
@@ -108,12 +111,13 @@ class _ProductsViewState extends State<ProductsView> {
     return Expanded(
       child: GridView.builder(
         itemCount: controller.serviceResultModel.value.data?.length,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+        gridDelegate:
+            const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
         itemBuilder: (context, index) {
           var product = controller.serviceResultModel.value.data![index];
           return InkWell(
             onTap: () {
-              context.router.push(ProductDetailRoute(productModel: product));
+              context.router.push(ProductDetailsRoute(productModel: product));
             },
             child: Container(
               color: Colors.grey,
@@ -138,10 +142,14 @@ class _ProductsViewState extends State<ProductsView> {
                       ),
                     ),
                   ),
-                  Expanded(child: Text(product.season, style: const TextStyle(fontSize: 10))),
+                  Expanded(
+                      child: Text(product.season,
+                          style: const TextStyle(fontSize: 10))),
                   Row(
                     children: [
-                      Expanded(child: Text(product.point.toString(), style: const TextStyle(fontSize: 10))),
+                      Expanded(
+                          child: Text(product.point.toString(),
+                              style: const TextStyle(fontSize: 10))),
                       SizedBox(
                         width: 60,
                         height: 20,
@@ -150,7 +158,9 @@ class _ProductsViewState extends State<ProductsView> {
                             /****************************************/
                             // SEPETE EKLEME YAPILACAK
                           },
-                          child: Text('EKLE', style: TextStyle(fontSize: 10, color: Colors.green.shade900)),
+                          child: Text('EKLE',
+                              style: TextStyle(
+                                  fontSize: 10, color: Colors.green.shade900)),
                         ),
                       ),
                     ],
@@ -179,7 +189,8 @@ class _ProductsViewState extends State<ProductsView> {
               child: Chip(
                 label: Text(all, style: textStyle),
                 elevation: 3,
-                backgroundColor: controller.isAll.value ? selectedColor : unSelectedColor,
+                backgroundColor:
+                    controller.isAll.value ? selectedColor : unSelectedColor,
               ),
               onTap: () {
                 controller.isAll.value = !controller.isAll.value;
@@ -197,7 +208,8 @@ class _ProductsViewState extends State<ProductsView> {
               child: Chip(
                 label: Text(winter, style: textStyle),
                 elevation: 3,
-                backgroundColor: controller.isWinter.value ? selectedColor : unSelectedColor,
+                backgroundColor:
+                    controller.isWinter.value ? selectedColor : unSelectedColor,
               ),
               onTap: () {
                 controller.isWinter.value = !controller.isWinter.value;
@@ -220,7 +232,8 @@ class _ProductsViewState extends State<ProductsView> {
               child: Chip(
                 label: Text(summer, style: textStyle),
                 elevation: 3,
-                backgroundColor: controller.isSummer.value ? selectedColor : unSelectedColor,
+                backgroundColor:
+                    controller.isSummer.value ? selectedColor : unSelectedColor,
               ),
               onTap: () {
                 controller.isSummer.value = !controller.isSummer.value;

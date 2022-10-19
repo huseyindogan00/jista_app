@@ -22,12 +22,13 @@ import 'core/router/auto_router/router.gr.dart';
 // SİNGLE OBJECT OLUŞTURUCU
 GetIt locator = GetIt.instance;
 // FLOATİN ACTIN BUTTON - BUBBLE ANIMATION
-late Animation<double> animation;
-late AnimationController animationController;
+/* late Animation<double> animation;
+late AnimationController animationController; */
 
 void main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+  SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
   await Firebase.initializeApp();
   await setupHive();
   setupLocator();
@@ -40,7 +41,7 @@ void main(List<String> args) async {
     title: 'JİSTA',
     routerDelegate: _appRouter.delegate(
       navigatorObservers: () => [
-        MyAppbarObserver(),
+        MyAppbar(),
       ],
     ),
     routeInformationParser: _appRouter.defaultRouteParser(),

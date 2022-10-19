@@ -15,4 +15,7 @@ appbar da sayfa isimlerini AutoRouteObserver ile gözleyip title yazdıracaz
 -Appbar titleları AutoRouteObserver ile gözlenip Appbarın titlenına yazılacak
 -Ölçü bilgileri ekranı yerine sipariş takibi gibi bir sayfa yapılabilir. Ölçü bilgilerini drawerı koy, bottomda sipariş die bir ekran ekle 
 ve o ekran üzerinden mevcutta bulanan siparişlerin takibi yapılsın
+
+19 Ekim 2022
+* appbar title değiştirme olmadı. Diğer işlere devam edilecek. Daha sonra appbartitle değiştirmeye bakılacak
  
