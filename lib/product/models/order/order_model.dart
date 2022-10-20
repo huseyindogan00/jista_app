@@ -12,23 +12,23 @@ class OrderModel {
   @HiveField(0)
   String? id;
   @HiveField(1)
-  ProductModel productModel;
+  String productId;
   @HiveField(2)
   DateTime dateTime;
   OrderModel({
-    required this.id,
-    required this.productModel,
+    this.id,
+    required this.productId,
     required this.dateTime,
   });
 
   OrderModel copyWith({
     String? id,
-    ProductModel? productModel,
+    String? productId,
     DateTime? dateTime,
   }) {
     return OrderModel(
       id: id ?? this.id,
-      productModel: productModel ?? this.productModel,
+      productId: productId ?? this.productId,
       dateTime: dateTime ?? this.dateTime,
     );
   }
@@ -36,38 +36,33 @@ class OrderModel {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,
-      'productModel': productModel.toMap(),
+      'productId': productId,
       'dateTime': dateTime.millisecondsSinceEpoch,
     };
   }
 
   factory OrderModel.fromMap(Map<String, dynamic> map) {
     return OrderModel(
-      id: map['id'] as String,
-      productModel:
-          ProductModel.fromMap(map['productModel'] as Map<String, dynamic>),
+      id: map['id'] != null ? map['id'] as String : null,
+      productId: map['productId'] as String,
       dateTime: DateTime.fromMillisecondsSinceEpoch(map['dateTime'] as int),
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory OrderModel.fromJson(String source) =>
-      OrderModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory OrderModel.fromJson(String source) => OrderModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
-  String toString() =>
-      'OrderModel(id: $id, productModel: $productModel, dateTime: $dateTime)';
+  String toString() => 'OrderModel(id: $id, productId: $productId, dateTime: $dateTime)';
 
   @override
   bool operator ==(covariant OrderModel other) {
     if (identical(this, other)) return true;
 
-    return other.id == id &&
-        other.productModel == productModel &&
-        other.dateTime == dateTime;
+    return other.id == id && other.productId == productId && other.dateTime == dateTime;
   }
 
   @override
-  int get hashCode => id.hashCode ^ productModel.hashCode ^ dateTime.hashCode;
+  int get hashCode => id.hashCode ^ productId.hashCode ^ dateTime.hashCode;
 }

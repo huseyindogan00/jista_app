@@ -18,7 +18,7 @@ class OrderModelAdapter extends TypeAdapter<OrderModel> {
     };
     return OrderModel(
       id: fields[0] as String?,
-      productModel: fields[1] as ProductModel,
+      productId: fields[1] as String,
       dateTime: fields[2] as DateTime,
     );
   }
@@ -30,7 +30,7 @@ class OrderModelAdapter extends TypeAdapter<OrderModel> {
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
-      ..write(obj.productModel)
+      ..write(obj.productId)
       ..writeByte(2)
       ..write(obj.dateTime);
   }

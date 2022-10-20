@@ -6,6 +6,7 @@ import 'package:jista/product/models/product/product_model.dart';
 
 import '../../core/services/service/hive_service.dart';
 import '../../core/utility/internet_connection_control.dart';
+import '../../product/models/cart/cart_model.dart';
 import '../../product/models/person/person_model.dart';
 
 class BaseModel extends GetxController {
@@ -21,6 +22,7 @@ class BaseModel extends GetxController {
   // SEPETTE TUTULACAK PRODUCT LİST
   //--------------------------------------------------
   RxList<ProductModel> products = <ProductModel>[].obs;
+  RxList<CartModel> cartItem = <CartModel>[].obs;
 
   // SEPET GÜNCELLEME
   //--------------------------------------------------
