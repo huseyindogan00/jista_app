@@ -19,13 +19,15 @@ class ProductsView extends StatefulWidget {
   State<ProductsView> createState() => _ProductsViewState();
 }
 
-class _ProductsViewState extends State<ProductsView> with AutoRouteAwareStateMixin {
+class _ProductsViewState extends State<ProductsView>
+    with AutoRouteAwareStateMixin {
   String winter = 'KIŞ';
   String summer = 'YAZ';
   String all = 'HEPSİ';
   String separator = '/';
   String productTypeName = '';
-  TextStyle? textStyle = Get.theme.textTheme.headline6?.copyWith(color: Get.theme.primaryColor);
+  TextStyle? filterTextStyle = Get.theme.textTheme.headline6
+      ?.copyWith(color: Get.theme.primaryColor, fontSize: 18);
   Color selectedColor = Get.theme.backgroundColor;
   Color unSelectedColor = Colors.white;
   //late FirebaseServiceResultModel<List<ProductModel>> serviceResultModel;
@@ -40,13 +42,6 @@ class _ProductsViewState extends State<ProductsView> with AutoRouteAwareStateMix
     controller.isWinter.value = false;
     productTypeName = widget.productTypeName;
     getAllProduct(productTypeName);
-  }
-
-  @override
-  void didPush() {
-    // TODO: implement didPush
-    super.didPush();
-    print('product sayfası girdi ***************************** ');
   }
 
   @override
@@ -72,7 +67,7 @@ class _ProductsViewState extends State<ProductsView> with AutoRouteAwareStateMix
                       )
                     : Column(
                         children: [
-                          _buildProducts(),
+                          _buildGridViewProducts(),
                         ],
                       ),
           ),
@@ -81,59 +76,33 @@ class _ProductsViewState extends State<ProductsView> with AutoRouteAwareStateMix
     );
   }
 
-  Widget _buildProducts() {
+  Widget _buildGridViewProducts() {
     return Expanded(
       child: GridView.builder(
         itemCount: controller.serviceResultModel.value.data?.length,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            childAspectRatio: 0.5, crossAxisCount: 2),
         itemBuilder: (context, index) {
-          var product = controller.serviceResultModel.value.data![index];
+          ProductModel product =
+              controller.serviceResultModel.value.data![index];
+          print('product sayfasında olan id-----------> ${product.id} ');
           return InkWell(
             onTap: () {
               context.router.push(ProductDetailsRoute(productModel: product));
             },
             child: Container(
               color: Colors.grey,
-              padding: const EdgeInsets.all(10),
+              //padding: const EdgeInsets.all(10),
               margin: const EdgeInsets.all(10),
               child: Column(
                 children: [
-                  Expanded(
-                    child: Center(
-                      child: Text(
-                        product.type,
-                        style: const TextStyle(fontSize: 10),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Hero(
-                      tag: product.id,
-                      child: Container(
-                        margin: const EdgeInsets.all(10),
-                        child: const Image(
-                          image: NetworkImage(
-                              'https://firebasestorage.googleapis.com/v0/b/jista-81374.appspot.com/o/hizmet_kiyafeti%2Fhizmet_kiyafeti.png?alt=media&token=ff60b28b-7be1-47d2-96da-89000721d5b7'),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Expanded(child: Text(product.season, style: const TextStyle(fontSize: 10))),
+                  //_buildTypeText(product),
+                  _buildImage(),
+                  _buildChipWidget(product),
                   Row(
                     children: [
-                      Expanded(child: Text(product.point.toString(), style: const TextStyle(fontSize: 10))),
-                      SizedBox(
-                        width: 60,
-                        height: 20,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            /****************************************/
-                            // SEPETE EKLEME YAPILACAK
-                          },
-                          child: Text('EKLE', style: TextStyle(fontSize: 10, color: Colors.green.shade900)),
-                        ),
-                      ),
+                      _buildPointText(product),
+                      _buildButtonCartAdd(),
                     ],
                   ),
                 ],
@@ -145,8 +114,76 @@ class _ProductsViewState extends State<ProductsView> with AutoRouteAwareStateMix
     );
   }
 
+  SizedBox _buildButtonCartAdd() {
+    return SizedBox(
+      width: 60,
+      height: 20,
+      child: ElevatedButton(
+        onPressed: () {
+          /****************************************/
+          // SEPETE EKLEME YAPILACAK
+        },
+        child: Text('EKLE',
+            style: TextStyle(fontSize: 10, color: Colors.green.shade900)),
+      ),
+    );
+  }
+
+  Expanded _buildPointText(ProductModel product) {
+    return Expanded(
+        flex: 1,
+        child: Text('${product.point} puan',
+            style: const TextStyle(fontSize: 18)));
+  }
+
+  Expanded _buildChipWidget(ProductModel product) {
+    const TextStyle chipTextStyle =
+        TextStyle(fontSize: 10, color: Color.fromARGB(255, 35, 34, 32));
+    return Expanded(
+      flex: 2,
+      child: Wrap(
+        children: [
+          Chip(label: Text(product.season, style: chipTextStyle)),
+          Chip(label: Text(product.gender, style: chipTextStyle)),
+          Chip(label: Text(product.rank, style: chipTextStyle)),
+          Chip(
+              label: Text(
+                  product.cargoStatus ? 'Kargo var' : 'Kargo Gönderimi Yok',
+                  style: chipTextStyle)),
+        ],
+      ),
+    );
+  }
+
+  Expanded _buildImage() {
+    return Expanded(
+      flex: 4,
+      child: Container(
+        padding: EdgeInsets.only(top: 2, bottom: 5),
+        child: const Image( ,
+          image: NetworkImage(
+              'https://firebasestorage.googleapis.com/v0/b/jista-81374.appspot.com/o/hizmet_kiyafeti%2Fhizmet_kiyafeti.png?alt=media&token=ff60b28b-7be1-47d2-96da-89000721d5b7'),
+          fit: BoxFit.fill,
+        ),
+      ),
+    );
+  }
+
+  Expanded _buildTypeText(ProductModel product) {
+    return Expanded(
+      child: Center(
+        child: Text(
+          product.type,
+          style: const TextStyle(fontSize: 18),
+        ),
+      ),
+    );
+  }
+
   getAllProduct(String productTypeName) {
-    controller.getAllProduct(productTypeName).then<FirebaseServiceResultModel<List<ProductModel>>?>((serviceResult) {
+    controller
+        .getAllProduct(productTypeName)
+        .then<FirebaseServiceResultModel<List<ProductModel>>?>((serviceResult) {
       controller.serviceResultModel.value = serviceResult!;
       return null;
     });
@@ -188,9 +225,10 @@ class _ProductsViewState extends State<ProductsView> with AutoRouteAwareStateMix
           () {
             return InkWell(
               child: Chip(
-                label: Text(all, style: textStyle),
+                label: Text(all, style: filterTextStyle),
                 elevation: 3,
-                backgroundColor: controller.isAll.value ? selectedColor : unSelectedColor,
+                backgroundColor:
+                    controller.isAll.value ? selectedColor : unSelectedColor,
               ),
               onTap: () {
                 controller.isAll.value = !controller.isAll.value;
@@ -206,9 +244,10 @@ class _ProductsViewState extends State<ProductsView> with AutoRouteAwareStateMix
           () {
             return InkWell(
               child: Chip(
-                label: Text(winter, style: textStyle),
+                label: Text(winter, style: filterTextStyle),
                 elevation: 3,
-                backgroundColor: controller.isWinter.value ? selectedColor : unSelectedColor,
+                backgroundColor:
+                    controller.isWinter.value ? selectedColor : unSelectedColor,
               ),
               onTap: () {
                 controller.isWinter.value = !controller.isWinter.value;
@@ -229,9 +268,10 @@ class _ProductsViewState extends State<ProductsView> with AutoRouteAwareStateMix
           () {
             return InkWell(
               child: Chip(
-                label: Text(summer, style: textStyle),
+                label: Text(summer, style: filterTextStyle),
                 elevation: 3,
-                backgroundColor: controller.isSummer.value ? selectedColor : unSelectedColor,
+                backgroundColor:
+                    controller.isSummer.value ? selectedColor : unSelectedColor,
               ),
               onTap: () {
                 controller.isSummer.value = !controller.isSummer.value;
