@@ -39,11 +39,7 @@ void main(List<String> args) async {
   runApp(MaterialApp.router(
     builder: EasyLoading.init(),
     title: 'JİSTA',
-    routerDelegate: _appRouter.delegate(
-      navigatorObservers: () => [
-        MyAppbar(),
-      ],
-    ),
+    routerDelegate: _appRouter.delegate(),
     routeInformationParser: _appRouter.defaultRouteParser(),
   ));
 }

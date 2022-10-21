@@ -13,7 +13,6 @@ class CartView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(cartController.cartItem.value.length);
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -21,32 +20,18 @@ class CartView extends StatelessWidget {
           systemOverlayStyle: SystemUiOverlayStyle.dark,
           centerTitle: true,
         ),
-        body: Column(
-          children: [
-            Container(
-              color: Colors.grey,
-              width: double.infinity,
-              child: cartController.cartItem.value.isEmpty
-                  ? const Center(
-                      child: Text('Sepetiniz boş'),
-                    )
-                  : GetBuilder<CartViewModel>(
-                      builder: (controller) => ListView.builder(
-                        itemCount: controller.cartItem.value.length,
-                        itemBuilder: (context, index) {
-                          CartModel cartItem = controller.cartItem.value[index];
-                          return Card(
-                            child: ListTile(
-                              leading: Text(cartItem.productModel.gender),
-                              title: Text(cartItem.productModel.type),
-                              subtitle: Text(cartItem.productModel.title),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-            ),
-          ],
+        body: ListView.builder(
+          itemCount: CartViewModel.cartListItem.length,
+          itemBuilder: (context, index) {
+            CartModel cartItem = CartViewModel.cartListItem[index];
+            return Card(
+              child: ListTile(
+                leading: Text(cartItem.productModel.gender),
+                title: Text(cartItem.productModel.type),
+                subtitle: Text(cartItem.productModel.title),
+              ),
+            );
+          },
         ),
       ),
     );

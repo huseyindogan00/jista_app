@@ -6,6 +6,7 @@ import 'package:jista/views/base/base_model.dart';
 import '../../../product/models/cart/cart_model.dart';
 
 class CartViewModel extends BaseModel {
+  static List<CartModel> cartListItem = <CartModel>[];
   addOrder(String personId, OrderModel orderModel) {
     /* veritabanına ekleme işlemleri yapılacak */
   }

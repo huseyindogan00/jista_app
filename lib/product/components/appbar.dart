@@ -8,32 +8,8 @@ import 'package:jista/core/router/auto_router/router.gr.dart';
 import 'package:jista/core/utility/appbarController/appbar_base_tabs_title.dart';
 import '../../views/base/base_model.dart';
 
-class MyAppbar extends AutoRouteObserver {
-  final BaseModel _controllerBaseModel = Get.put<BaseModel>(BaseModel());
-
-  /*  setAppbarTitle(String? routeName) {
-    print(_controllerBaseModel.appbarTitle.value);
-    print('******************************************');
-    switch (routeName) {
-      case 'HomeRoute':
-        print('anasayfaya  sayfasına girdi');
-        _controllerBaseModel.appbarTitle.value = 'Anasayfa';
-        break;
-      case 'ProductsRoute':
-        print('ürünler sayfasına girdi');
-        _controllerBaseModel.appbarTitle.value = 'Ürünler';
-        break;
-      case 'ProductDetailsRoute':
-        print('ürünler detayına girdi');
-        _controllerBaseModel.appbarTitle.value = 'Ürünler Detayı';
-        break;
-      case 'null':
-        print('null geldi');
-        _controllerBaseModel.appbarTitle.value = 'Anasayfa';
-        break;
-      default:
-    }
-  } */
+class MyAppbar {
+  final _baseModelController = Get.put<BaseModel>(BaseModel());
 
   PreferredSizeWidget getAppBar(BuildContext context, TabsRouter tabsRouter) {
     print('Appbar sınıfı çağrıldı ');
@@ -57,8 +33,9 @@ class MyAppbar extends AutoRouteObserver {
               alignment: const Alignment(0, 0.3),
               badgeContent: Obx(
                 () => Text(
-                  _controllerBaseModel.cartTotal.value.toString(),
-                  style: Get.theme.textTheme.headline6?.copyWith(color: Colors.red),
+                  _baseModelController.cartTotal.value.toString(),
+                  style: Get.theme.textTheme.headline6
+                      ?.copyWith(color: Colors.red),
                 ),
               ),
               child: const Icon(Icons.add_shopping_cart_sharp),

@@ -28,7 +28,7 @@ class BaseTabsView extends StatefulWidget {
   _BaseTabsViewState createState() => _BaseTabsViewState();
 }
 
-class _BaseTabsViewState extends State<BaseTabsView> with AutoRouteAwareStateMixin {
+class _BaseTabsViewState extends State<BaseTabsView> {
   PersonModel? personModel;
   final String home = 'Anasayfa';
   final String cargoInfo = 'Kargo Bilgileri';
@@ -40,7 +40,8 @@ class _BaseTabsViewState extends State<BaseTabsView> with AutoRouteAwareStateMix
   @override
   void initState() {
     super.initState();
-    personModel = (widget.personModel as ServiceResult).data as PersonModel ?? getPersonel();
+    personModel = (widget.personModel as ServiceResult).data as PersonModel ??
+        getPersonel();
     //AppbarBaseTabsTitle.setAppTitleWithIndex(0);
   }
 
@@ -56,15 +57,18 @@ class _BaseTabsViewState extends State<BaseTabsView> with AutoRouteAwareStateMix
       themeMode: ThemeMode.system,
       home: AutoTabsScaffold(
         backgroundColor: const Color.fromARGB(255, 16, 66, 68).withOpacity(0.7),
-        appBarBuilder: (context, tabsRouter) => MyAppbar().getAppBar(context, tabsRouter),
-        drawer: NavigationDrawer(imagePath: 'assets/images/person.png', personModel: personModel!),
+        appBarBuilder: (context, tabsRouter) =>
+            MyAppbar().getAppBar(context, tabsRouter),
+        drawer: NavigationDrawer(
+            imagePath: 'assets/images/person.png', personModel: personModel!),
         routes: <PageRouteInfo>[
           HomeRouter(),
           CargoInfoRouter(),
           OrderRouter(),
           RationRequestPeriodRouter(),
         ],
-        bottomNavigationBuilder: (_, tabsRouter) => _buildBottomNavigatonBar(tabsRouter, context),
+        bottomNavigationBuilder: (_, tabsRouter) =>
+            _buildBottomNavigatonBar(tabsRouter, context),
       ),
     );
   }
