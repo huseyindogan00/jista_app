@@ -24,6 +24,9 @@ class BaseTabsView extends StatefulWidget {
   // baseviewı kullanan widget, personelmodele ihtiyaç duyduğunda
   dynamic personModel;
 
+  ///***************************************************************************************** */
+  /* ServiceResult içinde gelen data future geliyor bu sebepten personmodel cast edilemiyor */
+
   @override
   _BaseTabsViewState createState() => _BaseTabsViewState();
 }
@@ -35,40 +38,43 @@ class _BaseTabsViewState extends State<BaseTabsView> {
   final String myOrders = 'Siparişlerim';
   final String requestPeriod = 'İsteklerim';
 
+  final Color _bottomColor = Color.fromARGB(244, 30, 85, 87);
+  //final Color _backgroundColorApp = const Color.fromARGB(255, 40, 121, 56).withOpacity(0.7);
+  final Color _bottomIconColor = const Color.fromARGB(255, 255, 255, 255);
+  final Color _selectedBottomIconColor = const Color.fromARGB(223, 0, 0, 0);
+
   final controllerBaseTabs = Get.put<BaseModel>(BaseModel());
 
   @override
   void initState() {
     super.initState();
-    personModel = (widget.personModel as ServiceResult).data as PersonModel ??
-        getPersonel();
+    personModel = (widget.personModel as ServiceResult).data as PersonModel ?? getPersonel();
     //AppbarBaseTabsTitle.setAppTitleWithIndex(0);
   }
 
-  getPersonel() {
-    return widget.personModel ??= controllerBaseTabs.getPersonHive();
+  getPersonel()async {
+    return await widget.personModel? ??= controllerBaseTabs.getPersonHive();
   }
 
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeApp.themeLight,
       darkTheme: ThemeApp.themeDark,
       themeMode: ThemeMode.system,
       home: AutoTabsScaffold(
-        backgroundColor: const Color.fromARGB(255, 16, 66, 68).withOpacity(0.7),
-        appBarBuilder: (context, tabsRouter) =>
-            MyAppbar().getAppBar(context, tabsRouter),
-        drawer: NavigationDrawer(
-            imagePath: 'assets/images/person.png', personModel: personModel!),
+        homeIndex: 0,
+        backgroundColor: const Color.fromARGB(255, 241, 243, 243).withOpacity(0.8),
+        appBarBuilder: (context, tabsRouter) => MyAppbar().getAppBar(context, tabsRouter),
+        drawer: NavigationDrawer(imagePath: 'assets/images/person.png', personModel: personModel!),
         routes: <PageRouteInfo>[
           HomeRouter(),
           CargoInfoRouter(),
           OrderRouter(),
           RationRequestPeriodRouter(),
         ],
-        bottomNavigationBuilder: (_, tabsRouter) =>
-            _buildBottomNavigatonBar(tabsRouter, context),
+        bottomNavigationBuilder: (_, tabsRouter) => _buildBottomNavigatonBar(tabsRouter, context),
       ),
     );
   }
@@ -78,7 +84,7 @@ class _BaseTabsViewState extends State<BaseTabsView> {
       elevation: 5,
       shadowColor: Colors.grey,
       borderRadius: const BorderRadius.all(Radius.circular(12)),
-      color: const Color.fromARGB(244, 14, 43, 44),
+      color: _bottomColor,
       type: MaterialType.card,
       child: SalomonBottomBar(
         itemPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
@@ -94,38 +100,38 @@ class _BaseTabsViewState extends State<BaseTabsView> {
   }
 
   List<SalomonBottomBarItem> buildBottomBar() {
-    const Color iconColor = Color.fromARGB(255, 255, 255, 255);
-    const Color selectedIcon = Color.fromARGB(158, 57, 179, 184);
+    _bottomIconColor;
+    _selectedBottomIconColor;
     return <SalomonBottomBarItem>[
       SalomonBottomBarItem(
-        selectedColor: selectedIcon,
-        icon: const Icon(
+        selectedColor: _selectedBottomIconColor,
+        icon: Icon(
           Icons.home,
-          color: iconColor,
+          color: _bottomIconColor,
         ),
         title: Text(home, style: Get.theme.textTheme.bodyText1),
       ),
       SalomonBottomBarItem(
-        selectedColor: selectedIcon,
-        icon: const Icon(
+        selectedColor: _selectedBottomIconColor,
+        icon: Icon(
           Icons.local_shipping_outlined,
-          color: iconColor,
+          color: _bottomIconColor,
         ),
         title: Text(cargoInfo, style: Get.theme.textTheme.bodyText1),
       ),
       SalomonBottomBarItem(
-        selectedColor: selectedIcon,
-        icon: const Icon(
+        selectedColor: _selectedBottomIconColor,
+        icon: Icon(
           Icons.circle_notifications_sharp,
-          color: iconColor,
+          color: _bottomIconColor,
         ),
         title: Text(myOrders, style: Get.theme.textTheme.bodyText1),
       ),
       SalomonBottomBarItem(
-        selectedColor: selectedIcon,
-        icon: const Icon(
+        selectedColor: _selectedBottomIconColor,
+        icon: Icon(
           Icons.calendar_month_outlined,
-          color: iconColor,
+          color: _bottomIconColor,
         ),
         title: Text(requestPeriod, style: Get.theme.textTheme.bodyText1),
       ),
