@@ -49,8 +49,8 @@ class BaseModel extends GetxController {
 
   // TELEFONA KAYDEDİLEN PERSONELİ DRAWERDA GÖSTERMEK İÇİN HAFIZADAN GETİRİLİYOR
   //--------------------------------------------------
-  PersonModel? getPersonHive() {
-    PersonModel? person = HiveService().getBox('person');
+  Future<PersonModel?> getPersonHive() async {
+    PersonModel? person = await HiveService().getBoxPerson('person');
     if (person != null) {
       return person;
     }

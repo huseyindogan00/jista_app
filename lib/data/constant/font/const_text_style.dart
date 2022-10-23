@@ -11,4 +11,6 @@ class ConstTextStyle {
       const TextStyle(fontFamily: 'Montserrat', fontSize: 30, fontWeight: FontWeight.w300);
   static TextStyle butonTextStyle =
       const TextStyle(fontFamily: 'Montserrat', fontSize: 30, fontWeight: FontWeight.normal);
+
+  static String fontFamilyMontserrat = 'Montserrat';
 }

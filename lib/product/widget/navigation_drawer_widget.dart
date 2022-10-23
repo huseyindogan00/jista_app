@@ -7,6 +7,7 @@ import 'package:jista/core/router/auto_router/router.gr.dart';
 import 'package:jista/core/services/service/hive_service.dart';
 import 'package:jista/data/constant/style/const_button_style.dart';
 import 'package:jista/data/theme/theme_app.dart';
+import 'package:jista/main.dart';
 import 'package:jista/product/models/person/person_model.dart';
 import 'package:jista/views/base/base_model.dart';
 
@@ -123,7 +124,7 @@ class NavigationDrawer extends StatelessWidget {
                       width: 190,
                       child: ElevatedButton(
                         onPressed: () {
-                          HiveService().deleteUserBox('personBox');
+                          locator<HiveService>().deleteUserBoxPerson('personBox');
                           context.router.replace(EntryRoute());
                         },
                         style: ElevatedButton.styleFrom(backgroundColor: Colors.red),

@@ -6,12 +6,10 @@ import '../../../product/models/person/person_model.dart';
 import '../../../product/models/product/product_model.dart';
 
 class FirebaseStoreService implements IFirebaseStoreService {
-  static final FirebaseFirestore _firebaseFirestore =
-      FirebaseFirestore.instance;
+  static final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
   @override
-  Future<FirebaseServiceResultModel<List<ProductModel>>> getFilterProducts(
-      String season, String typeName) async {
+  Future<FirebaseServiceResultModel<List<ProductModel>>> getFilterProducts(String season, String typeName) async {
     List<ProductModel> productList = [];
     try {
       QuerySnapshot<Map<String, dynamic>> snapshot = await _firebaseFirestore
@@ -32,20 +30,16 @@ class FirebaseStoreService implements IFirebaseStoreService {
       }
     } on FirebaseException catch (_) {}
 
-    return FirebaseServiceResultModel(
-        isSuccess: false, dataInfo: 'Product çekilemedi');
+    return FirebaseServiceResultModel(isSuccess: false, dataInfo: 'Product çekilemedi');
   }
 
   @override
-  Future<FirebaseServiceResultModel<List<ProductModel>>> getAllProduct(
-      String typeName) async {
+  Future<FirebaseServiceResultModel<List<ProductModel>>> getAllProduct(String typeName) async {
     List<ProductModel> productList = [];
 
     try {
-      QuerySnapshot<Map<String, dynamic>> snapshot = await _firebaseFirestore
-          .collection('product')
-          .where('type', isEqualTo: typeName)
-          .get();
+      QuerySnapshot<Map<String, dynamic>> snapshot =
+          await _firebaseFirestore.collection('product').where('type', isEqualTo: typeName).get();
 
       if (snapshot.docs.isNotEmpty) {
         for (QueryDocumentSnapshot<Map<String, dynamic>> doc in snapshot.docs) {
@@ -55,15 +49,12 @@ class FirebaseStoreService implements IFirebaseStoreService {
           productList.add(productModel);
         }
         ProductModel.productList = productList;
-        return FirebaseServiceResultModel(
-            isSuccess: true, data: productList, dataInfo: 'Başarılı');
+        return FirebaseServiceResultModel(isSuccess: true, data: productList, dataInfo: 'Başarılı');
       }
     } on FirebaseException catch (e) {
-      return FirebaseServiceResultModel(
-          isSuccess: false, dataInfo: e.message.toString());
+      return FirebaseServiceResultModel(isSuccess: false, dataInfo: e.message.toString());
     }
-    return FirebaseServiceResultModel(
-        isSuccess: false, dataInfo: 'Product çekilemedi');
+    return FirebaseServiceResultModel(isSuccess: false, dataInfo: 'Product çekilemedi');
   }
 
   @override
@@ -72,70 +63,45 @@ class FirebaseStoreService implements IFirebaseStoreService {
   }
 
   @override
-  Future<ServiceResult<PersonModel>> loginControl(
-      PersonModel personModel) async {
+  Future<ServiceResult<PersonModel>> loginControl(PersonModel personModel) async {
     //QuerySnapshot<Map<String, dynamic>> snapshot = await _firebaseFirestore.collection('person').where('pbik',isEqualTo: userModel.pbik).get();
     late PersonModel person;
     String error = '';
+    Map<String, dynamic>? addressMap;
+    Map<String, dynamic>? personMap;
 
     try {
       QuerySnapshot<Map<String, dynamic>> personSnapshot =
-          await _firebaseFirestore
-              .collection('person')
-              .where('pbik', isEqualTo: personModel.pbik)
-              .get();
+          await _firebaseFirestore.collection('person').where('pbik', isEqualTo: personModel.pbik).get();
 
       if (personSnapshot.docs.isNotEmpty) {
-        DocumentSnapshot<Map<String, dynamic>> personDoc =
-            personSnapshot.docs.first;
-        if (personDoc.exists) {
-          Map<String, dynamic>? personMap = personDoc.data();
+        DocumentSnapshot<Map<String, dynamic>> personDocument = personSnapshot.docs.first;
+        if (personDocument.exists) {
+          personMap = personDocument.data();
 
           QuerySnapshot<Map<String, dynamic>> addressSnapshot =
-              await _firebaseFirestore
-                  .collection('person')
-                  .doc(personDoc.id)
-                  .collection('address')
-                  .get();
+              await _firebaseFirestore.collection('person').doc(personDocument.id).collection('address').get();
 
-          Map<String, dynamic> address = addressSnapshot.docs.first.data();
-
-          personMap?['id'] = personDoc.id;
-          address['id'] = addressSnapshot.docs.first.id;
+          if (addressSnapshot.docs.isNotEmpty && addressSnapshot.docs.first.exists) {
+            addressMap = addressSnapshot.docs.first.data();
+            addressMap['id'] = addressSnapshot.docs.first.id;
+          }
+          personMap?['id'] = personDocument.id;
 
           if (personMap != null) {
-            personMap['address'] = address;
+            personMap['address'] = addressMap;
             person = PersonModel.fromMap(personMap);
             return FirebaseServiceResultModel(isSuccess: true, data: person);
           }
         }
       }
-      return FirebaseServiceResultModel(
-          isSuccess: false, dataInfo: 'Pbik numarası veritabınında yok');
+      return FirebaseServiceResultModel(isSuccess: false, dataInfo: 'Pbik numarası veritabınında yok');
     } on FirebaseException catch (e) {
       error = e.message.toString();
       print(e.stackTrace);
     }
 
     return FirebaseServiceResultModel(isSuccess: false, dataInfo: error);
-
-    // PERSON LİSTESİNİ GETİRME
-    /* QuerySnapshot<Map<String, dynamic>> snapshot = await _firebaseFirestore.collection('person').get();  
-
-    if (snapshot.docs.isNotEmpty) {
-      for (DocumentSnapshot<Map<String, dynamic>> doc in snapshot.docs) {
-
-        Map<String, dynamic>? personMap = doc.data();
-
-        personMap?['id'] = doc.id;
-        if (personMap != null) {
-          PersonModel personModel = PersonModel.fromMap(personMap);
-          personModelList.add(personModel);
-        }
-      }
-    } 
-    return FirebaseServiceResultModel<List<PersonModel>>(isSuccess: true, data: personModelList,dataInfo: 'Login oldu');
-    */
   }
 
   @override

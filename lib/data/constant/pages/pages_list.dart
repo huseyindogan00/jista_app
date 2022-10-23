@@ -5,7 +5,7 @@ class PagesList {
   static List<PageRouteInfo> get pagesList {
     return <PageRouteInfo>[
       const HomeRouter(),
-      CargoInfoRouter(),
+      CargoEditRouter(),
       const OrderRouter(),
       RationRequestPeriodRouter(),
     ];

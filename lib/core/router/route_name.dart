@@ -9,6 +9,7 @@ import 'package:jista/views/home/view_model/home_view_model.dart';
 import 'package:jista/views/period/view/ration_request_period_view.dart';
 
 import '../../product/error/error_view.dart';
+import '../../views/cargo/view/cargo_edit_view.dart';
 import '../../views/entry/view/entry_view.dart';
 import '../../views/home/view/home_view.dart';
 import '../../views/register/view/register_view.dart';
@@ -93,7 +94,7 @@ class RoutePage {
     ), */
     GetPage(
         name: RouteName.cargoInfoView,
-        page: () => CargoInfoView(),
+        page: () => CargoEditView(),
         binding: BindingsBuilder(
           () => Get.lazyPut<CargoInfoViewModel>(() => CargoInfoViewModel()),
         )),

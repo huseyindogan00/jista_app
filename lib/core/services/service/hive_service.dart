@@ -1,35 +1,34 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import '../../../product/models/person/person_model.dart';
 
 class HiveService {
-  static String _boxName = 'personBox';
-  late Box<PersonModel> box;
+  String _personBoxName = 'personBox';
+  late Box<PersonModel> _personBox;
 
-  HiveService() {
-    box = Hive.box<PersonModel>(_boxName);
-  }
-
-  PersonModel? getBox(String boxName) {
-    return box.get(boxName);
-  }
-
-  savePerson(PersonModel personModel) async {
-    await box.put('person', personModel);
-  }
-
-  deleteUserBox(String boxName) async {
-    await Hive.deleteBoxFromDisk(boxName);
+  _openBoxPerson() async {
+    await Hive.openBox<PersonModel>(_personBoxName);
+    _personBox = Hive.box<PersonModel>(_personBoxName);
   }
 
   Future<bool> isPersonBox() async {
-    if (!Hive.isBoxOpen('personBox')) {
-      await Hive.openBox<PersonModel>('personBox');
-    }
-    Box<PersonModel> personBox = Hive.box<PersonModel>('personBox');
-    PersonModel? personModel = personBox.get('person');
+    await _openBoxPerson();
+    bool result = _personBox.values.isNotEmpty;
 
-    return personModel == null ? false : true;
+    return result;
+  }
+
+  Future<PersonModel?> getBoxPerson(String boxName) async {
+    await _openBoxPerson();
+    return _personBox.get(boxName);
+  }
+
+  void saveBoxPerson(PersonModel personModel) async {
+    await _openBoxPerson();
+    await _personBox.put('person', personModel);
+  }
+
+  void deleteUserBoxPerson(String boxName) async {
+    await Hive.deleteBoxFromDisk(boxName);
   }
 }

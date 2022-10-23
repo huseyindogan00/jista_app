@@ -21,8 +21,9 @@ class EntryViewModel {
     */
     if (result.isSuccess && result.data?.id != null) {
       if (result.data?.password == personModel.password) {
-        if (!await box.isPersonBox()) {
-          HiveService().savePerson(result.data!);
+        bool isPerson = await box.isPersonBox();
+        if (!isPerson) {
+          HiveService().saveBoxPerson(result.data!);
           return result;
         }
       } else {

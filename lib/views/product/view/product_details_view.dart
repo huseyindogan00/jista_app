@@ -1,7 +1,5 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:jista/core/utility/appbarController/appbar_base_tabs_title.dart';
 import 'package:jista/product/models/product/product_model.dart';
 
 class ProductDetailsView extends StatelessWidget {
@@ -12,7 +10,6 @@ class ProductDetailsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ProductModel product = productModel;
-    print('product sayfasında olan id-----------> ${product.id} ');
     return Scaffold(
       body: Center(
         child: Container(
@@ -42,8 +39,7 @@ class ProductDetailsView extends StatelessWidget {
                     },
                     child: Text(
                       'EKLE',
-                      style:
-                          TextStyle(fontSize: 18, color: Colors.green.shade900),
+                      style: TextStyle(fontSize: 18, color: Colors.green.shade900),
                     ),
                   )
                 ],
