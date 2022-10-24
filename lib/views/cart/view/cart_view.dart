@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:jista/views/base/base_model.dart';
@@ -39,7 +37,8 @@ class CartView extends StatelessWidget {
                       ///************************************************************************
                       print(CartViewModel.cartListItem.length);
                       CartViewModel.cartListItem.remove(cartItem);
-                      Get.put(BaseModel()).cartTotal.value = CartViewModel.cartListItem.length;
+                      Get.put(BaseModel()).cartTotal.value =
+                          CartViewModel.cartListItem.length;
                       print(CartViewModel.cartListItem.length);
 
                       ///************************************************************************
@@ -59,7 +58,8 @@ class CartView extends StatelessWidget {
                       onPressed: (context) {
                         print(CartViewModel.cartListItem.length);
                         CartViewModel.cartListItem.remove(cartItem);
-                        Get.put(BaseModel()).cartTotal.value = CartViewModel.cartListItem.length;
+                        Get.put(BaseModel()).cartTotal.value =
+                            CartViewModel.cartListItem.length;
                         print(CartViewModel.cartListItem.length);
                       },
                     ),

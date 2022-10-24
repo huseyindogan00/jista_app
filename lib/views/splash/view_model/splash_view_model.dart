@@ -25,8 +25,9 @@ class SplashViewModel {
 
         await Future.delayed(const Duration(seconds: 2));
         if (isPerson) {
-          final ServiceResult result = FirebaseServiceResultModel(isSuccess: true);
-          result.data = box.getBoxPerson('person');
+          final ServiceResult result =
+              FirebaseServiceResultModel(isSuccess: true);
+          result.data = await box.getBoxPerson('person');
           context.router.replace(BaseTabsRoute(personModel: result));
         } else {
           context.router.replace(EntryRoute());

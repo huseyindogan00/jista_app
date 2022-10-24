@@ -10,7 +10,9 @@ import 'package:jista/product/models/address/address_model.dart';
 import 'package:jista/views/cargo/view_model/cargo_info_view_model.dart';
 
 class CargoEditView extends StatefulWidget {
-  CargoEditView({super.key});
+  CargoEditView({super.key, this.addressModel});
+
+  dynamic addressModel;
 
   @override
   State<CargoEditView> createState() => _CargoEditViewState();
@@ -22,23 +24,45 @@ class _CargoEditViewState extends State<CargoEditView> {
   TextEditingController townController = TextEditingController();
   TextEditingController postCodeController = TextEditingController();
   TextEditingController fullAddressController = TextEditingController();
-  TextEditingController mobileTelephoneNumberController = TextEditingController();
+  TextEditingController mobileTelephoneNumberController =
+      TextEditingController();
   TextEditingController telephoneNumberController = TextEditingController();
 
-  TextStyle hintTextStyle = TextStyle(color: Colors.cyan.shade400, fontSize: 18);
-  TextStyle dropdownTextStyle = const TextStyle(fontSize: 17, color: Colors.black, fontWeight: FontWeight.bold);
+  TextStyle hintTextStyle =
+      TextStyle(color: Colors.cyan.shade400, fontSize: 18);
+  TextStyle dropdownTextStyle = const TextStyle(
+      fontSize: 17, color: Colors.black, fontWeight: FontWeight.bold);
   Color dropdownColor = const Color.fromARGB(255, 50, 197, 197);
   Color iconDisabledColor = Colors.grey;
   Color iconEnabledColor = const Color.fromARGB(255, 24, 10, 182);
-  BorderRadius dropdownBorderRadius = const BorderRadius.all(Radius.circular(20));
+  BorderRadius dropdownBorderRadius =
+      const BorderRadius.all(Radius.circular(20));
   BorderRadius inputBorderRadius = const BorderRadius.all(Radius.circular(10));
-  List<TextInputFormatter> textInputFormatter = <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly];
-  TextStyle inputErrorTextStyle = const TextStyle(color: Colors.amber, fontSize: 14);
+  List<TextInputFormatter> textInputFormatter = <TextInputFormatter>[
+    FilteringTextInputFormatter.digitsOnly
+  ];
+  TextStyle inputErrorTextStyle =
+      const TextStyle(color: Colors.amber, fontSize: 14);
   TextStyle inputTextStyle = const TextStyle(color: Colors.black, fontSize: 17);
 
-  late AddressModel addressModel;
+  AddressModel? addressModel;
 
-  CargoInfoViewModel viewController = Get.put<CargoInfoViewModel>(CargoInfoViewModel());
+  CargoInfoViewModel viewController =
+      Get.put<CargoInfoViewModel>(CargoInfoViewModel());
+
+  @override
+  void initState() {}
+
+  isAddressModel() {
+    if (addressModel != null) {
+      cityController.text = addressModel!.city;
+      townController.text = addressModel!.town;
+
+      /// ******************************************************************
+      /// cargo adresi girilmeyen veya girildiği halde güncellemek isteyen kullanıccılar ile ilgili işlemleri yapıcam
+
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
