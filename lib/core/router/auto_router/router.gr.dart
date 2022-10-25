@@ -115,8 +115,10 @@ class AutoRouter extends _i14.RootStackRouter {
           routeData: routeData, child: _i12.CargoInfoView(key: args.key));
     },
     CargoEditRouter.name: (routeData) {
+      final pathParams = routeData.inheritedPathParams;
       final args = routeData.argsAs<CargoEditRouterArgs>(
-          orElse: () => const CargoEditRouterArgs());
+          orElse: () => CargoEditRouterArgs(
+              addressModel: pathParams.get('addressModel')));
       return _i14.MaterialPageX<dynamic>(
           routeData: routeData,
           child: _i13.CargoEditView(
@@ -148,7 +150,7 @@ class AutoRouter extends _i14.RootStackRouter {
                 _i14.RouteConfig(CargoInfoRoute.name,
                     path: '', parent: CargoInfoRouter.name),
                 _i14.RouteConfig(CargoEditRouter.name,
-                    path: ':cargoModel', parent: CargoInfoRouter.name)
+                    path: ':addressModel', parent: CargoInfoRouter.name)
               ]),
           _i14.RouteConfig(OrderRouter.name,
               path: 'orderView', parent: BaseTabsRoute.name),
@@ -403,8 +405,9 @@ class CargoInfoRouteArgs {
 class CargoEditRouter extends _i14.PageRouteInfo<CargoEditRouterArgs> {
   CargoEditRouter({_i15.Key? key, dynamic addressModel})
       : super(CargoEditRouter.name,
-            path: ':cargoModel',
-            args: CargoEditRouterArgs(key: key, addressModel: addressModel));
+            path: ':addressModel',
+            args: CargoEditRouterArgs(key: key, addressModel: addressModel),
+            rawPathParams: {'addressModel': addressModel});
 
   static const String name = 'CargoEditRouter';
 }

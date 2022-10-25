@@ -64,7 +64,7 @@ import 'package:jista/views/splash/view/splash_view.dart';
               page: CargoInfoView,
             ),
             AutoRoute(
-              path: ':cargoModel',
+              path: ':addressModel',
               name: 'CargoEditRouter',
               page: CargoEditView,
             ),

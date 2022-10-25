@@ -1,5 +1,6 @@
 // ignore_for_file: invalid_use_of_protected_member
 
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -10,7 +11,7 @@ import 'package:jista/product/models/address/address_model.dart';
 import 'package:jista/views/cargo/view_model/cargo_info_view_model.dart';
 
 class CargoEditView extends StatefulWidget {
-  CargoEditView({super.key, this.addressModel});
+  CargoEditView({super.key, @PathParam() this.addressModel});
 
   dynamic addressModel;
 
@@ -51,15 +52,24 @@ class _CargoEditViewState extends State<CargoEditView> {
       Get.put<CargoInfoViewModel>(CargoInfoViewModel());
 
   @override
-  void initState() {}
+  void initState() {
+    super.initState();
+    isAddressModel();
+  }
 
   isAddressModel() {
+    addressModel = widget.addressModel;
     if (addressModel != null) {
       cityController.text = addressModel!.city;
       townController.text = addressModel!.town;
+      fullAddressController.text = addressModel!.fullAddress;
+      postCodeController.text = addressModel!.postCode;
+      telephoneNumberController.text = addressModel!.telephoneNumber;
+      mobileTelephoneNumberController.text =
+          addressModel!.mobileTelephoneNumber;
 
       /// ******************************************************************
-      /// cargo adresi girilmeyen veya girildiği halde güncellemek isteyen kullanıccılar ile ilgili işlemleri yapıcam
+      /// il ve ilçe dropdown menüde gözükmüyor güncelleme  sayfasına gidildiğinde seçili il ve ilçeyi göster
 
     }
   }
@@ -104,6 +114,7 @@ class _CargoEditViewState extends State<CargoEditView> {
             fullAddress: fullAddressController.text.trim(),
             postCode: postCodeController.text.trim(),
           );
+          print(addres);
         }
       },
       child: const Text('Kaydet'),
@@ -115,6 +126,7 @@ class _CargoEditViewState extends State<CargoEditView> {
       style: const TextStyle(color: Colors.black),
       controller: mobileTelephoneNumberController,
       keyboardType: TextInputType.phone,
+      //initialValue: mobileTelephoneNumberController.text,
       decoration: InputDecoration(
         errorStyle: inputErrorTextStyle,
         prefixIcon: const Icon(Icons.phone),
@@ -137,6 +149,7 @@ class _CargoEditViewState extends State<CargoEditView> {
       style: const TextStyle(color: Colors.black),
       controller: telephoneNumberController,
       keyboardType: TextInputType.phone,
+      //initialValue: telephoneNumberController.text,
       inputFormatters: textInputFormatter,
       decoration: InputDecoration(
         errorStyle: inputErrorTextStyle,
@@ -159,6 +172,7 @@ class _CargoEditViewState extends State<CargoEditView> {
     return TextFormField(
       style: const TextStyle(color: Colors.black),
       controller: postCodeController,
+      //initialValue: postCodeController.text,
       decoration: InputDecoration(
         errorStyle: inputErrorTextStyle,
         prefixIcon: const Icon(Icons.local_post_office_sharp),
@@ -181,6 +195,7 @@ class _CargoEditViewState extends State<CargoEditView> {
       style: inputTextStyle,
       controller: fullAddressController,
       maxLines: 5,
+      //initialValue: fullAddressController.text,
       decoration: InputDecoration(
         errorStyle: inputErrorTextStyle,
         prefixIcon: const Icon(Icons.home_filled),

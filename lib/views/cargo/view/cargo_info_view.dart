@@ -133,7 +133,8 @@ class CargoInfoView extends StatelessWidget {
                         style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.amber),
                         onPressed: () {
-                          context.router.push(CargoEditRouter());
+                          context.router.push(
+                              CargoEditRouter(addressModel: addressModel));
                         },
                         child: const Text(
                           'Güncelle',
