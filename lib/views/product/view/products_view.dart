@@ -61,12 +61,13 @@ class _ProductsViewState extends State<ProductsView> {
 
   final BoxDecoration _boxDecorationImageCard = const BoxDecoration(color: Colors.white);
 
-  final _chipTextStyle = const TextStyle(fontSize: 10, color: Colors.white, fontWeight: FontWeight.w700);
-  final _chipLabelPadding = const EdgeInsets.all(3);
+  final _chipTextStyle = const TextStyle(fontSize: 11, color: Colors.white, fontWeight: FontWeight.w700);
+  final _chipLabelPadding = const EdgeInsets.all(5);
 
   final _pointTextStyle =
       const TextStyle(fontSize: 19, color: Color.fromARGB(255, 143, 26, 13), fontWeight: FontWeight.w600);
-  final _titleTextStyle = Get.theme.textTheme.bodySmall?.copyWith(color: Colors.black, fontWeight: FontWeight.w500);
+  final _titleTextStyle =
+      Get.theme.textTheme.bodySmall?.copyWith(color: Colors.black, fontWeight: FontWeight.w500, fontSize: 18);
 
   @override
   void initState() {
@@ -121,34 +122,29 @@ class _ProductsViewState extends State<ProductsView> {
         ),
         itemBuilder: (context, index) {
           ProductModel product = controller.serviceResultModel.value.data![index];
-          return InkWell(
-            onTap: () {
-              context.router.push(ProductDetailsRoute(productModel: product));
-            },
-            child: Container(
-              decoration: _boxDecorationProductCard,
-              child: Column(
-                children: [
-                  //_buildTypeText(product),
-                  _buildImagePageView(product),
-                  Expanded(
-                    flex: 4,
-                    child: Container(
-                      decoration: _boxDecorationSubContainer,
-                      width: double.infinity,
-                      child: Column(
-                        children: [
-                          _buildTitle(product),
-                          _buildChipWidget(product),
-                          _buildSizeAndQuantity(),
-                          const SizedBox(height: 5),
-                          _buildPointAndButton(product),
-                        ],
-                      ),
+          return Container(
+            decoration: _boxDecorationProductCard,
+            child: Column(
+              children: [
+                //_buildTypeText(product),
+                _buildImagePageView(product),
+                Expanded(
+                  flex: 4,
+                  child: Container(
+                    decoration: _boxDecorationSubContainer,
+                    width: double.infinity,
+                    child: Column(
+                      children: [
+                        _buildTitle(product),
+                        _buildChipWidget(product),
+                        //_buildSizeAndQuantity(),
+                        const SizedBox(height: 5),
+                        _buildPointAndButton(product),
+                      ],
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           );
         },
@@ -158,16 +154,19 @@ class _ProductsViewState extends State<ProductsView> {
 
   Expanded _buildImagePageView(ProductModel product) {
     return Expanded(
-      flex: 2,
+      flex: 3,
       child: Stack(
         children: [
-          Container(
-            width: double.infinity,
-            decoration: _boxDecorationImageCard,
-            padding: const EdgeInsets.only(bottom: 5),
-            child: const FadeInImage(
-              placeholder: AssetImage('assets/images/jandarma_logo.png'),
-              image: NetworkImage(ConstProductImage.fakeImage),
+          InkWell(
+            onTap: () => context.router.push(ProductDetailsRoute(productModel: product)),
+            child: Container(
+              width: double.infinity,
+              decoration: _boxDecorationImageCard,
+              padding: const EdgeInsets.only(bottom: 5),
+              child: const FadeInImage(
+                placeholder: AssetImage('assets/images/jandarma_logo.png'),
+                image: NetworkImage(ConstProductImage.fakeImage),
+              ),
             ),
           ),
           product.cargoStatus
@@ -252,8 +251,8 @@ class _ProductsViewState extends State<ProductsView> {
   }
 
   Row _buildSizeAndQuantity() {
-    double heightDropDownButton = 30;
-    double widthDropDownButton = 50;
+    double heightDropDownButton = 35;
+    double widthDropDownButton = 60;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [

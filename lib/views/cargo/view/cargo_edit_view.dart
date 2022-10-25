@@ -1,14 +1,21 @@
-// ignore_for_file: invalid_use_of_protected_member
+// ignore_for_file: invalid_use_of_protected_member, must_be_immutable
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:jista/core/enums/view_state.dart';
+import 'package:jista/core/services/service/hive_service.dart';
+import 'package:jista/core/services/service_result/firebase_service_result_model.dart';
+import 'package:jista/core/utility/show_utility/show_dialog.dart';
 import 'package:jista/core/utility/validation_utility/validation_controller.dart';
 import 'package:jista/data/data_model/entities/cities.dart';
 import 'package:jista/data/data_model/entities/towns.dart';
 import 'package:jista/product/models/address/address_model.dart';
-import 'package:jista/views/cargo/view_model/cargo_info_view_model.dart';
+import 'package:jista/views/cargo/view_model/cargo_view_model.dart';
+
+import '../../../main.dart';
 
 class CargoEditView extends StatefulWidget {
   CargoEditView({super.key, @PathParam() this.addressModel});
@@ -21,35 +28,31 @@ class CargoEditView extends StatefulWidget {
 
 class _CargoEditViewState extends State<CargoEditView> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
   TextEditingController cityController = TextEditingController();
   TextEditingController townController = TextEditingController();
   TextEditingController postCodeController = TextEditingController();
   TextEditingController fullAddressController = TextEditingController();
-  TextEditingController mobileTelephoneNumberController =
-      TextEditingController();
+  TextEditingController mobileTelephoneNumberController = TextEditingController();
   TextEditingController telephoneNumberController = TextEditingController();
 
-  TextStyle hintTextStyle =
-      TextStyle(color: Colors.cyan.shade400, fontSize: 18);
-  TextStyle dropdownTextStyle = const TextStyle(
-      fontSize: 17, color: Colors.black, fontWeight: FontWeight.bold);
+  TextStyle hintTextStyle = TextStyle(color: Colors.cyan.shade400, fontSize: 18);
+  TextStyle dropdownTextStyle = const TextStyle(fontSize: 17, color: Colors.black, fontWeight: FontWeight.bold);
   Color dropdownColor = const Color.fromARGB(255, 50, 197, 197);
   Color iconDisabledColor = Colors.grey;
   Color iconEnabledColor = const Color.fromARGB(255, 24, 10, 182);
-  BorderRadius dropdownBorderRadius =
-      const BorderRadius.all(Radius.circular(20));
+  BorderRadius dropdownBorderRadius = const BorderRadius.all(Radius.circular(20));
   BorderRadius inputBorderRadius = const BorderRadius.all(Radius.circular(10));
-  List<TextInputFormatter> textInputFormatter = <TextInputFormatter>[
-    FilteringTextInputFormatter.digitsOnly
-  ];
-  TextStyle inputErrorTextStyle =
-      const TextStyle(color: Colors.amber, fontSize: 14);
+  List<TextInputFormatter> textInputFormatter = <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly];
+  TextStyle inputErrorTextStyle = const TextStyle(color: Colors.amber, fontSize: 14);
   TextStyle inputTextStyle = const TextStyle(color: Colors.black, fontSize: 17);
 
   AddressModel? addressModel;
 
-  CargoInfoViewModel viewController =
-      Get.put<CargoInfoViewModel>(CargoInfoViewModel());
+  String? personId;
+  final hiveService = locator<HiveService>();
+
+  CargoViewModel viewController = Get.put<CargoViewModel>(CargoViewModel());
 
   @override
   void initState() {
@@ -57,7 +60,19 @@ class _CargoEditViewState extends State<CargoEditView> {
     isAddressModel();
   }
 
-  isAddressModel() {
+  @override
+  void dispose() {
+    viewController.onDelete;
+    cityController.dispose();
+    townController.dispose();
+    postCodeController.dispose();
+    fullAddressController.dispose();
+    mobileTelephoneNumberController.dispose();
+    telephoneNumberController.dispose();
+    super.dispose();
+  }
+
+  isAddressModel() async {
     addressModel = widget.addressModel;
     if (addressModel != null) {
       cityController.text = addressModel!.city;
@@ -65,36 +80,31 @@ class _CargoEditViewState extends State<CargoEditView> {
       fullAddressController.text = addressModel!.fullAddress;
       postCodeController.text = addressModel!.postCode;
       telephoneNumberController.text = addressModel!.telephoneNumber;
-      mobileTelephoneNumberController.text =
-          addressModel!.mobileTelephoneNumber;
-
-      /// ******************************************************************
-      /// il ve ilçe dropdown menüde gözükmüyor güncelleme  sayfasına gidildiğinde seçili il ve ilçeyi göster
-
+      mobileTelephoneNumberController.text = addressModel!.mobileTelephoneNumber;
+      personId = await hiveService.getBoxPersonId();
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+      padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
       child: Form(
         key: formKey,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
-          child: Wrap(
-            runSpacing: 35,
-            children: <Widget>[
-              _buildCityDropdownFormField(),
-              Obx(
-                () => _buildTownDropdownFormField(),
-              ),
-              _buildAddressTextField(),
-              _buildPostCodeTextField(),
-              _buildPhoneTextField(),
-              _buildMobilePhoneTextField(),
-              _buildSaveButton()
-            ],
-          ),
+        child: Wrap(
+          alignment: WrapAlignment.center,
+          runSpacing: 35,
+          children: <Widget>[
+            _buildCityDropdownFormField(),
+            Obx(
+              () => _buildTownDropdownFormField(),
+            ),
+            _buildAddressTextField(),
+            _buildPostCodeTextField(),
+            _buildPhoneTextField(),
+            _buildMobilePhoneTextField(),
+            _buildSaveButton()
+          ],
         ),
       ),
     );
@@ -102,11 +112,11 @@ class _CargoEditViewState extends State<CargoEditView> {
 
   ElevatedButton _buildSaveButton() {
     return ElevatedButton(
-      onPressed: () {
+      onPressed: () async {
         if (formKey.currentState!.validate()) {
           formKey.currentState?.save();
           AddressModel addres = AddressModel(
-            id: null,
+            id: addressModel?.id,
             city: cityController.text,
             town: townController.text,
             telephoneNumber: telephoneNumberController.text.trim(),
@@ -114,10 +124,16 @@ class _CargoEditViewState extends State<CargoEditView> {
             fullAddress: fullAddressController.text.trim(),
             postCode: postCodeController.text.trim(),
           );
-          print(addres);
+
+          FirebaseServiceResultModel result = await viewController.updateAddress(personId!, addres);
+          if (result.isSuccess) {
+            EasyLoading.showSuccess(result.dataInfo.toString(), duration: const Duration(seconds: 1));
+            context.router.pop();
+          }
+          setState(() {});
         }
       },
-      child: const Text('Kaydet'),
+      child: Obx(() => viewController.viewState == ViewState.BUSY ? CircularProgressIndicator() : Text('Güncelle')),
     );
   }
 
@@ -126,7 +142,6 @@ class _CargoEditViewState extends State<CargoEditView> {
       style: const TextStyle(color: Colors.black),
       controller: mobileTelephoneNumberController,
       keyboardType: TextInputType.phone,
-      //initialValue: mobileTelephoneNumberController.text,
       decoration: InputDecoration(
         errorStyle: inputErrorTextStyle,
         prefixIcon: const Icon(Icons.phone),
@@ -149,7 +164,6 @@ class _CargoEditViewState extends State<CargoEditView> {
       style: const TextStyle(color: Colors.black),
       controller: telephoneNumberController,
       keyboardType: TextInputType.phone,
-      //initialValue: telephoneNumberController.text,
       inputFormatters: textInputFormatter,
       decoration: InputDecoration(
         errorStyle: inputErrorTextStyle,
@@ -172,7 +186,6 @@ class _CargoEditViewState extends State<CargoEditView> {
     return TextFormField(
       style: const TextStyle(color: Colors.black),
       controller: postCodeController,
-      //initialValue: postCodeController.text,
       decoration: InputDecoration(
         errorStyle: inputErrorTextStyle,
         prefixIcon: const Icon(Icons.local_post_office_sharp),
@@ -195,7 +208,6 @@ class _CargoEditViewState extends State<CargoEditView> {
       style: inputTextStyle,
       controller: fullAddressController,
       maxLines: 5,
-      //initialValue: fullAddressController.text,
       decoration: InputDecoration(
         errorStyle: inputErrorTextStyle,
         prefixIcon: const Icon(Icons.home_filled),
@@ -211,34 +223,6 @@ class _CargoEditViewState extends State<CargoEditView> {
       validator: (value) {
         return ValidationController.fullAddressValidation(value);
       },
-    );
-  }
-
-  // OBX İÇİNDE
-  SizedBox _buildTownDropdownFormField() {
-    return SizedBox(
-      height: 60,
-      width: double.infinity,
-      child: DropdownButtonFormField<String>(
-        value: viewController.townFirstValue.value,
-        decoration: InputDecoration(
-          label: Text('İlçe Seçiniz', style: hintTextStyle),
-          border: OutlineInputBorder(borderRadius: inputBorderRadius),
-        ),
-        menuMaxHeight: 400,
-        borderRadius: dropdownBorderRadius,
-        dropdownColor: dropdownColor,
-        iconSize: 30,
-        iconDisabledColor: iconDisabledColor,
-        iconEnabledColor: iconEnabledColor,
-        items: viewController.townList?.value,
-        onChanged: (value) {
-          print(value);
-        },
-        onSaved: (town) {
-          townController.text = town ?? '';
-        },
-      ),
     );
   }
 
@@ -261,8 +245,34 @@ class _CargoEditViewState extends State<CargoEditView> {
         onChanged: (cityKey) {
           getTowns(cityKey!);
         },
-        onSaved: (newValue) {
-          cityController.text = newValue ?? '';
+        onSaved: (key) {
+          cityController.text = Cities.citiesList[key] ?? '';
+        },
+      ),
+    );
+  }
+
+  // OBX İÇİNDE
+  SizedBox _buildTownDropdownFormField() {
+    return SizedBox(
+      height: 60,
+      width: double.infinity,
+      child: DropdownButtonFormField<String>(
+        value: viewController.townFirstValue.value,
+        decoration: InputDecoration(
+          label: Text('İlçe Seçiniz', style: hintTextStyle),
+          border: OutlineInputBorder(borderRadius: inputBorderRadius),
+        ),
+        menuMaxHeight: 400,
+        borderRadius: dropdownBorderRadius,
+        dropdownColor: dropdownColor,
+        iconSize: 30,
+        iconDisabledColor: iconDisabledColor,
+        iconEnabledColor: iconEnabledColor,
+        items: viewController.townList?.value,
+        onChanged: (value) {},
+        onSaved: (town) {
+          townController.text = town ?? '';
         },
       ),
     );

@@ -1,13 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:jista/core/services/service/base/i_firebase_auth_service.dart';
 import 'package:jista/core/services/service_result/firebase_service_result_model.dart';
+import 'package:jista/product/models/address/address_model.dart';
 import '../../../product/models/person/person_model.dart';
 
 class FirebaseAuthService extends IFirebaseAuthService {
   static final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   @override
-  Future<FirebaseServiceResultModel> update(PersonModel personModel) async {
+  Future<FirebaseServiceResultModel> updatePerson(PersonModel personModel) async {
     try {
       // -> USERCREDENTİAL'e FIREBASEAUTH  ile oluşturduğumuz kimliği atıyoruz.
       // -> Firebase bizim için bu kullanıcıyı veritabanına kaydediyor.
@@ -90,4 +91,10 @@ class FirebaseAuthService extends IFirebaseAuthService {
 
   @override
   create(PersonModel personModel) {}
+
+  @override
+  updateAddress(String personId, AddressModel addressModel) {
+    // TODO: implement updateAddress
+    throw UnimplementedError();
+  }
 }

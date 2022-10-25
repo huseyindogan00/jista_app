@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:jista/core/services/service/base/i_firebase_store_service.dart';
 import 'package:jista/core/services/service_result/firebase_service_result_model.dart';
 import 'package:jista/core/services/service_result/base/service_result.dart';
+import 'package:jista/product/models/address/address_model.dart';
 import '../../../product/models/person/person_model.dart';
 import '../../../product/models/product/product_model.dart';
 
@@ -105,7 +106,20 @@ class FirebaseStoreService implements IFirebaseStoreService {
   }
 
   @override
-  update(PersonModel personModel) {}
+  Future<FirebaseServiceResultModel> updateAddress(String personId, AddressModel addressModel) async {
+    try {
+      Future<void> result = _firebaseFirestore
+          .collection('person')
+          .doc(personId)
+          .collection('address')
+          .doc(addressModel.id)
+          .update(addressModel.toMap());
+    } on FirebaseException catch (e) {
+      return FirebaseServiceResultModel(isSuccess: false, dataInfo: e.message);
+    }
+    return FirebaseServiceResultModel(isSuccess: true, dataInfo: 'Kargo bilgileri güncellendi');
+  }
+
   @override
   delete(PersonModel personModel) {}
 }

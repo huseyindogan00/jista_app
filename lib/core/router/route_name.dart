@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:jista/views/cargo/view/cargo_info_view.dart';
-import 'package:jista/views/cargo/view_model/cargo_info_view_model.dart';
+import 'package:jista/views/cargo/view_model/cargo_view_model.dart';
 import 'package:jista/views/product/view/product_details_view.dart';
 import 'package:jista/views/product/view_model/product_view_model.dart';
 import 'package:jista/views/product/view/products_view.dart';
@@ -96,7 +96,7 @@ class RoutePage {
         name: RouteName.cargoInfoView,
         page: () => CargoEditView(),
         binding: BindingsBuilder(
-          () => Get.lazyPut<CargoInfoViewModel>(() => CargoInfoViewModel()),
+          () => Get.lazyPut<CargoViewModel>(() => CargoViewModel()),
         )),
     GetPage(
       name: RouteName.requestPeriodView,

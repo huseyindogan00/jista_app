@@ -7,8 +7,7 @@ import '../../../product/models/person/person_model.dart';
 class RegisterViewModel extends BaseModel {
   static final _firebaseAuthService = locator<FirebaseAuthService>();
 
-  static Future<FirebaseServiceResultModel> savePerson(
-      PersonModel personModel) async {
-    return await _firebaseAuthService.update(personModel);
+  static Future<FirebaseServiceResultModel> savePerson(PersonModel personModel) async {
+    return await _firebaseAuthService.updatePerson(personModel);
   }
 }

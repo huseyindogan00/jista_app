@@ -23,6 +23,12 @@ class HiveService {
     return _personBox.get(boxName);
   }
 
+  Future<String> getBoxPersonId() async {
+    _openBoxPerson();
+    PersonModel? personModel = _personBox.get('person');
+    return personModel?.id;
+  }
+
   void saveBoxPerson(PersonModel personModel) async {
     await _openBoxPerson();
     await _personBox.put('person', personModel);
