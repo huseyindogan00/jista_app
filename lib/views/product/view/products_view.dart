@@ -1,13 +1,18 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: must_be_immutable
 
+import 'dart:math';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:jista/core/enums/view_state.dart';
 import 'package:jista/core/services/service_result/firebase_service_result_model.dart';
+import 'package:jista/data/constant/font/const_text_style.dart';
 import 'package:jista/data/constant/image/const_product_image.dart';
+import 'package:jista/data/constant/style/const_font_size.dart';
 import 'package:jista/product/models/cart/cart_model.dart';
 import 'package:jista/product/models/order/order_model.dart';
 import 'package:jista/product/models/product/product_model.dart';
@@ -41,15 +46,16 @@ class _ProductsViewState extends State<ProductsView> {
   final _baseModelController = Get.put<BaseModel>(BaseModel());
   CartViewModel _cartViewModel = CartViewModel();
 
-  final BoxDecoration _boxDecorationProductCard = BoxDecoration(
-    color: Colors.white,
-    boxShadow: const [BoxShadow(blurRadius: 5)],
-    border: Border.all(color: const Color.fromARGB(251, 188, 189, 188)),
-    borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(15), bottomRight: Radius.circular(15)),
+  final BoxDecoration _boxDecorationProductCard = const BoxDecoration(
+    color: Color.fromARGB(255, 250, 247, 247),
   );
   final BoxDecoration _boxDecorationSubContainer = const BoxDecoration(
-    color: Color.fromARGB(244, 226, 234, 235),
-    borderRadius: BorderRadius.all(Radius.circular(15)),
+    boxShadow: [BoxShadow(blurRadius: 0.3)],
+    color: Color.fromARGB(255, 161, 201, 201),
+    borderRadius: BorderRadius.only(
+      topLeft: Radius.circular(10),
+      topRight: Radius.circular(10),
+    ),
   );
 
   final BoxDecoration _boxDecorationChip = BoxDecoration(
@@ -59,15 +65,17 @@ class _ProductsViewState extends State<ProductsView> {
     boxShadow: const [BoxShadow(blurRadius: 1)],
   );
 
-  final BoxDecoration _boxDecorationImageCard = const BoxDecoration(color: Colors.white);
-
   final _chipTextStyle = const TextStyle(fontSize: 11, color: Colors.white, fontWeight: FontWeight.w700);
   final _chipLabelPadding = const EdgeInsets.all(5);
 
+  final BoxDecoration _boxDecorationImageCard = const BoxDecoration(
+      color: Color.fromARGB(255, 250, 247, 247),
+      borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)));
+
   final _pointTextStyle =
       const TextStyle(fontSize: 19, color: Color.fromARGB(255, 143, 26, 13), fontWeight: FontWeight.w600);
-  final _titleTextStyle =
-      Get.theme.textTheme.bodySmall?.copyWith(color: Colors.black, fontWeight: FontWeight.w500, fontSize: 18);
+  final _titleTextStyle = Get.theme.textTheme.bodySmall?.copyWith(
+      fontFamily: ConstTextStyle.fontFamilyMontserrat, color: Colors.black, fontWeight: FontWeight.w600, fontSize: 16);
 
   @override
   void initState() {
@@ -97,10 +105,7 @@ class _ProductsViewState extends State<ProductsView> {
                   ? Center(
                       child: Container(
                         color: Colors.transparent,
-                        child: Text(
-                          'Ürün listesi boş!',
-                          style: Get.theme.textTheme.headline4,
-                        ),
+                        child: Text('Ürün listesi boş!', style: Get.theme.textTheme.headline4),
                       ),
                     )
                   : _buildGridViewProducts(),
@@ -129,17 +134,16 @@ class _ProductsViewState extends State<ProductsView> {
                 //_buildTypeText(product),
                 _buildImagePageView(product),
                 Expanded(
-                  flex: 4,
+                  flex: 5,
                   child: Container(
                     decoration: _boxDecorationSubContainer,
                     width: double.infinity,
                     child: Column(
                       children: [
                         _buildTitle(product),
-                        _buildChipWidget(product),
+                        //_buildChipWidget(product),
                         //_buildSizeAndQuantity(),
-                        const SizedBox(height: 5),
-                        _buildPointAndButton(product),
+                        _buildSeasonAndPoint(product),
                       ],
                     ),
                   ),
@@ -154,13 +158,14 @@ class _ProductsViewState extends State<ProductsView> {
 
   Expanded _buildImagePageView(ProductModel product) {
     return Expanded(
-      flex: 3,
+      flex: 5,
       child: Stack(
         children: [
           InkWell(
             onTap: () => context.router.push(ProductDetailsRoute(productModel: product)),
             child: Container(
               width: double.infinity,
+              height: double.infinity,
               decoration: _boxDecorationImageCard,
               padding: const EdgeInsets.only(bottom: 5),
               child: const FadeInImage(
@@ -177,18 +182,27 @@ class _ProductsViewState extends State<ProductsView> {
                     width: 20,
                     height: 25,
                     decoration: const BoxDecoration(
-                        boxShadow: [BoxShadow(blurRadius: 1)],
-                        borderRadius:
-                            BorderRadius.only(bottomRight: Radius.circular(5), bottomLeft: Radius.circular(5)),
-                        color: Colors.amber),
+                      boxShadow: [BoxShadow(blurRadius: 3)],
+                      borderRadius: BorderRadius.only(bottomRight: Radius.circular(2), bottomLeft: Radius.circular(2)),
+                      color: Colors.amber,
+                    ),
                     child: const Icon(
                       Icons.local_shipping_outlined,
                       size: 17,
-                      color: Colors.black,
+                      color: Color.fromARGB(255, 136, 9, 9),
                     ),
                   ),
                 )
               : const SizedBox(),
+          const Positioned(
+            top: 2,
+            right: 5,
+            child: Icon(
+              Icons.search,
+              color: Color.fromARGB(255, 94, 25, 20),
+              size: 25,
+            ),
+          ),
         ],
       ),
     );
@@ -196,7 +210,7 @@ class _ProductsViewState extends State<ProductsView> {
 
   Widget _buildTitle(ProductModel product) {
     return Expanded(
-      flex: 1,
+      flex: 6,
       child: Container(
         padding: const EdgeInsets.only(right: 3, left: 3),
         alignment: Alignment.centerLeft,
@@ -205,7 +219,7 @@ class _ProductsViewState extends State<ProductsView> {
     );
   }
 
-  Expanded _buildChipWidget(ProductModel product) {
+  /* Expanded _buildChipWidget(ProductModel product) {
     return Expanded(
       flex: 1,
       child: Row(
@@ -235,22 +249,60 @@ class _ProductsViewState extends State<ProductsView> {
         ],
       ),
     );
-  }
+  } */
 
-  Padding _buildPointAndButton(ProductModel product) {
-    return Padding(
-      padding: const EdgeInsets.all(5.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          _buildPointText(product),
-          _buildButtonCartAdd(product),
-        ],
+  Widget _buildSeasonAndPoint(ProductModel product) {
+    return Expanded(
+      flex: 4,
+      child: Padding(
+        padding: const EdgeInsets.all(5.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            ..._buildSeasonIcon(product),
+            _buildPointText(product),
+          ],
+        ),
       ),
     );
   }
 
-  Row _buildSizeAndQuantity() {
+  _buildSeasonIcon(ProductModel product) {
+    switch (product.season) {
+      case 'KIŞ':
+        return const [
+          Icon(
+            Icons.severe_cold_sharp,
+            color: Colors.cyan,
+            size: 22,
+          )
+        ];
+      case 'YAZ':
+        return const [
+          Icon(
+            Icons.sunny,
+            color: Colors.amber,
+            size: 22,
+          )
+        ];
+      case 'KIŞ/YAZ':
+      case 'YAZ/KIŞ':
+        return [
+          const Icon(
+            Icons.severe_cold_sharp,
+            color: Colors.cyan,
+            size: 22,
+          ),
+          const Icon(
+            Icons.sunny,
+            color: Colors.amber,
+            size: 22,
+          )
+        ];
+    }
+  }
+
+  /* Row _buildSizeAndQuantity() {
     double heightDropDownButton = 35;
     double widthDropDownButton = 60;
     return Row(
@@ -320,7 +372,7 @@ class _ProductsViewState extends State<ProductsView> {
         ),
       ],
     );
-  }
+  } */
 
   Expanded _buildPointText(ProductModel product) {
     return Expanded(
@@ -329,17 +381,14 @@ class _ProductsViewState extends State<ProductsView> {
     );
   }
 
-  SizedBox _buildButtonCartAdd(ProductModel product) {
+  /* SizedBox _buildButtonCartAdd(ProductModel product) {
     return SizedBox(
       width: 50,
       height: 25,
       child: ElevatedButton(
-        onPressed: () {
-          ///************************************************************************
+        onPressed: () { 
           CartViewModel.cartListItem.add(CartModel(productModel: product));
-          _baseModelController.cartTotal.value = CartViewModel.cartListItem.length;
-
-          ///************************************************************************
+          _baseModelController.cartTotal.value = CartViewModel.cartListItem.length; 
           Get.showSnackbar(
             const GetSnackBar(
               duration: Duration(seconds: 1),
@@ -354,7 +403,7 @@ class _ProductsViewState extends State<ProductsView> {
         ),
       ),
     );
-  }
+  } */
 
   Expanded _buildTypeText(ProductModel product) {
     return Expanded(
