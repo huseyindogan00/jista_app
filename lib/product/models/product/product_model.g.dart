@@ -26,13 +26,14 @@ class ProductModelAdapter extends TypeAdapter<ProductModel> {
       cargoStatus: fields[6] as bool,
       quantity: fields[7] as int,
       point: fields[8] as int,
+      imageUrl: fields[9] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, ProductModel obj) {
     writer
-      ..writeByte(9)
+      ..writeByte(10)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -50,7 +51,9 @@ class ProductModelAdapter extends TypeAdapter<ProductModel> {
       ..writeByte(7)
       ..write(obj.quantity)
       ..writeByte(8)
-      ..write(obj.point);
+      ..write(obj.point)
+      ..writeByte(9)
+      ..write(obj.imageUrl);
   }
 
   @override

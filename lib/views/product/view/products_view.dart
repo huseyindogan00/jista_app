@@ -254,15 +254,13 @@ class _ProductsViewState extends State<ProductsView> {
   Widget _buildSeasonAndPoint(ProductModel product) {
     return Expanded(
       flex: 4,
-      child: Padding(
-        padding: const EdgeInsets.all(5.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            ..._buildSeasonIcon(product),
-            _buildPointText(product),
-          ],
-        ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          _buildSeasonIcon(product),
+          _buildPointText(product),
+        ],
       ),
     );
   }
@@ -270,35 +268,42 @@ class _ProductsViewState extends State<ProductsView> {
   _buildSeasonIcon(ProductModel product) {
     switch (product.season) {
       case 'KIŞ':
-        return const [
-          Icon(
-            Icons.severe_cold_sharp,
-            color: Colors.cyan,
-            size: 22,
-          )
-        ];
+        return Row(
+          children: const <Widget>[
+            Icon(
+              Icons.severe_cold_sharp,
+              color: Color.fromARGB(248, 62, 72, 155),
+              size: 22,
+            ),
+          ],
+        );
+
       case 'YAZ':
-        return const [
-          Icon(
-            Icons.sunny,
-            color: Colors.amber,
-            size: 22,
-          )
-        ];
+        return Row(
+          children: const <Widget>[
+            Icon(
+              Icons.sunny,
+              color: Colors.amber,
+              size: 22,
+            ),
+          ],
+        );
       case 'KIŞ/YAZ':
       case 'YAZ/KIŞ':
-        return [
-          const Icon(
-            Icons.severe_cold_sharp,
-            color: Colors.cyan,
-            size: 22,
-          ),
-          const Icon(
-            Icons.sunny,
-            color: Colors.amber,
-            size: 22,
-          )
-        ];
+        return Row(
+          children: const <Widget>[
+            Icon(
+              Icons.severe_cold_sharp,
+              color: Color.fromARGB(248, 62, 72, 155),
+              size: 22,
+            ),
+            Icon(
+              Icons.sunny,
+              color: Colors.amber,
+              size: 22,
+            )
+          ],
+        );
     }
   }
 
@@ -374,11 +379,9 @@ class _ProductsViewState extends State<ProductsView> {
     );
   } */
 
-  Expanded _buildPointText(ProductModel product) {
-    return Expanded(
-      flex: 1,
-      child: Text('${product.point} Puan', style: _pointTextStyle),
-    );
+  Widget _buildPointText(ProductModel product) {
+    return Container(
+        padding: const EdgeInsets.only(left: 26), child: Text('${product.point} Puan', style: _pointTextStyle));
   }
 
   /* SizedBox _buildButtonCartAdd(ProductModel product) {

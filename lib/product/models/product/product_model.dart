@@ -27,6 +27,8 @@ class ProductModel {
   int quantity;
   @HiveField(8)
   int point;
+  @HiveField(9)
+  String? imageUrl;
   ProductModel({
     required this.id,
     required this.type,
@@ -37,10 +39,11 @@ class ProductModel {
     required this.cargoStatus,
     required this.quantity,
     required this.point,
+    required this.imageUrl,
   });
 
   ProductModel copyWith({
-    String? id,
+    dynamic id,
     String? type,
     String? title,
     String? rank,
@@ -49,6 +52,7 @@ class ProductModel {
     bool? cargoStatus,
     int? quantity,
     int? point,
+    String? imageUrl,
   }) {
     return ProductModel(
       id: id ?? this.id,
@@ -60,26 +64,28 @@ class ProductModel {
       cargoStatus: cargoStatus ?? this.cargoStatus,
       quantity: quantity ?? this.quantity,
       point: point ?? this.point,
+      imageUrl: imageUrl ?? this.imageUrl,
     );
   }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      //'id': id,
+      'id': id,
       'type': type,
-      'productTitle': title,
+      'title': title,
       'rank': rank,
       'season': season,
       'gender': gender,
       'cargoStatus': cargoStatus,
       'quantity': quantity,
       'point': point,
+      'imageUrl': imageUrl,
     };
   }
 
   factory ProductModel.fromMap(Map<String, dynamic> map) {
     return ProductModel(
-      id: map['id'] as String,
+      id: map['id'] as dynamic,
       type: map['type'] as String,
       title: map['title'] as String,
       rank: map['rank'] as String,
@@ -87,7 +93,8 @@ class ProductModel {
       gender: map['gender'] as String,
       cargoStatus: map['cargoStatus'] as bool,
       quantity: map['quantity'] as int,
-      point: map['point'],
+      point: map['point'] as int,
+      imageUrl: map['imageUrl'] as String,
     );
   }
 
@@ -97,7 +104,7 @@ class ProductModel {
 
   @override
   String toString() {
-    return 'ProductModel(id: $id, type: $type, productTitle: $title, rank: $rank, season: $season, gender: $gender, cargoStatus: $cargoStatus, quantity: $quantity, point: $point)';
+    return 'ProductModel(id: $id, type: $type, title: $title, rank: $rank, season: $season, gender: $gender, cargoStatus: $cargoStatus, quantity: $quantity, point: $point, imageUrl: $imageUrl)';
   }
 
   @override
@@ -112,7 +119,8 @@ class ProductModel {
         other.gender == gender &&
         other.cargoStatus == cargoStatus &&
         other.quantity == quantity &&
-        other.point == point;
+        other.point == point &&
+        other.imageUrl == imageUrl;
   }
 
   @override
@@ -125,6 +133,7 @@ class ProductModel {
         gender.hashCode ^
         cargoStatus.hashCode ^
         quantity.hashCode ^
-        point.hashCode;
+        point.hashCode ^
+        imageUrl.hashCode;
   }
 }

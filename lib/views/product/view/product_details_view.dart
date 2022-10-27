@@ -1,5 +1,8 @@
 import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:jista/product/models/product/product_model.dart';
 
 class ProductDetailsView extends StatelessWidget {
@@ -11,38 +14,65 @@ class ProductDetailsView extends StatelessWidget {
   Widget build(BuildContext context) {
     ProductModel product = productModel;
     return Scaffold(
-      body: Center(
+      body: SingleChildScrollView(
         child: Container(
+          padding: const EdgeInsets.all(10),
           color: Colors.grey,
-          margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
           child: Column(
-            textDirection: TextDirection.ltr,
             children: [
-              Text(product.title),
-              Expanded(
-                child: Container(
-                  margin: const EdgeInsets.all(20),
-                  child: const Image(
-                      image: NetworkImage(
-                          'https://firebasestorage.googleapis.com/v0/b/jista-81374.appspot.com/o/hizmet_kiyafeti%2Fhizmet_kiyafeti.png?alt=media&token=ff60b28b-7be1-47d2-96da-89000721d5b7'),
-                      fit: BoxFit.cover),
-                ),
+              Container(
+                color: Colors.red,
+                height: 450,
+                width: double.infinity,
+                child: FadeInImage.assetNetwork(
+                    fit: BoxFit.contain,
+                    placeholder: '',
+                    image:
+                        'https://firebasestorage.googleapis.com/v0/b/jista-81374.appspot.com/o/hizmet_giyecegi%2Fhizmet_kiyafeti.png?alt=media&token=b234e67b-c15e-4354-a435-04ecee31a7db'),
               ),
+              Text(product.type),
               Text(product.title),
-              OverflowBar(
-                children: [
-                  Text(product.point.toString()),
-                  TextButton(
-                    onPressed: () {
-                      /****************************************/
-                      // SEPETE EKLEME YAPILACAK
-                    },
-                    child: Text(
-                      'EKLE',
-                      style: TextStyle(fontSize: 18, color: Colors.green.shade900),
+              SizedBox(
+                height: 60,
+                width: 250,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Container(
+                      width: 60,
+                      height: 60,
+                      color: Colors.orange,
+                      child: Column(
+                        children: [
+                          Text('Kargo Durumu'),
+                          Text(product.cargoStatus ? 'Evet' : 'Hayır'),
+                        ],
+                      ),
                     ),
-                  )
-                ],
+                    Container(
+                      width: 60,
+                      height: 60,
+                      color: Colors.orange,
+                      child: Column(
+                        children: [
+                          Text('Kargo Durumu'),
+                          Text(product.cargoStatus ? 'Evet' : 'Hayır'),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      width: 60,
+                      height: 60,
+                      color: Colors.orange,
+                      child: Column(
+                        children: [
+                          Text('Kargo Durumu'),
+                          Text(product.cargoStatus ? 'Evet' : 'Hayır'),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
