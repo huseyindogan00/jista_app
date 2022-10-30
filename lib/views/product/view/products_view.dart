@@ -168,9 +168,9 @@ class _ProductsViewState extends State<ProductsView> {
               height: double.infinity,
               decoration: _boxDecorationImageCard,
               padding: const EdgeInsets.only(bottom: 5),
-              child: const FadeInImage(
-                placeholder: AssetImage('assets/images/jandarma_logo.png'),
-                image: NetworkImage(ConstProductImage.fakeImage),
+              child: FadeInImage(
+                placeholder: const AssetImage('assets/images/jandarma_logo.png'),
+                image: NetworkImage(product.imageUrl!),
               ),
             ),
           ),
@@ -194,15 +194,6 @@ class _ProductsViewState extends State<ProductsView> {
                   ),
                 )
               : const SizedBox(),
-          const Positioned(
-            top: 2,
-            right: 5,
-            child: Icon(
-              Icons.search,
-              color: Color.fromARGB(255, 94, 25, 20),
-              size: 25,
-            ),
-          ),
         ],
       ),
     );
@@ -218,38 +209,6 @@ class _ProductsViewState extends State<ProductsView> {
       ),
     );
   }
-
-  /* Expanded _buildChipWidget(ProductModel product) {
-    return Expanded(
-      flex: 1,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Container(
-            padding: _chipLabelPadding,
-            decoration: _boxDecorationChip,
-            child: Text(
-              product.season,
-              style: _chipTextStyle,
-            ),
-          ),
-          Container(
-            padding: _chipLabelPadding,
-            decoration: _boxDecorationChip,
-            child: Text(
-              product.gender,
-              style: _chipTextStyle,
-            ),
-          ),
-          Container(
-            padding: _chipLabelPadding,
-            decoration: _boxDecorationChip,
-            child: Text(product.rank, style: _chipTextStyle),
-          ),
-        ],
-      ),
-    );
-  } */
 
   Widget _buildSeasonAndPoint(ProductModel product) {
     return Expanded(
@@ -307,91 +266,19 @@ class _ProductsViewState extends State<ProductsView> {
     }
   }
 
-  /* Row _buildSizeAndQuantity() {
-    double heightDropDownButton = 35;
-    double widthDropDownButton = 60;
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        SizedBox(
-          height: heightDropDownButton,
-          width: widthDropDownButton,
-          child: DropdownButton<String>(
-            value: 'data',
-            items: const [
-              DropdownMenuItem<String>(
-                value: 'data',
-                child: Text(
-                  'data',
-                  style: TextStyle(fontSize: 10, color: Colors.black),
-                ),
-              ),
-              DropdownMenuItem<String>(
-                value: 'data1',
-                child: Text(
-                  'data1',
-                  style: TextStyle(fontSize: 10, color: Colors.black),
-                ),
-              ),
-              DropdownMenuItem<String>(
-                value: 'data2',
-                child: Text(
-                  'data2',
-                  style: TextStyle(fontSize: 10, color: Colors.black),
-                ),
-              ),
-            ],
-            onChanged: (value) {},
-          ),
-        ),
-        SizedBox(
-          height: heightDropDownButton,
-          width: widthDropDownButton,
-          child: DropdownButton<String>(
-            value: 'data',
-            items: const [
-              DropdownMenuItem<String>(
-                value: 'data',
-                child: Text(
-                  'data',
-                  style: TextStyle(fontSize: 10, color: Colors.black),
-                ),
-              ),
-              DropdownMenuItem<String>(
-                value: 'data1',
-                child: Text(
-                  'data1',
-                  style: TextStyle(fontSize: 10, color: Colors.black),
-                ),
-              ),
-              DropdownMenuItem<String>(
-                value: 'data2',
-                child: Text(
-                  'data2',
-                  style: TextStyle(fontSize: 10, color: Colors.black),
-                ),
-              ),
-            ],
-            onChanged: (value) {},
-          ),
-        ),
-      ],
-    );
-  } */
-
   Widget _buildPointText(ProductModel product) {
     return Container(
         padding: const EdgeInsets.only(left: 26), child: Text('${product.point} Puan', style: _pointTextStyle));
   }
 
-  /* SizedBox _buildButtonCartAdd(ProductModel product) {
+  SizedBox _buildButtonCartAdd(ProductModel product) {
     return SizedBox(
       width: 50,
       height: 25,
       child: ElevatedButton(
-        onPressed: () { 
+        onPressed: () {
           CartViewModel.cartListItem.add(CartModel(productModel: product));
-          _baseModelController.cartTotal.value = CartViewModel.cartListItem.length; 
+          _baseModelController.cartTotal.value = CartViewModel.cartListItem.length;
           Get.showSnackbar(
             const GetSnackBar(
               duration: Duration(seconds: 1),
@@ -406,7 +293,7 @@ class _ProductsViewState extends State<ProductsView> {
         ),
       ),
     );
-  } */
+  }
 
   Expanded _buildTypeText(ProductModel product) {
     return Expanded(

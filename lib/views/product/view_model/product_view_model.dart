@@ -12,6 +12,8 @@ class ProductViewModel extends BaseModel {
   var isSummer = false.obs;
   var isAll = false.obs;
   var seasonFilter = 'HEPSİ';
+  var count = 1.obs;
+  var size = ''.obs;
 
   // ÜRÜN LİSTESİNİN DEĞİŞİMİNİ GÜNCELLEME
   //--------------------------------------------------

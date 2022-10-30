@@ -59,7 +59,7 @@ class _BaseTabsViewState extends State<BaseTabsView> {
       debugShowCheckedModeBanner: false,
       theme: ThemeApp.themeLight,
       darkTheme: ThemeApp.themeDark,
-      themeMode: ThemeMode.system,
+      //themeMode: ThemeMode.system,
       home: AutoTabsScaffold(
         homeIndex: 0,
         backgroundColor: const Color.fromARGB(255, 241, 243, 243).withOpacity(0.8),
