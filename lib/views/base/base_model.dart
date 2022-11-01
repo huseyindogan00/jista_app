@@ -16,6 +16,10 @@ class BaseModel extends GetxController {
   //--------------------------------------------------
   RxBool isExit = false.obs;
 
+  // TOTAL POİNT
+  //--------------------------------------------------
+  var totalPoint = 0.obs;
+
   // APPBAR TITLE
   //--------------------------------------------------
   RxString appbarTitle = ''.obs;

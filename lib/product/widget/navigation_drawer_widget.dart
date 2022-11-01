@@ -14,7 +14,6 @@ import 'package:jista/views/base/base_model.dart';
 class NavigationDrawer extends StatelessWidget {
   NavigationDrawer({
     Key? key,
-    required this.imagePath,
     required this.personModel,
   }) : super(key: key) {
     initializer();
@@ -22,11 +21,11 @@ class NavigationDrawer extends StatelessWidget {
 
   BaseModel? controller;
   final ThemeApp theme = Get.put(ThemeApp());
-  String imagePath;
   PersonModel personModel;
 
   void initializer() {
     controller = Get.put(BaseModel());
+    controller?.totalPoint.value = personModel.totalPoint ?? 0;
   }
 
   @override
@@ -34,25 +33,26 @@ class NavigationDrawer extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            buildHeader(context, imagePath, personModel),
+            buildHeader(context, personModel),
             buildMenuItem(context),
           ],
         ),
       );
 
-  Widget buildHeader(BuildContext context, String imagePath, PersonModel personModel) {
+  Widget buildHeader(BuildContext context, PersonModel personModel) {
     Color textColor = const Color.fromARGB(255, 230, 230, 236);
     return Container(
       color: Get.theme.backgroundColor.withOpacity(0.9),
       padding: EdgeInsets.only(
-        top: 24 + MediaQuery.of(context).padding.top,
-        bottom: 24,
+        top: 25 + MediaQuery.of(context).padding.top,
+        bottom: 10,
       ),
       child: Column(
         children: [
           CircleAvatar(
-            radius: 45,
-            backgroundImage: AssetImage(imagePath),
+            minRadius: 50,
+            maxRadius: 70,
+            backgroundImage: NetworkImage(personModel.imageUrl!),
           ),
           const SizedBox(height: 12),
           Text(
@@ -67,6 +67,23 @@ class NavigationDrawer extends StatelessWidget {
             '${personModel.duty}',
             style: TextStyle(fontSize: 16, color: textColor, fontStyle: FontStyle.italic, fontWeight: FontWeight.bold),
           ),
+          const Divider(),
+          Container(
+            padding: const EdgeInsets.only(top: 0, right: 15),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  'Toplam Puan : ',
+                  style: TextStyle(color: Colors.amber, fontWeight: FontWeight.w500, fontSize: 20),
+                ),
+                Obx(() => Text(
+                      controller!.totalPoint.value.toString(),
+                      style: TextStyle(color: Colors.cyan.shade300, fontSize: 25, fontWeight: FontWeight.w500),
+                    )),
+              ],
+            ),
+          )
         ],
       ),
     );

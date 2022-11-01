@@ -271,30 +271,6 @@ class _ProductsViewState extends State<ProductsView> {
         padding: const EdgeInsets.only(left: 26), child: Text('${product.point} Puan', style: _pointTextStyle));
   }
 
-  SizedBox _buildButtonCartAdd(ProductModel product) {
-    return SizedBox(
-      width: 50,
-      height: 25,
-      child: ElevatedButton(
-        onPressed: () {
-          CartViewModel.cartListItem.add(CartModel(productModel: product));
-          _baseModelController.cartTotal.value = CartViewModel.cartListItem.length;
-          Get.showSnackbar(
-            const GetSnackBar(
-              duration: Duration(seconds: 1),
-              snackPosition: SnackPosition.BOTTOM,
-              message: 'Ürün Eklendi',
-            ),
-          );
-        },
-        child: const Icon(
-          Icons.add_shopping_cart_outlined,
-          size: 20,
-        ),
-      ),
-    );
-  }
-
   Expanded _buildTypeText(ProductModel product) {
     return Expanded(
       child: Center(

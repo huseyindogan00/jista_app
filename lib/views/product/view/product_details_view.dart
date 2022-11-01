@@ -25,6 +25,8 @@ class ProductDetailsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ProductModel product = productModel;
+    viewModel.size.value = '';
+    viewModel.count.value = 1;
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -82,23 +84,26 @@ class ProductDetailsView extends StatelessWidget {
     );
   }
 
-  Align _buildTypeAndTitle(ProductModel product) {
-    return Align(
-      alignment: Alignment.centerLeft,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            '\t\t${product.type}\t\t',
-            style: textStyleTitleType.copyWith(fontWeight: FontWeight.w700),
-          ),
-          const SizedBox(height: 10),
-          Text(
-            '\t\t\t${product.title} ',
-            style: textStyleTitleType.copyWith(color: Colors.teal, fontSize: 15, fontWeight: FontWeight.w700),
-          ),
-        ],
+  Widget _buildTypeAndTitle(ProductModel product) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              '\t\t${product.type}\t\t',
+              style: textStyleTitleType.copyWith(fontWeight: FontWeight.w700),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              '\t\t\t${product.title} ',
+              style: textStyleTitleType.copyWith(color: Colors.teal, fontSize: 15, fontWeight: FontWeight.w700),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -184,19 +189,19 @@ class ProductDetailsView extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         Container(
-          padding: const EdgeInsets.only(right: 10, left: 10),
+          padding: const EdgeInsets.only(right: 5, left: 5),
           decoration: BoxDecoration(color: Colors.transparent, borderRadius: BorderRadius.circular(20)),
           height: heightDropDownButton,
           width: widthDropDownButton,
           child: DropdownButtonFormField<String>(
             decoration: const InputDecoration(border: InputBorder.none, hintStyle: TextStyle(color: Colors.black)),
             borderRadius: BorderRadius.circular(10),
-            dropdownColor: Colors.teal,
+            dropdownColor: const Color.fromARGB(255, 36, 110, 103),
             alignment: Alignment.center,
             isExpanded: true,
-            hint: Text(
+            hint: const Text(
               'Beden Seçin',
-              style: textStyle.copyWith(fontSize: 12, color: Colors.black, fontWeight: FontWeight.w700),
+              style: TextStyle(fontSize: 14, color: Colors.black, fontWeight: FontWeight.w700),
             ),
             elevation: 20,
             style: textStyle.copyWith(color: Colors.black, fontSize: 18),
@@ -235,6 +240,9 @@ class ProductDetailsView extends StatelessWidget {
         ),
         Container(
           padding: const EdgeInsets.only(bottom: 10, top: 10),
+          decoration: BoxDecoration(
+              border: Border.all(width: 0.3, color: Color.fromARGB(255, 161, 161, 161)),
+              borderRadius: BorderRadius.circular(30)),
           child: Row(
             children: [
               IconButton(
@@ -305,8 +313,25 @@ class ProductDetailsView extends StatelessWidget {
               ),
             ),
             onTap: () {
+              int productCount = viewModel.count.value;
+
               if (viewModel.size.value.isNotEmpty) {
-                CartViewModel.cartListItem.add(CartModel(productModel: product));
+                for (var cart in CartViewModel.cartListItem) {
+                  if (cart.productModel.title == product.title) {
+                    EasyLoading.showSuccess(
+                      'Aynı ürün sepette mevcut',
+                      dismissOnTap: false,
+                      duration: const Duration(seconds: 2),
+                    );
+                    viewModel.size.value = '';
+                    return;
+                  }
+                }
+                CartViewModel.cartListItem.add(CartModel(
+                  productModel: product,
+                  count: productCount,
+                  size: viewModel.size.value,
+                ));
                 Get.find<BaseModel>().cartTotal.value = CartViewModel.cartListItem.length;
                 EasyLoading.showSuccess(
                   'Kıyafet Eklendi',

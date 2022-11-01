@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 import 'package:hive_flutter/adapters.dart';
+
 import '../address/address_model.dart';
 import '../order/order_model.dart';
 
@@ -33,6 +34,8 @@ class PersonModel {
   String? duty;
   @HiveField(11)
   OrderModel? order;
+  @HiveField(12)
+  String? imageUrl;
   PersonModel({
     this.id,
     this.password,
@@ -46,10 +49,11 @@ class PersonModel {
     this.totalPoint,
     this.duty,
     this.order,
+    this.imageUrl,
   });
 
   PersonModel copyWith({
-    dynamic id,
+    dynamic? id,
     String? password,
     String? pbik,
     String? email,
@@ -61,6 +65,7 @@ class PersonModel {
     int? totalPoint,
     String? duty,
     OrderModel? order,
+    String? imageUrl,
   }) {
     return PersonModel(
       id: id ?? this.id,
@@ -75,6 +80,7 @@ class PersonModel {
       totalPoint: totalPoint ?? this.totalPoint,
       duty: duty ?? this.duty,
       order: order ?? this.order,
+      imageUrl: imageUrl ?? this.imageUrl,
     );
   }
 
@@ -92,6 +98,7 @@ class PersonModel {
       'totalPoint': totalPoint,
       'duty': duty,
       'order': order?.toMap(),
+      'imageUrl': imageUrl,
     };
   }
 
@@ -109,6 +116,7 @@ class PersonModel {
       totalPoint: map['totalPoint'] != null ? map['totalPoint'] as int : null,
       duty: map['duty'] != null ? map['duty'] as String : null,
       order: map['order'] != null ? OrderModel.fromMap(map['order'] as Map<String, dynamic>) : null,
+      imageUrl: map['imageUrl'] != null ? map['imageUrl'] as String : null,
     );
   }
 
@@ -118,7 +126,7 @@ class PersonModel {
 
   @override
   String toString() {
-    return 'PersonModel(id: $id, password: $password, pbik: $pbik, email: $email, name: $name, lastName: $lastName, rank: $rank, gender: $gender, address: $address, totalPoint: $totalPoint, duty: $duty, order: $order)';
+    return 'PersonModel(id: $id, password: $password, pbik: $pbik, email: $email, name: $name, lastName: $lastName, rank: $rank, gender: $gender, address: $address, totalPoint: $totalPoint, duty: $duty, order: $order, imageUrl: $imageUrl)';
   }
 
   @override
@@ -136,7 +144,8 @@ class PersonModel {
         other.address == address &&
         other.totalPoint == totalPoint &&
         other.duty == duty &&
-        other.order == order;
+        other.order == order &&
+        other.imageUrl == imageUrl;
   }
 
   @override
@@ -152,6 +161,7 @@ class PersonModel {
         address.hashCode ^
         totalPoint.hashCode ^
         duty.hashCode ^
-        order.hashCode;
+        order.hashCode ^
+        imageUrl.hashCode;
   }
 }

@@ -29,13 +29,14 @@ class PersonModelAdapter extends TypeAdapter<PersonModel> {
       totalPoint: fields[9] as int?,
       duty: fields[10] as String?,
       order: fields[11] as OrderModel?,
+      imageUrl: fields[12] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, PersonModel obj) {
     writer
-      ..writeByte(12)
+      ..writeByte(13)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -59,7 +60,9 @@ class PersonModelAdapter extends TypeAdapter<PersonModel> {
       ..writeByte(10)
       ..write(obj.duty)
       ..writeByte(11)
-      ..write(obj.order);
+      ..write(obj.order)
+      ..writeByte(12)
+      ..write(obj.imageUrl);
   }
 
   @override
