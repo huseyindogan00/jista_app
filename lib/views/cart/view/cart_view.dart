@@ -26,7 +26,8 @@ class _CartViewState extends State<CartView> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 238, 234, 234),
       appBar: AppBar(
-        title: Obx(() => Text('Sepetim (${_baseController.cartTotal.value} Ürün)')),
+        title: Obx(
+            () => Text('Sepetim (${_baseController.cartTotal.value} Ürün)')),
         systemOverlayStyle: SystemUiOverlayStyle.light,
         backgroundColor: Colors.cyan.shade800,
         centerTitle: true,
@@ -39,7 +40,7 @@ class _CartViewState extends State<CartView> {
             CartModel cartItem = CartViewModel.cartListItem[index];
             return Card(
               elevation: 2,
-              margin: EdgeInsets.only(top: 15),
+              margin: const EdgeInsets.only(top: 15),
               color: Colors.white,
               child: Slidable(
                 key: Key(index.toString()),
@@ -56,7 +57,8 @@ class _CartViewState extends State<CartView> {
                       foregroundColor: Colors.white,
                       backgroundColor: Colors.red,
                       spacing: 5,
-                      onPressed: (context) => _onDismissed(index, Action.delete),
+                      onPressed: (context) =>
+                          _onDismissed(index, Action.delete),
                     ),
                   ],
                 ),
@@ -64,10 +66,21 @@ class _CartViewState extends State<CartView> {
                   tileColor: Colors.white,
                   contentPadding: const EdgeInsets.all(15),
                   minLeadingWidth: 50,
-                  leading: Image(image: NetworkImage(cartItem.productModel.imageUrl!)),
+                  leading: Image(
+                      image: NetworkImage(cartItem.productModel.imageUrl!)),
                   title: Text(cartItem.productModel.type),
-                  subtitle: Text(cartItem.productModel.title),
-                  trailing: Text('${cartItem.count} Adet\nBeden:${cartItem.size}'),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Açıklama : ${cartItem.productModel.title}'),
+                      Text('Sezon : ${cartItem.productModel.season}'),
+                      Text(cartItem.productModel.cargoStatus
+                          ? 'Kargo : Evet'
+                          : 'Kargo : Hayır'),
+                    ],
+                  ),
+                  trailing:
+                      Text('${cartItem.count} Adet\nBeden:${cartItem.size}'),
                 ),
               ),
             );
@@ -76,18 +89,10 @@ class _CartViewState extends State<CartView> {
       ),
 
       ///**BOTTOM SHEET İLE ANİMATİON CONTROLLER YAPILACAK VE CONTROL EDİLEVCEK */
-      /* bottomSheet: BottomSheet(
-        onClosing: () {},
-        builder: (context) {
-          return Container(
-            decoration: BoxDecoration(
-                color: Colors.black38,
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(100), topRight: Radius.circular(50))),
-            height: 200,
-            width: double.infinity,
-          );
-        },
-      ) ,*/
+      bottomSheet: SizedBox(
+          width: double.infinity,
+          child:
+              ElevatedButton(onPressed: () {}, child: Text('Sepeti Onayla'))),
     );
   }
 
@@ -96,7 +101,8 @@ class _CartViewState extends State<CartView> {
       case Action.delete:
         setState(() {
           CartViewModel.cartListItem.removeAt(index);
-          Get.put(BaseModel()).cartTotal.value = CartViewModel.cartListItem.length;
+          Get.put(BaseModel()).cartTotal.value =
+              CartViewModel.cartListItem.length;
         });
         break;
       default:
