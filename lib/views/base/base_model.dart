@@ -16,21 +16,21 @@ class BaseModel extends GetxController {
   //--------------------------------------------------
   RxBool isExit = false.obs;
 
-  // TOTAL POİNT
+  // TOPLAM PUAN
   //--------------------------------------------------
   var totalPoint = 0.obs;
+
+  // SEPET ÜRÜN SAYISI
+  //--------------------------------------------------
+  Rx<int> cartTotal = 0.obs;
 
   // APPBAR TITLE
   //--------------------------------------------------
   RxString appbarTitle = ''.obs;
 
-  // SEPETTE TUTULACAK PRODUCT LİST
+  /* // SEPETTE TUTULACAK PRODUCT LİST
   //--------------------------------------------------
-  RxList<ProductModel> products = <ProductModel>[].obs;
-
-  // SEPET GÜNCELLEME
-  //--------------------------------------------------
-  Rx<int> cartTotal = 0.obs;
+  RxList<ProductModel> products = <ProductModel>[].obs; */
 
   // SAYFA İŞLEM YAPTIĞINDA BEKLEME DURUMUNU BELİRTİR
   //--------------------------------------------------

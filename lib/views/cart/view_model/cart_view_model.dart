@@ -7,6 +7,11 @@ import '../../../product/models/cart/cart_model.dart';
 
 class CartViewModel extends BaseModel {
   static List<CartModel> cartListItem = <CartModel>[];
+
+  addToCart(CartModel cartModel) {
+    cartListItem.add(cartModel);
+  }
+
   addOrder(String personId, OrderModel orderModel) {
     /* veritabanına ekleme işlemleri yapılacak */
   }

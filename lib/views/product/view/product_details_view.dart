@@ -20,7 +20,7 @@ class ProductDetailsView extends StatelessWidget {
 
   final TextStyle textStyle =
       TextStyle(fontSize: 12, fontFamily: 'Montserrat', color: Colors.orange.shade900, fontWeight: FontWeight.bold);
-  final TextStyle textStyleTitleType = const TextStyle(fontSize: 18, color: Colors.black, fontFamily: 'Montserrat');
+  final TextStyle textStyleTitleType = const TextStyle(fontSize: 20, color: Colors.black, fontFamily: 'Montserrat');
 
   @override
   Widget build(BuildContext context) {
@@ -86,16 +86,49 @@ class ProductDetailsView extends StatelessWidget {
 
   Widget _buildTypeAndTitle(ProductModel product) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.only(left: 8, top: 8, right: 20),
       child: Align(
         alignment: Alignment.centerLeft,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              '\t\t${product.type}\t\t',
-              style: textStyleTitleType.copyWith(fontWeight: FontWeight.w700),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  '\t\t${product.type}\t\t',
+                  style: textStyleTitleType.copyWith(fontWeight: FontWeight.w700),
+                ),
+                Container(
+                  child: product.season == 'KIŞ'
+                      ? const Icon(
+                          Icons.severe_cold_sharp,
+                          color: Color.fromARGB(248, 62, 72, 155),
+                          size: 28,
+                        )
+                      : product.season == 'YAZ'
+                          ? const Icon(
+                              Icons.sunny,
+                              color: Colors.amber,
+                              size: 28,
+                            )
+                          : Row(
+                              children: const <Widget>[
+                                Icon(
+                                  Icons.severe_cold_sharp,
+                                  color: Color.fromARGB(248, 62, 72, 155),
+                                  size: 28,
+                                ),
+                                Icon(
+                                  Icons.sunny,
+                                  color: Colors.amber,
+                                  size: 28,
+                                )
+                              ],
+                            ),
+                ),
+              ],
             ),
             const SizedBox(height: 10),
             Text(
@@ -182,104 +215,107 @@ class ProductDetailsView extends StatelessWidget {
     );
   }
 
-  Row _buildSizeAndQuantity() {
-    double heightDropDownButton = 50;
-    double widthDropDownButton = 130;
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        Container(
-          padding: const EdgeInsets.only(right: 5, left: 5),
-          decoration: BoxDecoration(color: Colors.transparent, borderRadius: BorderRadius.circular(20)),
-          height: heightDropDownButton,
-          width: widthDropDownButton,
-          child: DropdownButtonFormField<String>(
-            decoration: const InputDecoration(border: InputBorder.none, hintStyle: TextStyle(color: Colors.black)),
-            borderRadius: BorderRadius.circular(10),
-            dropdownColor: const Color.fromARGB(255, 36, 110, 103),
+  Widget _buildSizeAndQuantity() {
+    double heightDropDownButton = 45;
+    double widthDropDownButton = 125;
+    return Padding(
+      padding: const EdgeInsets.only(top: 15, bottom: 15),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          Container(
             alignment: Alignment.center,
-            isExpanded: true,
-            hint: const Text(
-              'Beden Seçin',
-              style: TextStyle(fontSize: 14, color: Colors.black, fontWeight: FontWeight.w700),
+            padding: const EdgeInsets.only(right: 5, left: 5),
+            decoration: BoxDecoration(
+              color: const Color.fromARGB(255, 47, 138, 129),
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: const <BoxShadow>[BoxShadow(blurRadius: 1)],
             ),
-            elevation: 20,
-            style: textStyle.copyWith(color: Colors.black, fontSize: 18),
-            items: const [
-              DropdownMenuItem<String>(
-                alignment: AlignmentDirectional.center,
-                value: 'XL',
-                child: Text(
-                  'XL',
+            height: heightDropDownButton,
+            width: widthDropDownButton,
+            child: DropdownButtonFormField<String>(
+              decoration: const InputDecoration(border: InputBorder.none, hintStyle: TextStyle(color: Colors.black)),
+              borderRadius: BorderRadius.circular(10),
+              dropdownColor: const Color.fromARGB(255, 36, 110, 103),
+              isExpanded: true,
+              hint: const Text(
+                'Beden Seçin',
+                style: TextStyle(fontSize: 14, color: Colors.white, fontWeight: FontWeight.w700),
+              ),
+              elevation: 20,
+              style: textStyle.copyWith(color: Colors.white, fontSize: 17),
+              items: const [
+                DropdownMenuItem<String>(
+                  alignment: AlignmentDirectional.center,
+                  value: 'XLarge',
+                  child: Text('XLarge'),
                 ),
-              ),
-              DropdownMenuItem<String>(
-                alignment: AlignmentDirectional.center,
-                value: 'L',
-                child: Text(
-                  'M',
+                DropdownMenuItem<String>(
+                  alignment: AlignmentDirectional.center,
+                  value: 'Large',
+                  child: Text('Large'),
                 ),
-              ),
-              DropdownMenuItem<String>(
-                alignment: AlignmentDirectional.center,
-                value: 'M',
-                child: Text(
-                  'L',
+                DropdownMenuItem<String>(
+                  alignment: AlignmentDirectional.center,
+                  value: 'Medium',
+                  child: Text('Medium'),
                 ),
-              ),
-              DropdownMenuItem<String>(
-                alignment: AlignmentDirectional.center,
-                value: 'S',
-                child: Text('S'),
-              ),
-            ],
-            onChanged: (value) {
-              viewModel.size.value = value!;
-            },
+                DropdownMenuItem<String>(
+                  alignment: AlignmentDirectional.center,
+                  value: 'Small',
+                  child: Text('Small'),
+                ),
+              ],
+              onChanged: (value) {
+                viewModel.size.value = value!;
+              },
+            ),
           ),
-        ),
-        Container(
-          padding: const EdgeInsets.only(bottom: 10, top: 10),
-          decoration: BoxDecoration(
-              border: Border.all(width: 0.3, color: Color.fromARGB(255, 161, 161, 161)),
-              borderRadius: BorderRadius.circular(30)),
-          child: Row(
-            children: [
-              IconButton(
-                onPressed: () {
-                  viewModel.count.value <= 1 ? viewModel.count.value = 1 : viewModel.count.value--;
-                },
-                icon: const Icon(
-                  Icons.remove_circle,
-                  size: 36,
-                  color: Colors.red,
+          Container(
+            padding: const EdgeInsets.only(bottom: 5, top: 5),
+            decoration: BoxDecoration(
+                border: Border.all(width: 0.3, color: const Color.fromARGB(255, 161, 161, 161)),
+                borderRadius: BorderRadius.circular(30)),
+            child: Row(
+              children: [
+                IconButton(
+                  onPressed: () {
+                    viewModel.count.value <= 1 ? viewModel.count.value = 1 : viewModel.count.value--;
+                  },
+                  icon: const Icon(
+                    Icons.remove_circle,
+                    size: 32,
+                    color: Colors.red,
+                    shadows: [BoxShadow(blurRadius: 1)],
+                  ),
                 ),
-              ),
-              Obx(
-                () => SizedBox(
-                  width: 50,
-                  child: Center(
-                    child: Text(
-                      viewModel.count.value.toString(),
-                      style: textStyle.copyWith(color: Colors.black, fontSize: 26),
+                Obx(
+                  () => SizedBox(
+                    width: 40,
+                    child: Center(
+                      child: Text(
+                        viewModel.count.value.toString(),
+                        style: textStyle.copyWith(color: Colors.black, fontSize: 24),
+                      ),
                     ),
                   ),
                 ),
-              ),
-              IconButton(
-                onPressed: () {
-                  viewModel.count.value >= 2 ? viewModel.count.value = 2 : viewModel.count.value++;
-                },
-                icon: const Icon(
-                  Icons.add_circle_outlined,
-                  size: 36,
-                  color: Colors.green,
+                IconButton(
+                  onPressed: () {
+                    viewModel.count.value >= 2 ? viewModel.count.value = 2 : viewModel.count.value++;
+                  },
+                  icon: const Icon(
+                    Icons.add_circle_outlined,
+                    size: 32,
+                    color: Colors.green,
+                    shadows: [BoxShadow(blurRadius: 1)],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 

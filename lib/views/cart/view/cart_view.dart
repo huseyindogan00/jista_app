@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:jista/core/router/auto_router/router.gr.dart';
 import 'package:jista/views/base/base_model.dart';
 import 'package:jista/views/cart/view_model/cart_view_model.dart';
@@ -26,12 +27,13 @@ class _CartViewState extends State<CartView> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 238, 234, 234),
       appBar: AppBar(
-        title: Obx(
-            () => Text('Sepetim (${_baseController.cartTotal.value} Ürün)')),
+        toolbarHeight: 75,
+        title: Obx(() => Text('Sepetim (${_baseController.cartTotal.value} Ürün)\nÜrün Toplam Puanı ${}')),
         systemOverlayStyle: SystemUiOverlayStyle.light,
         backgroundColor: Colors.cyan.shade800,
         centerTitle: true,
       ),
+      floatingActionButton: FloatingActionButton(onPressed: _buildShowModalBottomSheet),
       body: SlidableAutoCloseBehavior(
         closeWhenOpened: true,
         child: ListView.builder(
@@ -57,8 +59,7 @@ class _CartViewState extends State<CartView> {
                       foregroundColor: Colors.white,
                       backgroundColor: Colors.red,
                       spacing: 5,
-                      onPressed: (context) =>
-                          _onDismissed(index, Action.delete),
+                      onPressed: (context) => _onDismissed(index, Action.delete),
                     ),
                   ],
                 ),
@@ -66,21 +67,26 @@ class _CartViewState extends State<CartView> {
                   tileColor: Colors.white,
                   contentPadding: const EdgeInsets.all(15),
                   minLeadingWidth: 50,
-                  leading: Image(
-                      image: NetworkImage(cartItem.productModel.imageUrl!)),
+                  leading: Image(image: NetworkImage(cartItem.productModel.imageUrl!)),
                   title: Text(cartItem.productModel.type),
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text('Açıklama : ${cartItem.productModel.title}'),
                       Text('Sezon : ${cartItem.productModel.season}'),
-                      Text(cartItem.productModel.cargoStatus
-                          ? 'Kargo : Evet'
-                          : 'Kargo : Hayır'),
+                      Text(cartItem.productModel.cargoStatus ? 'Kargo : Evet' : 'Kargo : Hayır'),
                     ],
                   ),
-                  trailing:
-                      Text('${cartItem.count} Adet\nBeden:${cartItem.size}'),
+                  trailing: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Adet\t\t\t\t: ${cartItem.count}'),
+                      Text('Beden\t: ${cartItem.size}'),
+                      SizedBox(height: 5),
+                      Text('Puan : ${cartItem.productModel.point}')
+                    ],
+                  ),
+                  isThreeLine: true,
                 ),
               ),
             );
@@ -89,10 +95,15 @@ class _CartViewState extends State<CartView> {
       ),
 
       ///**BOTTOM SHEET İLE ANİMATİON CONTROLLER YAPILACAK VE CONTROL EDİLEVCEK */
-      bottomSheet: SizedBox(
-          width: double.infinity,
-          child:
-              ElevatedButton(onPressed: () {}, child: Text('Sepeti Onayla'))),
+    );
+  }
+
+  _buildShowModalBottomSheet() {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return Container();
+      },
     );
   }
 
@@ -101,8 +112,7 @@ class _CartViewState extends State<CartView> {
       case Action.delete:
         setState(() {
           CartViewModel.cartListItem.removeAt(index);
-          Get.put(BaseModel()).cartTotal.value =
-              CartViewModel.cartListItem.length;
+          Get.put(BaseModel()).cartTotal.value = CartViewModel.cartListItem.length;
         });
         break;
       default:
