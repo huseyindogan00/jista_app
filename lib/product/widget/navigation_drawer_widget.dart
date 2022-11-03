@@ -57,15 +57,24 @@ class NavigationDrawer extends StatelessWidget {
           const SizedBox(height: 12),
           Text(
             '${personModel.name} ${personModel.lastName}',
-            style: TextStyle(fontSize: 28, color: textColor, fontWeight: FontWeight.bold),
+            style: TextStyle(
+                fontSize: 28, color: textColor, fontWeight: FontWeight.bold),
           ),
           Text(
             '${personModel.rank}',
-            style: TextStyle(fontSize: 16, color: textColor, fontStyle: FontStyle.italic, fontWeight: FontWeight.bold),
+            style: TextStyle(
+                fontSize: 16,
+                color: textColor,
+                fontStyle: FontStyle.italic,
+                fontWeight: FontWeight.bold),
           ),
           Text(
             '${personModel.duty}',
-            style: TextStyle(fontSize: 16, color: textColor, fontStyle: FontStyle.italic, fontWeight: FontWeight.bold),
+            style: TextStyle(
+                fontSize: 16,
+                color: textColor,
+                fontStyle: FontStyle.italic,
+                fontWeight: FontWeight.bold),
           ),
           const Divider(),
           Container(
@@ -75,11 +84,17 @@ class NavigationDrawer extends StatelessWidget {
               children: [
                 const Text(
                   'Toplam Puan : ',
-                  style: TextStyle(color: Colors.amber, fontWeight: FontWeight.w500, fontSize: 20),
+                  style: TextStyle(
+                      color: Colors.amber,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 20),
                 ),
                 Obx(() => Text(
                       controller!.totalPoint.value.toString(),
-                      style: TextStyle(color: Colors.cyan.shade300, fontSize: 25, fontWeight: FontWeight.w500),
+                      style: TextStyle(
+                          color: Colors.cyan.shade300,
+                          fontSize: 25,
+                          fontWeight: FontWeight.w500),
                     )),
               ],
             ),
@@ -125,7 +140,8 @@ class NavigationDrawer extends StatelessWidget {
             ),
             ListTile(
               leading: Icon(Icons.plagiarism, size: iconSize),
-              title: Text('İstihkak Kargo İhalesi Fiyat Cetveli', style: textStyle),
+              title: Text('İstihkak Kargo İhalesi Fiyat Cetveli',
+                  style: textStyle),
               onTap: () {},
             ),
             const SizedBox(height: 20),
@@ -141,11 +157,14 @@ class NavigationDrawer extends StatelessWidget {
                       width: 190,
                       child: ElevatedButton(
                         onPressed: () {
-                          locator<HiveService>().deleteUserBoxPerson('personBox');
+                          locator<HiveService>()
+                              .deleteUserBoxPerson('personBox');
                           context.router.replace(EntryRoute());
                         },
-                        style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-                        child: const Text('Oturumu Kapat', textAlign: TextAlign.end),
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.red),
+                        child: const Text('Oturumu Kapat',
+                            textAlign: TextAlign.end),
                       ),
                     ),
                     const Positioned(left: 10, child: Icon(Icons.exit_to_app)),

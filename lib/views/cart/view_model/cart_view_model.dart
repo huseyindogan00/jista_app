@@ -7,9 +7,18 @@ import '../../../product/models/cart/cart_model.dart';
 
 class CartViewModel extends BaseModel {
   static List<CartModel> cartListItem = <CartModel>[];
+  static int _cartTotalPoint = 0;
 
   addToCart(CartModel cartModel) {
     cartListItem.add(cartModel);
+    _calculateCartTotalPoint();
+  }
+
+  _calculateCartTotalPoint() {
+    for (CartModel cart in cartListItem) {
+      _cartTotalPoint += cart.productModel.point;
+    }
+    totalPoint.value = _cartTotalPoint;
   }
 
   addOrder(String personId, OrderModel orderModel) {

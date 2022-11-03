@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
-import 'package:jista/core/router/auto_router/router.gr.dart';
 import 'package:jista/views/base/base_model.dart';
 import 'package:jista/views/cart/view_model/cart_view_model.dart';
 
@@ -28,12 +26,14 @@ class _CartViewState extends State<CartView> {
       backgroundColor: const Color.fromARGB(255, 238, 234, 234),
       appBar: AppBar(
         toolbarHeight: 75,
-        title: Obx(() => Text('Sepetim (${_baseController.cartTotal.value} Ürün)\nÜrün Toplam Puanı ${}')),
+        title: Obx(() => Text(
+            'Sepetim (${_baseController.cartTotal.value} Ürün)\n Toplam Puanı ${_cartController.cartTotal}')),
         systemOverlayStyle: SystemUiOverlayStyle.light,
         backgroundColor: Colors.cyan.shade800,
         centerTitle: true,
       ),
-      floatingActionButton: FloatingActionButton(onPressed: _buildShowModalBottomSheet),
+      floatingActionButton:
+          FloatingActionButton(onPressed: _buildShowModalBottomSheet),
       body: SlidableAutoCloseBehavior(
         closeWhenOpened: true,
         child: ListView.builder(
@@ -59,7 +59,8 @@ class _CartViewState extends State<CartView> {
                       foregroundColor: Colors.white,
                       backgroundColor: Colors.red,
                       spacing: 5,
-                      onPressed: (context) => _onDismissed(index, Action.delete),
+                      onPressed: (context) =>
+                          _onDismissed(index, Action.delete),
                     ),
                   ],
                 ),
@@ -67,14 +68,17 @@ class _CartViewState extends State<CartView> {
                   tileColor: Colors.white,
                   contentPadding: const EdgeInsets.all(15),
                   minLeadingWidth: 50,
-                  leading: Image(image: NetworkImage(cartItem.productModel.imageUrl!)),
+                  leading: Image(
+                      image: NetworkImage(cartItem.productModel.imageUrl!)),
                   title: Text(cartItem.productModel.type),
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text('Açıklama : ${cartItem.productModel.title}'),
                       Text('Sezon : ${cartItem.productModel.season}'),
-                      Text(cartItem.productModel.cargoStatus ? 'Kargo : Evet' : 'Kargo : Hayır'),
+                      Text(cartItem.productModel.cargoStatus
+                          ? 'Kargo : Evet'
+                          : 'Kargo : Hayır'),
                     ],
                   ),
                   trailing: Column(
@@ -112,7 +116,8 @@ class _CartViewState extends State<CartView> {
       case Action.delete:
         setState(() {
           CartViewModel.cartListItem.removeAt(index);
-          Get.put(BaseModel()).cartTotal.value = CartViewModel.cartListItem.length;
+          Get.put(BaseModel()).cartTotal.value =
+              CartViewModel.cartListItem.length;
         });
         break;
       default:
