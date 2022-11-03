@@ -4,6 +4,7 @@ import 'package:auto_route/empty_router_widgets.dart';
 import 'package:jista/views/base/base_tabs_view.dart';
 import 'package:jista/views/cargo/view/cargo_edit_view.dart';
 import 'package:jista/views/cargo/view/cargo_info_view.dart';
+import 'package:jista/views/cart/view/cart_image.dart';
 import 'package:jista/views/cart/view/cart_view.dart';
 import 'package:jista/views/order/view/order_view.dart';
 import 'package:jista/views/product/view/products_view.dart';
@@ -89,8 +90,20 @@ import 'package:jista/views/splash/view/splash_view.dart';
       ],
     ),
     AutoRoute(
-      path: 'cart',
-      page: CartView,
+      path: '',
+      name: 'CartRouter',
+      page: EmptyRouterPage,
+      children: [
+        AutoRoute(
+          path: '',
+          page: CartView,
+        ),
+        AutoRoute(
+          path: ':imageUrl',
+          name: 'CartImageRouter',
+          page: CartImageView,
+        )
+      ],
     ),
   ],
 )

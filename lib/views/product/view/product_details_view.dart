@@ -363,7 +363,7 @@ class ProductDetailsView extends StatelessWidget {
                     return;
                   }
                 }
-                CartViewModel.cartListItem.add(CartModel(
+                CartViewModel().addToCart(CartModel(
                   productModel: product,
                   count: productCount,
                   size: viewModel.size.value,

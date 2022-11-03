@@ -8,17 +8,24 @@ import '../../../product/models/cart/cart_model.dart';
 class CartViewModel extends BaseModel {
   static List<CartModel> cartListItem = <CartModel>[];
   static int _cartTotalPoint = 0;
+  var baseController = Get.put(BaseModel());
 
   addToCart(CartModel cartModel) {
     cartListItem.add(cartModel);
-    _calculateCartTotalPoint();
+    _addCartTotalPoint();
   }
 
-  _calculateCartTotalPoint() {
+  removeToCart(int index) {
+    cartListItem.removeAt(index);
+    _addCartTotalPoint();
+  }
+
+  _addCartTotalPoint() {
+    _cartTotalPoint = 0;
     for (CartModel cart in cartListItem) {
-      _cartTotalPoint += cart.productModel.point;
+      _cartTotalPoint += (cart.productModel.point * cart.count);
     }
-    totalPoint.value = _cartTotalPoint;
+    baseController.totalPoint.value = _cartTotalPoint;
   }
 
   addOrder(String personId, OrderModel orderModel) {

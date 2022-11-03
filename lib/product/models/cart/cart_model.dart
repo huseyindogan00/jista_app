@@ -8,6 +8,7 @@ class CartModel {
   ProductModel productModel;
   int count;
   String size;
+  bool sendByCargo = false;
   CartModel({
     this.id,
     required this.productModel,

@@ -46,7 +46,7 @@ class MyAppbar {
             ),
           ),
           onTap: () {
-            context.router.push(CartRoute());
+            context.router.push(CartRouter());
           },
         ),
         const SizedBox(width: 10),
