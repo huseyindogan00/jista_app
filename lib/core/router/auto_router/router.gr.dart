@@ -52,14 +52,10 @@ class AutoRouter extends _i15.RootStackRouter {
           routeData: routeData, child: _i3.RegisterView(key: args.key));
     },
     BaseTabsRoute.name: (routeData) {
-      final pathParams = routeData.inheritedPathParams;
       final args = routeData.argsAs<BaseTabsRouteArgs>(
-          orElse: () =>
-              BaseTabsRouteArgs(personModel: pathParams.get('personModel')));
+          orElse: () => const BaseTabsRouteArgs());
       return _i15.MaterialPageX<dynamic>(
-          routeData: routeData,
-          child:
-              _i4.BaseTabsView(personModel: args.personModel, key: args.key));
+          routeData: routeData, child: _i4.BaseTabsView(key: args.key));
     },
     CartRouter.name: (routeData) {
       return _i15.MaterialPageX<dynamic>(
@@ -232,29 +228,23 @@ class RegisterRouteArgs {
 /// generated route for
 /// [_i4.BaseTabsView]
 class BaseTabsRoute extends _i15.PageRouteInfo<BaseTabsRouteArgs> {
-  BaseTabsRoute(
-      {required dynamic personModel,
-      _i16.Key? key,
-      List<_i15.PageRouteInfo>? children})
+  BaseTabsRoute({_i16.Key? key, List<_i15.PageRouteInfo>? children})
       : super(BaseTabsRoute.name,
             path: '/:personModel',
-            args: BaseTabsRouteArgs(personModel: personModel, key: key),
-            rawPathParams: {'personModel': personModel},
+            args: BaseTabsRouteArgs(key: key),
             initialChildren: children);
 
   static const String name = 'BaseTabsRoute';
 }
 
 class BaseTabsRouteArgs {
-  const BaseTabsRouteArgs({required this.personModel, this.key});
-
-  final dynamic personModel;
+  const BaseTabsRouteArgs({this.key});
 
   final _i16.Key? key;
 
   @override
   String toString() {
-    return 'BaseTabsRouteArgs{personModel: $personModel, key: $key}';
+    return 'BaseTabsRouteArgs{key: $key}';
   }
 }
 

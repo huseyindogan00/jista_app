@@ -1,29 +1,37 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+// ignore_for_file: unused_element
 
 import 'package:auto_route/auto_route.dart';
 import 'package:badges/badges.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jista/core/utility/appbarController/appbar_base_tabs_title.dart';
 import '../../core/router/auto_router/router.gr.dart';
 import '../../views/base/base_model.dart';
 
-class MyAppbar {
+class MyAppbarWiget {
+  Color? color;
+  String? title;
+
+  MyAppbarWiget._singleConstructor();
+
+  MyAppbarWiget.createAppbar({
+    required this.title,
+    this.color,
+  });
+
   final _appbarShadowColor = Colors.grey;
   final _badgeColor = Colors.white;
   final _badgeContentColor = Colors.red;
 
   final _baseModelController = Get.put<BaseModel>(BaseModel());
 
-  PreferredSizeWidget getAppBar(BuildContext context, TabsRouter tabsRouter) {
+  PreferredSizeWidget getAppBar(BuildContext context) {
     print('Appbar sınıfı çağrıldı ');
     return AppBar(
       shadowColor: _appbarShadowColor,
       centerTitle: true,
       leading: const AutoLeadingButton(),
-      title: GetBuilder<BaseModel>(
-        builder: (controller) => Text(controller.appbarTitle.value),
-      ),
+      title: Text(title ?? 'null Geldi'),
       actions: [
         InkWell(
           child: SizedBox(
@@ -46,7 +54,7 @@ class MyAppbar {
             ),
           ),
           onTap: () {
-            context.router.push(CartRouter());
+            context.router.push(const CartRouter());
           },
         ),
         const SizedBox(width: 10),

@@ -19,19 +19,17 @@ import 'package:jista/views/cargo/view_model/cargo_view_model.dart';
 
 import '../../../main.dart';
 
-class CargoEditView extends StatefulWidget {
-  CargoEditView({super.key, @PathParam() this.addressModel});
+class TrustView extends StatefulWidget {
+  TrustView({super.key, @PathParam() this.addressModel});
 
   dynamic addressModel;
 
   @override
-  State<CargoEditView> createState() => _CargoEditViewState();
+  State<TrustView> createState() => _TrustViewViewState();
 }
 
-class _CargoEditViewState extends State<CargoEditView> {
-  final formKey = GlobalKey<FormState>();
-  final dropDownCityKey = GlobalKey<FormState>();
-  GlobalKey<FormState> dropDownTownKey = GlobalKey<FormState>();
+class _TrustViewViewState extends State<TrustView> {
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   TextEditingController cityController = TextEditingController();
   TextEditingController townController = TextEditingController();
@@ -140,9 +138,7 @@ class _CargoEditViewState extends State<CargoEditView> {
           setState(() {});
         }
       },
-      child: Obx(
-        () => viewController.viewState == ViewState.BUSY ? const CircularProgressIndicator() : const Text('Güncelle'),
-      ),
+      child: Obx(() => viewController.viewState == ViewState.BUSY ? CircularProgressIndicator() : Text('Güncelle')),
     );
   }
 
@@ -240,7 +236,6 @@ class _CargoEditViewState extends State<CargoEditView> {
       height: 60,
       width: double.infinity,
       child: DropdownButtonFormField<String>(
-        key: dropDownCityKey,
         decoration: InputDecoration(
           label: Text('İl Seçiniz', style: hintTextStyle),
           border: OutlineInputBorder(borderRadius: inputBorderRadius),
@@ -268,7 +263,6 @@ class _CargoEditViewState extends State<CargoEditView> {
       height: 60,
       width: double.infinity,
       child: DropdownButtonFormField<String>(
-        key: dropDownTownKey,
         value: viewController.townFirstValue.value,
         decoration: InputDecoration(
           label: Text('İlçe Seçiniz', style: hintTextStyle),

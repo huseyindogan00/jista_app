@@ -130,7 +130,7 @@ class EntryView extends StatelessWidget {
             ServiceResult result = await EntryViewModel.login(personModel);
             if (result.isSuccess) {
               // HOME SAYFASINA GEÇİŞŞŞŞ
-              context.router.replace(BaseTabsRoute(personModel: result));
+              context.router.replace(BaseTabsRoute());
               //Get.offAndToNamed(RouteName.homeView, arguments: result.data);
               //EasyLoading.showToast(result.dataInfo.toString(), duration: const Duration(milliseconds: 2000));
             } else {

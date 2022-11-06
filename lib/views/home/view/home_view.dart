@@ -7,9 +7,10 @@ import 'package:jista/core/enums/view_state.dart';
 import 'package:jista/core/router/auto_router/router.gr.dart';
 import 'package:jista/data/constant/font/const_text_style.dart';
 import 'package:jista/data/constant/type/type_name.dart';
+import 'package:jista/product/widget/my_appbar_widget.dart';
+import 'package:jista/product/widget/navigation_drawer_widget.dart';
 import 'package:jista/views/home/view_model/home_view_model.dart';
 
-import '../../../core/utility/appbarController/appbar_base_tabs_title.dart';
 import '../../../data/constant/const_assets_images.dart';
 
 class HomeView extends StatelessWidget {
@@ -27,16 +28,20 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print('Home build');
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
-        child: Stack(
-          children: [
-            Wrap(
-              runSpacing: 40,
-              children: _buildCategoryList(context),
-            ),
-          ],
+    return Scaffold(
+      appBar: MyAppbarWiget.createAppbar(title: 'Anasayfa').getAppBar(context),
+      drawer: NavigationDrawer(),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+          child: Stack(
+            children: [
+              Wrap(
+                runSpacing: 40,
+                children: _buildCategoryList(context),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -56,7 +61,7 @@ class HomeView extends StatelessWidget {
         child: _buildProductCard(ConstAssetsImages.serviceWear, 'HİZMET GİYECEĞİ'),
         onTap: () async {
           bool connection = await controller.internetControl();
-          AppbarBaseTabsTitle.setAppTitleWithString('HİZMET GİYECEĞİ');
+          //AppbarBaseTabsTitle.setAppTitleWithString('HİZMET GİYECEĞİ');
           if (connection) context.router.push(ProductsRoute(productTypeName: TypeName.hizmetGiyecegi));
         },
       ),
@@ -64,7 +69,7 @@ class HomeView extends StatelessWidget {
         child: _buildProductCard(ConstAssetsImages.stafTaskClothing, 'KADRO GÖREV GİYECEĞİ'),
         onTap: () async {
           bool connection = await controller.internetControl();
-          AppbarBaseTabsTitle.setAppTitleWithString('KADRO GÖREV GİYECEĞİ');
+          //AppbarBaseTabsTitle.setAppTitleWithString('KADRO GÖREV GİYECEĞİ');
           if (connection) {
             await context.router.push(ProductsRoute(productTypeName: TypeName.kadroGorevKiyafeti));
           }
@@ -74,7 +79,7 @@ class HomeView extends StatelessWidget {
         child: _buildProductCard(ConstAssetsImages.coldClimateClothing, 'SOĞUK İKLİM'),
         onTap: () async {
           bool connection = await controller.internetControl();
-          AppbarBaseTabsTitle.setAppTitleWithString('SOĞUK İKLİM');
+          //AppbarBaseTabsTitle.setAppTitleWithString('SOĞUK İKLİM');
           if (connection) context.router.push(ProductsRoute(productTypeName: TypeName.sogukIklimGiyecgi));
         },
       ),

@@ -10,12 +10,15 @@ import 'package:get/get.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:jista/core/enums/view_state.dart';
 import 'package:jista/core/services/service_result/firebase_service_result_model.dart';
+import 'package:jista/data/constant/appbar_text/appbar_title.dart';
 import 'package:jista/data/constant/font/const_text_style.dart';
 import 'package:jista/data/constant/image/const_product_image.dart';
 import 'package:jista/data/constant/style/const_font_size.dart';
 import 'package:jista/product/models/cart/cart_model.dart';
 import 'package:jista/product/models/order/order_model.dart';
 import 'package:jista/product/models/product/product_model.dart';
+import 'package:jista/product/widget/my_appbar_widget.dart';
+import 'package:jista/product/widget/navigation_drawer_widget.dart';
 import 'package:jista/views/base/base_model.dart';
 import 'package:jista/views/cart/view_model/cart_view_model.dart';
 import 'package:jista/views/product/view_model/product_view_model.dart';
@@ -89,28 +92,31 @@ class _ProductsViewState extends State<ProductsView> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const SizedBox(height: 10),
-        _buildRowFilter(),
-        const SizedBox(height: 10),
-        Obx(
-          () => controller.viewState == ViewState.BUSY
-              ? const Expanded(
-                  child: Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                )
-              : controller.serviceResultModel.value.isSuccess == false
-                  ? Center(
-                      child: Container(
-                        color: Colors.transparent,
-                        child: Text('Ürün listesi boş!', style: Get.theme.textTheme.headline4),
-                      ),
-                    )
-                  : _buildGridViewProducts(),
-        ),
-      ],
+    return Scaffold(
+      appBar: MyAppbarWiget.createAppbar(title: AppbarTitle.productPageTitle).getAppBar(context),
+      body: Column(
+        children: [
+          const SizedBox(height: 10),
+          _buildRowFilter(),
+          const SizedBox(height: 10),
+          Obx(
+            () => controller.viewState == ViewState.BUSY
+                ? const Expanded(
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  )
+                : controller.serviceResultModel.value.isSuccess == false
+                    ? Center(
+                        child: Container(
+                          color: Colors.transparent,
+                          child: Text('Ürün listesi boş!', style: Get.theme.textTheme.headline4),
+                        ),
+                      )
+                    : _buildGridViewProducts(),
+          ),
+        ],
+      ),
     );
   }
 

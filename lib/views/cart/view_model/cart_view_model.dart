@@ -9,6 +9,9 @@ class CartViewModel extends BaseModel {
   static List<CartModel> cartListItem = <CartModel>[];
   static int _cartTotalPoint = 0;
   var baseController = Get.put(BaseModel());
+  var isCargoInfoAccept = false.obs;
+
+  var warning = ''.obs;
 
   addToCart(CartModel cartModel) {
     cartListItem.add(cartModel);
@@ -25,7 +28,7 @@ class CartViewModel extends BaseModel {
     for (CartModel cart in cartListItem) {
       _cartTotalPoint += (cart.productModel.point * cart.count);
     }
-    baseController.totalPoint.value = _cartTotalPoint;
+    baseController.cartTotalPoint.value = _cartTotalPoint;
   }
 
   addOrder(String personId, OrderModel orderModel) {

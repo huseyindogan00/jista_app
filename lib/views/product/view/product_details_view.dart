@@ -5,8 +5,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
+import 'package:jista/data/constant/appbar_text/appbar_title.dart';
 import 'package:jista/product/models/cart/cart_model.dart';
 import 'package:jista/product/models/product/product_model.dart';
+import 'package:jista/product/widget/my_appbar_widget.dart';
 import 'package:jista/views/base/base_model.dart';
 import 'package:jista/views/cart/view_model/cart_view_model.dart';
 import 'package:jista/views/product/view_model/product_view_model.dart';
@@ -17,6 +19,7 @@ class ProductDetailsView extends StatelessWidget {
   dynamic productModel;
 
   var viewModel = Get.find<ProductViewModel>();
+  final _baseModelController = Get.find<BaseModel>();
 
   final TextStyle textStyle =
       TextStyle(fontSize: 12, fontFamily: 'Montserrat', color: Colors.orange.shade900, fontWeight: FontWeight.bold);
@@ -28,6 +31,7 @@ class ProductDetailsView extends StatelessWidget {
     viewModel.size.value = '';
     viewModel.count.value = 1;
     return Scaffold(
+      appBar: MyAppbarWiget.createAppbar(title: AppbarTitle.productDetailPageTitle).getAppBar(context),
       body: SingleChildScrollView(
         child: Container(
           color: const Color.fromARGB(255, 240, 239, 239),
@@ -61,7 +65,7 @@ class ProductDetailsView extends StatelessWidget {
           width: double.infinity,
           child: FadeInImage.assetNetwork(
             fit: BoxFit.contain,
-            placeholder: '',
+            placeholder: 'assets/images/jandarma_logo.png',
             image: product.imageUrl!,
           ),
         ),

@@ -5,10 +5,13 @@ import 'package:get/get.dart';
 import 'package:jista/core/router/auto_router/router.gr.dart';
 import 'package:jista/core/services/service/firebase_store_service.dart';
 import 'package:jista/core/services/service/hive_service.dart';
+import 'package:jista/data/constant/appbar_text/appbar_title.dart';
 import 'package:jista/data/constant/font/const_text_style.dart';
 import 'package:jista/main.dart';
 import 'package:jista/product/models/address/address_model.dart';
 import 'package:jista/product/models/person/person_model.dart';
+import 'package:jista/product/widget/my_appbar_widget.dart';
+import 'package:jista/product/widget/navigation_drawer_widget.dart';
 
 class CargoInfoView extends StatelessWidget {
   CargoInfoView({super.key}) {
@@ -32,74 +35,50 @@ class CargoInfoView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-      stream: FirebaseFirestore.instance.collection('person').doc(personModel?.id).collection('address').snapshots(),
-      builder: (context, snapshot) {
-        if (snapshot.data == null) {
-          return Center(
-            child: Text('Adres Bilgilerinizi Giriniz', style: Get.theme.textTheme.headline4),
-          );
-        } else {
-          QueryDocumentSnapshot<Map<String, dynamic>>? addresQuery = snapshot.data?.docs.first;
+    return Scaffold(
+      appBar: MyAppbarWiget.createAppbar(title: AppbarTitle.cargoInfoPageTitle).getAppBar(context),
+      drawer: NavigationDrawer(),
+      body: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+        stream: FirebaseFirestore.instance.collection('person').doc(personModel?.id).collection('address').snapshots(),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return Text(snapshot.error.toString());
+          } else if (snapshot.data == null) {
+            return Center(
+              child: Text('Adres Bilgilerinizi Giriniz', style: Get.theme.textTheme.headline4),
+            );
+          } else {
+            QueryDocumentSnapshot<Map<String, dynamic>>? addresQuery = snapshot.data?.docs.first;
 
-          AddressModel addressModel = AddressModel.fromMap(addresQuery!.data());
-          addressModel.id = addresQuery.id;
-          return SingleChildScrollView(
-            padding: const EdgeInsets.all(10),
-            child: Form(
-              child: Container(
-                color: const Color.fromARGB(255, 248, 245, 245),
-                child: Column(
-                  children: [
-                    Column(
-                      children: [
-                        _listTileCity(addressModel),
-                        _listTileTown(addressModel),
-                        _listTileFullAddress(addressModel),
-                        _listTilePostCode(addressModel),
-                        _listTileTelephoneNumber(addressModel),
-                        _listTileMobileTelephoneNumber(addressModel),
-                      ],
-                    ),
-                    _rowUpdateButton(context, addressModel)
-                  ],
+            AddressModel addressModel = AddressModel.fromMap(addresQuery!.data());
+            addressModel.id = addresQuery.id;
+            return SingleChildScrollView(
+              padding: const EdgeInsets.all(10),
+              child: Form(
+                child: Container(
+                  color: const Color.fromARGB(255, 248, 245, 245),
+                  child: Column(
+                    children: [
+                      Column(
+                        children: [
+                          _listTileCity(addressModel),
+                          _listTileTown(addressModel),
+                          _listTileFullAddress(addressModel),
+                          _listTilePostCode(addressModel),
+                          _listTileTelephoneNumber(addressModel),
+                          _listTileMobileTelephoneNumber(addressModel),
+                        ],
+                      ),
+                      _rowUpdateButton(context, addressModel)
+                    ],
+                  ),
                 ),
               ),
-            ),
-          );
-        }
-      },
+            );
+          }
+        },
+      ),
     );
-
-    /* addressModel == null
-        ? Center(
-            child: Text('Adres Bilgilerinizi Giriniz', style: Get.theme.textTheme.headline4),
-          )
-        : 
-
-    SingleChildScrollView(
-            padding: const EdgeInsets.all(10),
-            child: Form(
-              child: Container(
-                color: const Color.fromARGB(255, 248, 245, 245),
-                child: Column(
-                  children: [
-                    Column(
-                      children: [
-                        _listTileCity(),
-                        _listTileTown(),
-                        _listTileFullAddress(),
-                        _listTilePostCode(),
-                        _listTileTelephoneNumber(),
-                        _listTileMobileTelephoneNumber(),
-                      ],
-                    ),
-                    _rowUpdateButton(context)
-                  ],
-                ),
-              ),
-            ),
-          ); */
   }
 
   Row _rowUpdateButton(BuildContext context, AddressModel addressModel) {

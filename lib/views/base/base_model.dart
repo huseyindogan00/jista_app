@@ -18,7 +18,8 @@ class BaseModel extends GetxController {
 
   // TOPLAM PUAN
   //--------------------------------------------------
-  var totalPoint = 0.obs;
+  var cartTotalPoint = 0.obs;
+  var personTotalPoint = 0.obs;
 
   // SEPET ÜRÜN SAYISI
   //--------------------------------------------------

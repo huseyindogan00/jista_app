@@ -3,8 +3,6 @@ import 'dart:convert';
 
 import 'package:hive_flutter/adapters.dart';
 
-import '../product/product_model.dart';
-
 part 'order_model.g.dart';
 
 @HiveType(typeId: 3)
