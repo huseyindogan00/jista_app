@@ -97,7 +97,8 @@ class _CartViewState extends State<CartView> {
                       foregroundColor: Colors.white,
                       backgroundColor: Colors.red,
                       spacing: 5,
-                      onPressed: (context) => _onDismissed(index, Action.delete),
+                      onPressed: (context) =>
+                          _onDismissed(index, Action.delete),
                     ),
                   ],
                 ),
@@ -127,10 +128,14 @@ class _CartViewState extends State<CartView> {
                                   height: 80,
                                   padding: const EdgeInsets.all(3.0),
                                   child: InkWell(
-                                    onTap: () =>
-                                        context.router.push(CartImageRouter(imageUrl: cartItem.productModel.imageUrl)),
+                                    onTap: () => context.router.push(
+                                        CartImageRouter(
+                                            imageUrl: cartItem
+                                                .productModel.imageUrl)),
                                     child: Image(
-                                        image: NetworkImage(cartItem.productModel.imageUrl!), fit: BoxFit.contain),
+                                        image: NetworkImage(
+                                            cartItem.productModel.imageUrl!),
+                                        fit: BoxFit.contain),
                                   ),
                                 ),
                                 cartItem.productModel.cargoStatus
@@ -140,7 +145,9 @@ class _CartViewState extends State<CartView> {
                                           const Divider(),
                                           Text(
                                             'Kargo İle Gönder',
-                                            style: TextStyle(fontSize: 13, color: Colors.yellow.shade900),
+                                            style: TextStyle(
+                                                fontSize: 13,
+                                                color: Colors.yellow.shade900),
                                           ),
                                           Checkbox(
                                             value: cartItem.sendByCargo,
@@ -170,24 +177,33 @@ class _CartViewState extends State<CartView> {
                                 children: [
                                   Text(
                                     cartItem.productModel.type,
-                                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                                    style: const TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w500),
                                   ),
                                   const Divider(),
                                   Wrap(
-                                    crossAxisAlignment: WrapCrossAlignment.start,
+                                    crossAxisAlignment:
+                                        WrapCrossAlignment.start,
                                     spacing: double.infinity,
                                     runSpacing: 10,
                                     children: [
                                       Text(
                                         cartItem.productModel.title,
-                                        style: TextStyle(color: Colors.grey.shade600),
+                                        style: TextStyle(
+                                            color: Colors.grey.shade600),
                                         overflow: TextOverflow.ellipsis,
                                         maxLines: 3,
                                       ),
-                                      Text('Sezon : ${cartItem.productModel.season}'),
-                                      Text(cartItem.productModel.cargoStatus ? 'Kargo : Var' : 'Kargo : Yok'),
-                                      Text('Cinsiyet : ${cartItem.productModel.gender}'),
-                                      Text('Rütbe : ${cartItem.productModel.rank}'),
+                                      Text(
+                                          'Sezon : ${cartItem.productModel.season}'),
+                                      Text(cartItem.productModel.cargoStatus
+                                          ? 'Kargo : Var'
+                                          : 'Kargo : Yok'),
+                                      Text(
+                                          'Cinsiyet : ${cartItem.productModel.gender}'),
+                                      Text(
+                                          'Rütbe : ${cartItem.productModel.rank}'),
                                     ],
                                   )
                                 ],
@@ -207,7 +223,9 @@ class _CartViewState extends State<CartView> {
                                   const SizedBox(height: 10),
                                   Text(
                                     'Puan : ${cartItem.productModel.point}',
-                                    style: TextStyle(color: Colors.orange.shade800, fontSize: 20),
+                                    style: TextStyle(
+                                        color: Colors.orange.shade800,
+                                        fontSize: 20),
                                   )
                                 ],
                               ),
@@ -225,8 +243,9 @@ class _CartViewState extends State<CartView> {
                               height: 25,
                               decoration: const BoxDecoration(
                                 boxShadow: [BoxShadow(blurRadius: 1)],
-                                borderRadius:
-                                    BorderRadius.only(bottomRight: Radius.circular(2), bottomLeft: Radius.circular(2)),
+                                borderRadius: BorderRadius.only(
+                                    bottomRight: Radius.circular(2),
+                                    bottomLeft: Radius.circular(2)),
                                 color: Colors.amber,
                               ),
                               child: const Icon(
@@ -251,8 +270,10 @@ class _CartViewState extends State<CartView> {
     int _cartTotalPoint = _baseController.cartTotalPoint.value;
     double _rest = (_personTotalPoint - _cartTotalPoint).toDouble();
 
-    TextStyle titleTextStyle = TextStyle(color: Colors.blue.shade800, fontSize: 18);
-    TextStyle pointTextStyle = TextStyle(color: Colors.orange.shade900, fontSize: 19);
+    TextStyle titleTextStyle =
+        TextStyle(color: Colors.blue.shade800, fontSize: 18);
+    TextStyle pointTextStyle =
+        TextStyle(color: Colors.orange.shade900, fontSize: 19);
 
     showModalBottomSheet(
       backgroundColor: Colors.transparent,
@@ -275,14 +296,20 @@ class _CartViewState extends State<CartView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Divider(color: Colors.white38, height: 25, thickness: 5, indent: 140, endIndent: 140),
+                const Divider(
+                    color: Colors.white38,
+                    height: 25,
+                    thickness: 5,
+                    indent: 140,
+                    endIndent: 140),
                 Container(
                   height: 300,
                   width: double.infinity,
                   margin: const EdgeInsets.all(10),
                   padding: const EdgeInsets.all(15),
-                  decoration:
-                      BoxDecoration(border: Border.all(color: Colors.grey), borderRadius: BorderRadius.circular(10)),
+                  decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(10)),
                   child: Wrap(
                     runSpacing: 20,
                     children: [
@@ -290,14 +317,16 @@ class _CartViewState extends State<CartView> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text('Mecvut Puan', style: titleTextStyle),
-                          Text(_personTotalPoint.toString(), style: pointTextStyle),
+                          Text(_personTotalPoint.toString(),
+                              style: pointTextStyle),
                         ],
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text('Toplam Ürün Puanı', style: titleTextStyle),
-                          Text(_cartTotalPoint.toString(), style: pointTextStyle),
+                          Text(_cartTotalPoint.toString(),
+                              style: pointTextStyle),
                         ],
                       ),
                       const Divider(
@@ -319,10 +348,12 @@ class _CartViewState extends State<CartView> {
                                   children: [
                                     Obx(
                                       () => Checkbox(
-                                        value: _cargoViewController.isCargoInfoAccept.value,
+                                        value: _cargoViewController
+                                            .isCargoInfoAccept.value,
                                         onChanged: (value) {
                                           print(value);
-                                          _cargoViewController.isCargoInfoAccept.value = value!;
+                                          _cargoViewController
+                                              .isCargoInfoAccept.value = value!;
                                         },
                                       ),
                                     ),
@@ -334,9 +365,7 @@ class _CartViewState extends State<CartView> {
                                 ),
                               ],
                             )
-                          : SizedBox(
-                              height: 50,
-                            ),
+                          : const SizedBox(height: 50),
 
                       ///** KARGO BİLGİLERİ KONTROLÜ YAPILACAK */
                       Obx(() => _cargoViewController.isCargoInfoAccept.value
@@ -344,13 +373,18 @@ class _CartViewState extends State<CartView> {
                               width: double.infinity,
                               height: 40,
                               child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(backgroundColor: Colors.amber.shade900),
+                                style: ElevatedButton.styleFrom(
+                                    backgroundColor:
+                                        Color.fromARGB(255, 36, 158, 124)),
                                 onPressed: () {
-                                  print('sepet onaylandı');
+                                y
                                 },
                                 child: const Text(
                                   'Sepeti Onayla',
-                                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 18),
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 18),
                                 ),
                               ),
                             )
@@ -358,12 +392,14 @@ class _CartViewState extends State<CartView> {
                               width: double.infinity,
                               height: 40,
                               child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(backgroundColor: Colors.amber.shade900),
+                                style: ElevatedButton.styleFrom(
+                                    backgroundColor: const Color.fromARGB(
+                                        255, 36, 158, 124)),
                                 onPressed: () {},
-                                child: const Text(
-                                  'Sepeti Onayla',
+                                child: Text(
+                                  'Kargo bilgilerini doğrulayın',
                                   style: TextStyle(
-                                      color: Color.fromARGB(255, 133, 130, 130),
+                                      color: Colors.red.shade700,
                                       fontWeight: FontWeight.w600,
                                       fontSize: 18),
                                 ),
@@ -379,11 +415,15 @@ class _CartViewState extends State<CartView> {
                     children: [
                       Text(
                         '* \'Kargo İle Gönder\' seçeneği işaretlenen ürünler anlaşmalı kargo firmasıyla gönderilecektir.',
-                        style: TextStyle(color: Colors.red.shade700, fontStyle: FontStyle.italic),
+                        style: TextStyle(
+                            color: Colors.red.shade700,
+                            fontStyle: FontStyle.italic),
                       ),
                       Text(
                         '* Kargo adresiniz güncel değilse herhangi bir aksaklık yaşamamak için lütfen güncelleyiniz.',
-                        style: TextStyle(color: Colors.red.shade700, fontStyle: FontStyle.italic),
+                        style: TextStyle(
+                            color: Colors.red.shade700,
+                            fontStyle: FontStyle.italic),
                       ),
                     ],
                   ),
@@ -409,7 +449,8 @@ class _CartViewState extends State<CartView> {
       case Action.delete:
         setState(() {
           CartViewModel().removeToCart(index);
-          Get.put(BaseModel()).cartTotal.value = CartViewModel.cartListItem.length;
+          Get.put(BaseModel()).cartTotal.value =
+              CartViewModel.cartListItem.length;
         });
         break;
       default:
