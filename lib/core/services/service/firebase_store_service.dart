@@ -3,6 +3,7 @@ import 'package:jista/core/services/service/base/i_firebase_store_service.dart';
 import 'package:jista/core/services/service_result/firebase_service_result_model.dart';
 import 'package:jista/core/services/service_result/base/service_result.dart';
 import 'package:jista/product/models/address/address_model.dart';
+import 'package:jista/product/models/order/order_model.dart';
 import '../../../product/models/person/person_model.dart';
 import '../../../product/models/product/product_model.dart';
 
@@ -118,6 +119,26 @@ class FirebaseStoreService implements IFirebaseStoreService {
       return FirebaseServiceResultModel(isSuccess: false, dataInfo: e.message);
     }
     return FirebaseServiceResultModel(isSuccess: true, dataInfo: 'Kargo bilgileri güncellendi');
+  }
+
+//**PERSONELİN PUANI VEYA HERHANGİ BİR ÖZELLİĞİ DEĞİŞTİĞİNDE GÜNCELLEME YAPILACAK  */
+//
+  Future<FirebaseServiceResultModel> updatePersonAndOrder(PersonModel personModel) async {
+    try {
+      Future<void> result = _firebaseFirestore.collection(personModel.id).doc().update(personModel.toMap());
+    } on FirebaseException catch (e) {
+      return FirebaseServiceResultModel(isSuccess: false, dataInfo: e.message);
+    }
+    return FirebaseServiceResultModel(isSuccess: true, dataInfo: 'Kullanıcı puanı güncellendi');
+  }
+
+  addOrderModel(List<OrderModel> orderModelList) async {
+    /*
+
+        ORDER MODEL LİSTESİ EKLENECEK
+    
+    
+     */
   }
 
   @override
