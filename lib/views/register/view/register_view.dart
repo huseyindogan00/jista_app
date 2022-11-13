@@ -1,8 +1,9 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:jista/core/services/service_result/firebase_service_result_model.dart';
-import 'package:jista/core/utility/show_utility/show_snacbar.dart';
 import 'package:jista/core/utility/validation_utility/validation_controller.dart';
 
 import '../../../data/constant/style/const_button_style.dart';

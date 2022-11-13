@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class SizeInfoView extends StatelessWidget {
-  SizeInfoView({super.key}) {}
+  const SizeInfoView({super.key});
 
   @override
   Widget build(BuildContext context) {

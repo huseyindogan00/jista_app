@@ -3,7 +3,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jista/core/enums/view_state.dart';
 import 'package:jista/core/router/auto_router/router.gr.dart';
 import 'package:jista/data/constant/font/const_text_style.dart';
 import 'package:jista/data/constant/type/type_name.dart';
@@ -53,7 +52,6 @@ class HomeView extends StatelessWidget {
         child: _buildProductCard(ConstAssetsImages.trainingClothing, 'EĞİTİM GİYECEĞİ'),
         onTap: () async {
           bool connection = await controller.internetControl();
-          //AppbarBaseTabsTitle.setAppTitleWithString('EĞİTİM GİYECEĞİ');
           if (connection) context.router.push(ProductsRoute(productTypeName: TypeName.egitimGiyecegi));
         },
       ),
@@ -61,7 +59,6 @@ class HomeView extends StatelessWidget {
         child: _buildProductCard(ConstAssetsImages.serviceWear, 'HİZMET GİYECEĞİ'),
         onTap: () async {
           bool connection = await controller.internetControl();
-          //AppbarBaseTabsTitle.setAppTitleWithString('HİZMET GİYECEĞİ');
           if (connection) context.router.push(ProductsRoute(productTypeName: TypeName.hizmetGiyecegi));
         },
       ),
@@ -69,7 +66,6 @@ class HomeView extends StatelessWidget {
         child: _buildProductCard(ConstAssetsImages.stafTaskClothing, 'KADRO GÖREV GİYECEĞİ'),
         onTap: () async {
           bool connection = await controller.internetControl();
-          //AppbarBaseTabsTitle.setAppTitleWithString('KADRO GÖREV GİYECEĞİ');
           if (connection) {
             await context.router.push(ProductsRoute(productTypeName: TypeName.kadroGorevKiyafeti));
           }
@@ -79,17 +75,8 @@ class HomeView extends StatelessWidget {
         child: _buildProductCard(ConstAssetsImages.coldClimateClothing, 'SOĞUK İKLİM'),
         onTap: () async {
           bool connection = await controller.internetControl();
-          //AppbarBaseTabsTitle.setAppTitleWithString('SOĞUK İKLİM');
           if (connection) context.router.push(ProductsRoute(productTypeName: TypeName.sogukIklimGiyecgi));
         },
-      ),
-      Obx(
-        () => controller.viewState == ViewState.BUSY
-            ? const CircularProgressIndicator(
-                color: Colors.lightBlue,
-                strokeWidth: 3,
-              )
-            : const SizedBox(),
       ),
     ];
   }
@@ -110,15 +97,9 @@ class HomeView extends StatelessWidget {
         width: double.infinity,
         margin: cardContainerMargin,
         height: cardContainerHeight,
-        decoration: BoxDecoration(
-          boxShadow: const [
-            BoxShadow(
-              blurRadius: 2,
-              color: Color.fromARGB(248, 34, 209, 209),
-            )
-          ],
-          color: Get.theme.backgroundColor.withOpacity(0.6),
-          borderRadius: const BorderRadius.only(
+        decoration: const BoxDecoration(
+          color: Color.fromARGB(255, 74, 133, 160),
+          borderRadius: BorderRadius.only(
             topLeft: Radius.circular(30),
             topRight: Radius.circular(5),
             bottomLeft: Radius.circular(5),

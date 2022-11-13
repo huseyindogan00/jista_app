@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:jista/core/services/service/base/i_firebase_store_service.dart';
 import 'package:jista/core/services/service_result/firebase_service_result_model.dart';
@@ -100,14 +102,13 @@ class FirebaseStoreService implements IFirebaseStoreService {
       return FirebaseServiceResultModel(isSuccess: false, dataInfo: 'Pbik numarası veritabınında yok');
     } on FirebaseException catch (e) {
       error = e.message.toString();
-      print(e.stackTrace);
     }
 
     return FirebaseServiceResultModel(isSuccess: false, dataInfo: error);
   }
 
   @override
-  Future<FirebaseServiceResultModel> updateAddress(String personId, AddressModel addressModel) async {
+  FirebaseServiceResultModel updateAddress(String personId, AddressModel addressModel) {
     try {
       Future<void> result = _firebaseFirestore
           .collection('person')
@@ -121,24 +122,64 @@ class FirebaseStoreService implements IFirebaseStoreService {
     return FirebaseServiceResultModel(isSuccess: true, dataInfo: 'Kargo bilgileri güncellendi');
   }
 
-//**PERSONELİN PUANI VEYA HERHANGİ BİR ÖZELLİĞİ DEĞİŞTİĞİNDE GÜNCELLEME YAPILACAK  */
-//
-  Future<FirebaseServiceResultModel> updatePersonAndOrder(PersonModel personModel) async {
+  Future<FirebaseServiceResultModel> updatePerson(PersonModel personModel) async {
     try {
-      Future<void> result = _firebaseFirestore.collection(personModel.id).doc().update(personModel.toMap());
+      Future<void> result = _firebaseFirestore.collection('person').doc(personModel.id).update(personModel.toMap());
     } on FirebaseException catch (e) {
       return FirebaseServiceResultModel(isSuccess: false, dataInfo: e.message);
     }
     return FirebaseServiceResultModel(isSuccess: true, dataInfo: 'Kullanıcı puanı güncellendi');
   }
 
-  addOrderModel(List<OrderModel> orderModelList) async {
-    /*
+  Future<FirebaseServiceResultModel> addOrderModel(PersonModel personModel, List<OrderModel> orderModelList) async {
+    try {
+      for (var order in orderModelList) {
+        await _firebaseFirestore.collection('person').doc(personModel.id).collection('order').doc().set(order.toMap());
+      }
 
-        ORDER MODEL LİSTESİ EKLENECEK
-    
-    
-     */
+      return FirebaseServiceResultModel(isSuccess: true, dataInfo: 'Sipariş Verildi');
+    } on FirebaseException catch (e) {
+      return FirebaseServiceResultModel(isSuccess: true, dataInfo: e.message);
+    }
+  }
+
+  Future<FirebaseServiceResultModel> isThereProduct(String personId, String productId) async {
+    try {
+      QuerySnapshot<Map<String, dynamic>> result = await _firebaseFirestore
+          .collection('person')
+          .doc(personId)
+          .collection('order')
+          .where('productId', isEqualTo: productId)
+          .get();
+
+      if (result.docs.isNotEmpty) {
+        return FirebaseServiceResultModel(isSuccess: true, dataInfo: 'Ürün mevcut');
+      } else {
+        return FirebaseServiceResultModel(isSuccess: false, dataInfo: 'Ürün mevcut değil');
+      }
+    } on FirebaseException catch (e) {
+      return FirebaseServiceResultModel(isSuccess: false, dataInfo: e.message);
+    }
+  }
+
+  Future<FirebaseServiceResultModel<List<OrderModel>>> getOrder(String year, String personelId) async {
+    List<OrderModel> orderModelList = [];
+    try {
+      QuerySnapshot<Map<String, dynamic>> data =
+          await _firebaseFirestore.collection('person').doc(personelId).collection('order').get();
+      if (data.docs.isNotEmpty) {
+        List<QueryDocumentSnapshot<Map<String, dynamic>>> queryList = data.docs;
+        for (var queryDocument in queryList) {
+          OrderModel orderModel = OrderModel.fromMap(queryDocument.data());
+          orderModelList.add(orderModel);
+        }
+      } else {
+        return FirebaseServiceResultModel(isSuccess: false, dataInfo: 'Sipariş bulunmamaktadır');
+      }
+    } on FirebaseException catch (e) {
+      return FirebaseServiceResultModel(isSuccess: false, dataInfo: e.message);
+    }
+    return FirebaseServiceResultModel<List<OrderModel>>(isSuccess: true, data: orderModelList);
   }
 
   @override

@@ -1,9 +1,10 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:auto_route/auto_route.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jista/core/router/auto_router/router.gr.dart';
-import 'package:jista/core/services/service/firebase_store_service.dart';
 import 'package:jista/core/services/service/hive_service.dart';
 import 'package:jista/data/constant/appbar_text/appbar_title.dart';
 import 'package:jista/data/constant/font/const_text_style.dart';
@@ -26,41 +27,31 @@ class CargoInfoView extends StatelessWidget {
     //addressModel = personModel?.address;
   }
 
-  final _listTileTextStyle = Get.theme.textTheme.headline5?.copyWith(
-      color: const Color.fromARGB(255, 136, 52, 6),
-      fontFamily: ConstTextStyle.fontFamilyMontserrat);
+  final _listTileTextStyle = Get.theme.textTheme.headline5
+      ?.copyWith(color: const Color.fromARGB(255, 136, 52, 6), fontFamily: ConstTextStyle.fontFamilyMontserrat);
 
-  final _listTileLeadingStyle =
-      Get.theme.textTheme.headline4?.copyWith(color: Colors.black);
+  final _listTileLeadingStyle = Get.theme.textTheme.headline4?.copyWith(color: Colors.black);
 
   ///AddressModel? addressModel;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppbarWiget.createAppbar(title: AppbarTitle.cargoInfoPageTitle)
-          .getAppBar(context),
+      appBar: MyAppbarWiget.createAppbar(title: AppbarTitle.cargoInfoPageTitle).getAppBar(context),
       drawer: NavigationDrawer(),
       body: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-        stream: FirebaseFirestore.instance
-            .collection('person')
-            .doc(personModel?.id)
-            .collection('address')
-            .snapshots(),
+        stream: FirebaseFirestore.instance.collection('person').doc(personModel?.id).collection('address').snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return Text(snapshot.error.toString());
           } else if (snapshot.data == null) {
             return Center(
-              child: Text('Adres Bilgilerinizi Giriniz',
-                  style: Get.theme.textTheme.headline4),
+              child: Text('Adres Bilgilerinizi Giriniz', style: Get.theme.textTheme.headline4),
             );
           } else {
-            QueryDocumentSnapshot<Map<String, dynamic>>? addresQuery =
-                snapshot.data?.docs.first;
+            QueryDocumentSnapshot<Map<String, dynamic>>? addresQuery = snapshot.data?.docs.first;
 
-            AddressModel addressModel =
-                AddressModel.fromMap(addresQuery!.data());
+            AddressModel addressModel = AddressModel.fromMap(addresQuery!.data());
             addressModel.id = addresQuery.id;
             return SingleChildScrollView(
               padding: const EdgeInsets.all(10),
@@ -79,7 +70,7 @@ class CargoInfoView extends StatelessWidget {
                           _listTileMobileTelephoneNumber(addressModel),
                         ],
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       _rowUpdateButton(context, addressModel)
                     ],
                   ),
@@ -97,15 +88,13 @@ class CargoInfoView extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         ElevatedButton(
-          style: ElevatedButton.styleFrom(
-              backgroundColor: Color.fromARGB(255, 36, 158, 124)),
+          style: ElevatedButton.styleFrom(backgroundColor: const Color.fromARGB(255, 36, 158, 124)),
           onPressed: () {
             context.router.push(CargoEditRouter(addressModel: addressModel));
           },
           child: const Text(
             'Güncelle',
-            style: TextStyle(
-                color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
           ),
         )
       ],

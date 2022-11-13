@@ -1,11 +1,10 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:jista/core/router/route_name.dart';
 import 'package:jista/core/services/service/firebase_auth_service.dart';
 import 'package:jista/core/services/service/firebase_store_service.dart';
 import 'package:jista/core/services/service/hive_service.dart';
@@ -14,7 +13,6 @@ import 'package:jista/product/models/address/address_model.dart';
 import 'package:jista/product/models/order/order_model.dart';
 import 'package:jista/product/models/person/person_model.dart';
 import 'package:jista/product/models/product/product_model.dart';
-import 'package:jista/views/home/view/home_view.dart';
 
 import 'core/router/auto_router/router.gr.dart';
 

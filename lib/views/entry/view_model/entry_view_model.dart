@@ -1,4 +1,3 @@
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:jista/core/services/service/hive_service.dart';
 import 'package:jista/core/services/service_result/base/service_result.dart';
 

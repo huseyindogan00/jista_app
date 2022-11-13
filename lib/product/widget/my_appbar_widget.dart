@@ -2,7 +2,6 @@
 
 import 'package:auto_route/auto_route.dart';
 import 'package:badges/badges.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../core/router/auto_router/router.gr.dart';
@@ -26,7 +25,6 @@ class MyAppbarWiget {
   final _baseModelController = Get.put<BaseModel>(BaseModel());
 
   PreferredSizeWidget getAppBar(BuildContext context) {
-    print('Appbar sınıfı çağrıldı ');
     return AppBar(
       shadowColor: _appbarShadowColor,
       centerTitle: true,

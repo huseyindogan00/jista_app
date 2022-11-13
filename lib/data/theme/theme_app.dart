@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ThemeApp extends GetxController {
-  static Color bacgroundColorAPP = const Color.fromARGB(255, 16, 66, 68);
-  static Color bottomAppBarColor = const Color.fromARGB(255, 16, 137, 141);
+  static Color bacgroundColorAPP = Color.fromARGB(255, 25, 72, 110);
+  static Color bottomAppBarColor = const Color.fromARGB(255, 7, 44, 4);
 
   static final themeLight = ThemeData.light().copyWith(
     backgroundColor: bacgroundColorAPP,
@@ -46,7 +46,7 @@ class ThemeApp extends GetxController {
     ),
   );
 
-  static final themeDark = ThemeData.dark().copyWith(
+  /* static final themeDark = ThemeData.dark().copyWith(
     /** DARK THEME DE GÜCELLEMELER YAPILACAK */
     splashColor: const Color.fromARGB(255, 203, 206, 209),
     primaryColor: Colors.black,
@@ -74,7 +74,7 @@ class ThemeApp extends GetxController {
         fontWeight: FontWeight.w700,
       ),
     ),
-  );
+  ); */
 
   var isDarkModeApp = (Get.isPlatformDarkMode ? true : false).obs;
 }

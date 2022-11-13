@@ -92,9 +92,7 @@ class FirebaseAuthService extends IFirebaseAuthService {
   @override
   create(PersonModel personModel) {}
 
-  @override
   updateAddress(String personId, AddressModel addressModel) {
-    // TODO: implement updateAddress
     throw UnimplementedError();
   }
 }

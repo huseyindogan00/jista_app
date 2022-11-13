@@ -17,12 +17,12 @@ class OrderModelAdapter extends TypeAdapter<OrderModel> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return OrderModel(
-      id: fields[0] as String?,
+      id: fields[0] as dynamic,
       productId: fields[1] as String,
       size: fields[2] as String,
       cargo: fields[3] as bool,
-      count: fields[4] as bool,
-      dateTime: fields[5] as DateTime,
+      count: fields[4] as int,
+      dateTime: fields[5] as dynamic,
     );
   }
 

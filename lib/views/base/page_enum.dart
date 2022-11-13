@@ -1,7 +1,5 @@
 // ignore_for_file: constant_identifier_names
 
-import 'package:jista/core/router/route_name.dart';
-
 enum PageEnum {
   SERVISE_WEAR_VIEW(),
   TRAINING_CLOTING_VIEW,

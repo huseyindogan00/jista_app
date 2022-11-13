@@ -1,10 +1,10 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:jista/data/constant/appbar_text/appbar_title.dart';
 import 'package:jista/product/models/cart/cart_model.dart';
 import 'package:jista/product/models/product/product_model.dart';
@@ -176,7 +176,7 @@ class ProductDetailsView extends StatelessWidget {
             alignment: Alignment.center,
             decoration:
                 BoxDecoration(borderRadius: BorderRadius.circular(5), color: const Color.fromARGB(151, 240, 187, 107)),
-            padding: EdgeInsets.all(5),
+            padding: const EdgeInsets.all(5),
             width: 92,
             height: 50,
             child: Column(
@@ -194,7 +194,7 @@ class ProductDetailsView extends StatelessWidget {
             alignment: Alignment.center,
             decoration:
                 BoxDecoration(borderRadius: BorderRadius.circular(5), color: const Color.fromARGB(151, 240, 187, 107)),
-            padding: EdgeInsets.all(5),
+            padding: const EdgeInsets.all(5),
             width: 92,
             height: 50,
             child: Column(

@@ -20,7 +20,7 @@ class CargoViewModel extends BaseModel {
 
   Future<FirebaseServiceResultModel> updateAddress(String personId, AddressModel addressModel) async {
     setViewState(ViewState.BUSY);
-    FirebaseServiceResultModel result = await _fireStoreService.updateAddress(personId, addressModel);
+    FirebaseServiceResultModel result = _fireStoreService.updateAddress(personId, addressModel);
     await savePersonAndAddress(addressModel);
     setViewState(ViewState.IDLE);
     return result;
@@ -30,6 +30,5 @@ class CargoViewModel extends BaseModel {
     PersonModel? personModel = await box.getBoxPerson('person');
     personModel?.address = addressModel;
     box.saveBoxPerson(personModel!);
-    print('person modelin addresi güncellendi');
   }
 }

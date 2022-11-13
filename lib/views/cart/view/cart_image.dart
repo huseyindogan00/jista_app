@@ -1,8 +1,7 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:auto_route/annotations.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class CartImageView extends StatelessWidget {
   CartImageView({super.key, @PathParam() this.imageUrl});
@@ -15,9 +14,11 @@ class CartImageView extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.cyan.shade800,
       ),
-      body: Image(
-        fit: BoxFit.fitHeight,
-        image: NetworkImage(imageUrl),
+      body: Center(
+        child: Image(
+          fit: BoxFit.fitHeight,
+          image: NetworkImage(imageUrl),
+        ),
       ),
     );
   }

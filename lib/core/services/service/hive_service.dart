@@ -3,7 +3,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import '../../../product/models/person/person_model.dart';
 
 class HiveService {
-  String _personBoxName = 'personBox';
+  final String _personBoxName = 'personBox';
   late Box<PersonModel> _personBox;
 
   _openBoxPerson() async {

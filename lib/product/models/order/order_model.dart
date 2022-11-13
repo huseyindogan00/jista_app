@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+
 import 'dart:convert';
 
 import 'package:hive_flutter/adapters.dart';
@@ -8,7 +9,7 @@ part 'order_model.g.dart';
 @HiveType(typeId: 3)
 class OrderModel {
   @HiveField(0)
-  String? id;
+  dynamic id;
   @HiveField(1)
   String productId;
   @HiveField(2)
@@ -16,9 +17,9 @@ class OrderModel {
   @HiveField(3)
   bool cargo;
   @HiveField(4)
-  bool count;
+  int count;
   @HiveField(5)
-  DateTime dateTime;
+  dynamic dateTime;
   OrderModel({
     this.id,
     required this.productId,
@@ -33,8 +34,8 @@ class OrderModel {
     String? productId,
     String? size,
     bool? cargo,
-    bool? count,
-    DateTime? dateTime,
+    int? count,
+    dynamic dateTime,
   }) {
     return OrderModel(
       id: id ?? this.id,
@@ -53,7 +54,7 @@ class OrderModel {
       'size': size,
       'cargo': cargo,
       'count': count,
-      'dateTime': dateTime.millisecondsSinceEpoch,
+      'dateTime': dateTime,
     };
   }
 
@@ -63,8 +64,8 @@ class OrderModel {
       productId: map['productId'] as String,
       size: map['size'] as String,
       cargo: map['cargo'] as bool,
-      count: map['count'] as bool,
-      dateTime: DateTime.fromMillisecondsSinceEpoch(map['dateTime'] as int),
+      count: map['count'] as int,
+      dateTime: map['dateTime'] as dynamic,
     );
   }
 

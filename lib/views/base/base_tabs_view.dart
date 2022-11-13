@@ -4,17 +4,15 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jista/core/router/auto_router/router.gr.dart';
-import 'package:jista/core/services/service_result/base/service_result.dart';
-import 'package:jista/data/constant/pages/pages_list.dart';
+import 'package:jista/core/services/service/hive_service.dart';
 import 'package:jista/product/models/person/person_model.dart';
-import 'package:jista/views/order/view/order_view.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import '../../data/theme/theme_app.dart';
-import '../../product/widget/navigation_drawer_widget.dart';
+import '../../main.dart';
 import 'base_model.dart';
 
 class BaseTabsView extends StatefulWidget {
-  BaseTabsView({
+  const BaseTabsView({
     Key? key,
   }) : super(key: key);
 
@@ -29,7 +27,7 @@ class _BaseTabsViewState extends State<BaseTabsView> {
   final String myOrders = 'Siparişlerim';
   final String requestPeriod = 'İsteklerim';
 
-  final Color _bottomColor = const Color.fromARGB(244, 30, 85, 87);
+  final Color _bottomColor = Color.fromARGB(244, 66, 219, 20);
   //final Color _backgroundColorApp = const Color.fromARGB(255, 40, 121, 56).withOpacity(0.7);
   final Color _bottomIconColor = const Color.fromARGB(255, 255, 255, 255);
   final Color _selectedBottomIconColor = const Color.fromARGB(223, 0, 0, 0);
@@ -37,11 +35,22 @@ class _BaseTabsViewState extends State<BaseTabsView> {
   final controllerBaseTabs = Get.put<BaseModel>(BaseModel());
 
   @override
+  void initState() {
+    super.initState();
+
+    getPerson();
+  }
+
+  getPerson() async {
+    personModel = await locator<HiveService>().getBoxPerson('person');
+  }
+
+  @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeApp.themeLight,
-      darkTheme: ThemeApp.themeDark,
+      //darkTheme: ThemeApp.themeDark,
       home: AutoTabsScaffold(
         homeIndex: 0,
         backgroundColor: const Color.fromARGB(255, 241, 243, 243).withOpacity(0.8),
@@ -50,7 +59,7 @@ class _BaseTabsViewState extends State<BaseTabsView> {
         routes: <PageRouteInfo>[
           const HomeRouter(),
           const CargoInfoRouter(),
-          const OrderRouter(),
+          OrderRouter(personModel: personModel),
           RationRequestPeriodRouter(),
         ],
         bottomNavigationBuilder: (_, tabsRouter) => _buildBottomNavigatonBar(tabsRouter, context),
@@ -62,8 +71,8 @@ class _BaseTabsViewState extends State<BaseTabsView> {
     return Material(
       elevation: 5,
       shadowColor: Colors.grey,
-      borderRadius: const BorderRadius.all(Radius.circular(12)),
-      color: _bottomColor,
+      borderRadius: const BorderRadius.only(topLeft: Radius.circular(12), topRight: Radius.circular(12)),
+      color: Color.fromARGB(255, 25, 72, 110),
       type: MaterialType.card,
       child: SalomonBottomBar(
         itemPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),

@@ -13,7 +13,6 @@ import 'package:jista/views/home/view/home_view.dart';
 import 'package:jista/views/period/view/ration_request_period_view.dart';
 import 'package:jista/views/product/view/product_details_view.dart';
 import 'package:jista/views/register/view/register_view.dart';
-import 'package:jista/views/size/view/size_info.dart';
 import 'package:jista/views/splash/view/splash_view.dart';
 
 @MaterialAutoRouter(
@@ -72,7 +71,7 @@ import 'package:jista/views/splash/view/splash_view.dart';
           ],
         ),
         AutoRoute(
-          path: 'orderView',
+          path: ':personModel',
           name: 'OrderRouter',
           page: OrderView,
         ),

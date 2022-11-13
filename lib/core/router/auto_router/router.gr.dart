@@ -52,10 +52,8 @@ class AutoRouter extends _i15.RootStackRouter {
           routeData: routeData, child: _i3.RegisterView(key: args.key));
     },
     BaseTabsRoute.name: (routeData) {
-      final args = routeData.argsAs<BaseTabsRouteArgs>(
-          orElse: () => const BaseTabsRouteArgs());
       return _i15.MaterialPageX<dynamic>(
-          routeData: routeData, child: _i4.BaseTabsView(key: args.key));
+          routeData: routeData, child: const _i4.BaseTabsView());
     },
     CartRouter.name: (routeData) {
       return _i15.MaterialPageX<dynamic>(
@@ -70,8 +68,13 @@ class AutoRouter extends _i15.RootStackRouter {
           routeData: routeData, child: const _i5.EmptyRouterPage());
     },
     OrderRouter.name: (routeData) {
+      final pathParams = routeData.inheritedPathParams;
+      final args = routeData.argsAs<OrderRouterArgs>(
+          orElse: () =>
+              OrderRouterArgs(personModel: pathParams.get('personModel')));
       return _i15.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i6.OrderView());
+          routeData: routeData,
+          child: _i6.OrderView(personModel: args.personModel, key: args.key));
     },
     RationRequestPeriodRouter.name: (routeData) {
       final args = routeData.argsAs<RationRequestPeriodRouterArgs>(
@@ -120,10 +123,8 @@ class AutoRouter extends _i15.RootStackRouter {
               key: args.key, addressModel: args.addressModel));
     },
     CartRoute.name: (routeData) {
-      final args =
-          routeData.argsAs<CartRouteArgs>(orElse: () => const CartRouteArgs());
       return _i15.MaterialPageX<dynamic>(
-          routeData: routeData, child: _i13.CartView(key: args.key));
+          routeData: routeData, child: const _i13.CartView());
     },
     CartImageRouter.name: (routeData) {
       final pathParams = routeData.inheritedPathParams;
@@ -163,7 +164,7 @@ class AutoRouter extends _i15.RootStackRouter {
                     path: ':addressModel', parent: CargoInfoRouter.name)
               ]),
           _i15.RouteConfig(OrderRouter.name,
-              path: 'orderView', parent: BaseTabsRoute.name),
+              path: ':personModel', parent: BaseTabsRoute.name),
           _i15.RouteConfig(RationRequestPeriodRouter.name,
               path: 'rationRequestPeriodView', parent: BaseTabsRoute.name)
         ]),
@@ -227,25 +228,12 @@ class RegisterRouteArgs {
 
 /// generated route for
 /// [_i4.BaseTabsView]
-class BaseTabsRoute extends _i15.PageRouteInfo<BaseTabsRouteArgs> {
-  BaseTabsRoute({_i16.Key? key, List<_i15.PageRouteInfo>? children})
+class BaseTabsRoute extends _i15.PageRouteInfo<void> {
+  const BaseTabsRoute({List<_i15.PageRouteInfo>? children})
       : super(BaseTabsRoute.name,
-            path: '/:personModel',
-            args: BaseTabsRouteArgs(key: key),
-            initialChildren: children);
+            path: '/:personModel', initialChildren: children);
 
   static const String name = 'BaseTabsRoute';
-}
-
-class BaseTabsRouteArgs {
-  const BaseTabsRouteArgs({this.key});
-
-  final _i16.Key? key;
-
-  @override
-  String toString() {
-    return 'BaseTabsRouteArgs{key: $key}';
-  }
 }
 
 /// generated route for
@@ -277,10 +265,27 @@ class CargoInfoRouter extends _i15.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i6.OrderView]
-class OrderRouter extends _i15.PageRouteInfo<void> {
-  const OrderRouter() : super(OrderRouter.name, path: 'orderView');
+class OrderRouter extends _i15.PageRouteInfo<OrderRouterArgs> {
+  OrderRouter({required dynamic personModel, _i16.Key? key})
+      : super(OrderRouter.name,
+            path: ':personModel',
+            args: OrderRouterArgs(personModel: personModel, key: key),
+            rawPathParams: {'personModel': personModel});
 
   static const String name = 'OrderRouter';
+}
+
+class OrderRouterArgs {
+  const OrderRouterArgs({required this.personModel, this.key});
+
+  final dynamic personModel;
+
+  final _i16.Key? key;
+
+  @override
+  String toString() {
+    return 'OrderRouterArgs{personModel: $personModel, key: $key}';
+  }
 }
 
 /// generated route for
@@ -424,22 +429,10 @@ class CargoEditRouterArgs {
 
 /// generated route for
 /// [_i13.CartView]
-class CartRoute extends _i15.PageRouteInfo<CartRouteArgs> {
-  CartRoute({_i16.Key? key})
-      : super(CartRoute.name, path: '', args: CartRouteArgs(key: key));
+class CartRoute extends _i15.PageRouteInfo<void> {
+  const CartRoute() : super(CartRoute.name, path: '');
 
   static const String name = 'CartRoute';
-}
-
-class CartRouteArgs {
-  const CartRouteArgs({this.key});
-
-  final _i16.Key? key;
-
-  @override
-  String toString() {
-    return 'CartRouteArgs{key: $key}';
-  }
 }
 
 /// generated route for

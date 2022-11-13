@@ -1,10 +1,5 @@
 import 'package:get/get.dart';
-import 'package:jista/views/cargo/view/cargo_info_view.dart';
 import 'package:jista/views/cargo/view_model/cargo_view_model.dart';
-import 'package:jista/views/product/view/product_details_view.dart';
-import 'package:jista/views/product/view_model/product_view_model.dart';
-import 'package:jista/views/product/view/products_view.dart';
-import 'package:jista/views/product/view_model/product_view_model.dart';
 import 'package:jista/views/home/view_model/home_view_model.dart';
 import 'package:jista/views/period/view/ration_request_period_view.dart';
 

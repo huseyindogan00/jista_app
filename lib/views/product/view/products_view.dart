@@ -1,24 +1,15 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+// ignore_for_file: public_member_api_docs, sort_constructors_first, unused_field, unused_element
 // ignore_for_file: must_be_immutable
-
-import 'dart:math';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:hive_flutter/adapters.dart';
 import 'package:jista/core/enums/view_state.dart';
 import 'package:jista/core/services/service_result/firebase_service_result_model.dart';
 import 'package:jista/data/constant/appbar_text/appbar_title.dart';
 import 'package:jista/data/constant/font/const_text_style.dart';
-import 'package:jista/data/constant/image/const_product_image.dart';
-import 'package:jista/data/constant/style/const_font_size.dart';
-import 'package:jista/product/models/cart/cart_model.dart';
-import 'package:jista/product/models/order/order_model.dart';
 import 'package:jista/product/models/product/product_model.dart';
 import 'package:jista/product/widget/my_appbar_widget.dart';
-import 'package:jista/product/widget/navigation_drawer_widget.dart';
 import 'package:jista/views/base/base_model.dart';
 import 'package:jista/views/cart/view_model/cart_view_model.dart';
 import 'package:jista/views/product/view_model/product_view_model.dart';
@@ -47,17 +38,17 @@ class _ProductsViewState extends State<ProductsView> {
 
   final controller = Get.put<ProductViewModel>(ProductViewModel());
   final _baseModelController = Get.put<BaseModel>(BaseModel());
-  CartViewModel _cartViewModel = CartViewModel();
+  final CartViewModel _cartViewModel = CartViewModel();
 
   final BoxDecoration _boxDecorationProductCard = const BoxDecoration(
     color: Color.fromARGB(255, 250, 247, 247),
   );
   final BoxDecoration _boxDecorationSubContainer = const BoxDecoration(
-    boxShadow: [BoxShadow(blurRadius: 0.3)],
-    color: Color.fromARGB(255, 161, 201, 201),
+    boxShadow: [BoxShadow(blurRadius: 0.5, color: Color.fromARGB(255, 61, 14, 11))],
+    color: Color.fromARGB(255, 241, 240, 240),
     borderRadius: BorderRadius.only(
-      topLeft: Radius.circular(10),
-      topRight: Radius.circular(10),
+      topLeft: Radius.circular(2),
+      topRight: Radius.circular(2),
     ),
   );
 
@@ -129,7 +120,7 @@ class _ProductsViewState extends State<ProductsView> {
           childAspectRatio: 0.6,
           crossAxisCount: 2,
           crossAxisSpacing: 20,
-          mainAxisSpacing: 20,
+          mainAxisSpacing: 30,
         ),
         itemBuilder: (context, index) {
           ProductModel product = controller.serviceResultModel.value.data![index];

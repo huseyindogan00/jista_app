@@ -2,12 +2,9 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get/get.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:jista/core/enums/view_state.dart';
-import 'package:jista/product/models/product/product_model.dart';
-import 'package:jista/views/cart/view_model/cart_view_model.dart';
 
 import '../../core/services/service/hive_service.dart';
 import '../../core/utility/internet_connection_control.dart';
-import '../../product/models/cart/cart_model.dart';
 import '../../product/models/person/person_model.dart';
 
 class BaseModel extends GetxController {
