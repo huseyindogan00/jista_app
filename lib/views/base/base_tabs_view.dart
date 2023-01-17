@@ -2,7 +2,9 @@
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
+import 'package:jista/core/init/app_init.dart';
 import 'package:jista/core/router/auto_router/router.gr.dart';
 import 'package:jista/core/services/service/hive_service.dart';
 import 'package:jista/product/models/person/person_model.dart';
@@ -27,7 +29,7 @@ class _BaseTabsViewState extends State<BaseTabsView> {
   final String myOrders = 'Siparişlerim';
   final String requestPeriod = 'İsteklerim';
 
-  final Color _bottomColor = Color.fromARGB(244, 66, 219, 20);
+  final Color _bottomColor = const Color.fromARGB(244, 66, 219, 20);
   //final Color _backgroundColorApp = const Color.fromARGB(255, 40, 121, 56).withOpacity(0.7);
   final Color _bottomIconColor = const Color.fromARGB(255, 255, 255, 255);
   final Color _selectedBottomIconColor = const Color.fromARGB(223, 0, 0, 0);
@@ -37,7 +39,6 @@ class _BaseTabsViewState extends State<BaseTabsView> {
   @override
   void initState() {
     super.initState();
-
     getPerson();
   }
 
@@ -72,7 +73,7 @@ class _BaseTabsViewState extends State<BaseTabsView> {
       elevation: 5,
       shadowColor: Colors.grey,
       borderRadius: const BorderRadius.only(topLeft: Radius.circular(12), topRight: Radius.circular(12)),
-      color: Color.fromARGB(255, 25, 72, 110),
+      color: const Color.fromARGB(255, 25, 72, 110),
       type: MaterialType.card,
       child: SalomonBottomBar(
         itemPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),

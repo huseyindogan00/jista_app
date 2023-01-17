@@ -4,12 +4,14 @@ import 'package:auto_route/auto_route.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jista/core/init/app_init.dart';
 import 'package:jista/core/router/auto_router/router.gr.dart';
 import 'package:jista/core/services/service/hive_service.dart';
 import 'package:jista/data/theme/theme_app.dart';
-import 'package:jista/main.dart';
 import 'package:jista/product/models/person/person_model.dart';
 import 'package:jista/views/base/base_model.dart';
+import 'package:jista/views/cargo/view/trust_view.dart';
+import 'package:jista/views/trustee/view/trustee_view.dart';
 
 class NavigationDrawer extends StatelessWidget {
   NavigationDrawer({
@@ -79,16 +81,20 @@ class NavigationDrawer extends StatelessWidget {
                   style: TextStyle(color: Colors.amber, fontWeight: FontWeight.w500, fontSize: 20),
                 ),
                 StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-                  stream: FirebaseFirestore.instance.collection('person').doc('LwnDB3o7L7uGSWjiNkVF').snapshots(),
+                  stream: FirebaseFirestore.instance.collection('person').doc(personModel.id).snapshots(),
                   builder: (context, snapshot) {
                     Map<String, dynamic>? data = snapshot.data?.data();
-                    if (snapshot.connectionState == ConnectionState.waiting || snapshot.data == null) {
+                    if (!snapshot.hasData || snapshot.data == null) {
                       return const Text('Yükleniyor');
-                    } else {}
-                    return Text(
-                      data!['totalPoint'].toString(),
-                      style: TextStyle(color: Colors.cyan.shade300, fontSize: 25, fontWeight: FontWeight.w500),
-                    );
+                    } else {
+                      PersonModel _personModel = personModel;
+                      _personModel.totalPoint = data!['totalPoint'];
+                      hiveService.saveBoxPerson(personModel);
+                      return Text(
+                        data['totalPoint'].toString(),
+                        style: TextStyle(color: Colors.cyan.shade300, fontSize: 25, fontWeight: FontWeight.w500),
+                      );
+                    }
                   },
                 ),
               ],
@@ -123,7 +129,14 @@ class NavigationDrawer extends StatelessWidget {
                 'Mutemet İşlemlerim',
                 style: textStyle,
               ),
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => TrusteeView(),
+                  ),
+                );
+              },
             ),
             ListTile(
               leading: Icon(Icons.boy_outlined, size: iconSize),

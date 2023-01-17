@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jista/core/enums/view_state.dart';
+import 'package:jista/core/init/app_init.dart';
 import 'package:jista/core/services/service/firebase_store_service.dart';
 import 'package:jista/core/services/service/hive_service.dart';
 import 'package:jista/core/services/service_result/firebase_service_result_model.dart';
-import 'package:jista/main.dart';
 import 'package:jista/product/models/address/address_model.dart';
 import 'package:jista/product/models/person/person_model.dart';
 import 'package:jista/views/base/base_model.dart';

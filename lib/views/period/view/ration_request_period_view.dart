@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jista/core/enums/view_state.dart';
+import 'package:jista/core/init/app_init.dart';
 import 'package:jista/core/services/service/hive_service.dart';
 import 'package:jista/data/constant/appbar_text/appbar_title.dart';
 import 'package:jista/main.dart';

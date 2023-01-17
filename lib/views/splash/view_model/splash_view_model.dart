@@ -2,13 +2,12 @@
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:jista/core/init/app_init.dart';
 import 'package:jista/core/router/auto_router/router.gr.dart';
 import 'package:jista/core/services/service/firebase_store_service.dart';
 import 'package:jista/core/services/service/hive_service.dart';
 import 'package:jista/core/services/service_result/base/service_result.dart';
 import 'package:jista/core/services/service_result/firebase_service_result_model.dart';
-
-import '../../../main.dart';
 
 class SplashViewModel {
   static final _firebaseService = locator<FirebaseStoreService>();
@@ -26,7 +25,7 @@ class SplashViewModel {
         if (isPerson) {
           final ServiceResult result = FirebaseServiceResultModel(isSuccess: true);
           result.data = await box.getBoxPerson('person');
-          context.router.replace(BaseTabsRoute());
+          context.router.replace(const BaseTabsRoute());
         } else {
           context.router.replace(EntryRoute());
           //Navigator.pushReplacementNamed(context, RouteName.entryView);

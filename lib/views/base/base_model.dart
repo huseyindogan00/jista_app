@@ -75,7 +75,7 @@ class BaseModel extends GetxController {
     setViewState(ViewState.IDLE);
     Get.showSnackbar(
       const GetSnackBar(
-        duration: Duration(seconds: 3),
+        duration: Duration(milliseconds: 1500),
         snackPosition: SnackPosition.TOP,
         message: 'Lütfen internet bağlantınızı kontrol ediniz.',
       ),

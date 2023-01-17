@@ -69,6 +69,7 @@ dependencies:
   google_fonts: ^3.0.1
   auto_route: ^5.0.1
   firebase_storage: ^10.3.11
+  flutter_bloc: ^8.1.1
   
   
 

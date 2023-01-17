@@ -1,3 +1,4 @@
+import 'package:jista/core/init/app_init.dart';
 import 'package:jista/core/services/service/hive_service.dart';
 import 'package:jista/core/services/service_result/base/service_result.dart';
 

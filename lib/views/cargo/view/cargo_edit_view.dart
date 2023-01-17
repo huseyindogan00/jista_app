@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:jista/core/enums/view_state.dart';
+import 'package:jista/core/init/app_init.dart';
 import 'package:jista/core/services/service/hive_service.dart';
 import 'package:jista/core/services/service_result/firebase_service_result_model.dart';
 import 'package:jista/core/utility/validation_utility/validation_controller.dart';
@@ -14,8 +15,6 @@ import 'package:jista/data/data_model/entities/towns.dart';
 import 'package:jista/product/models/address/address_model.dart';
 import 'package:jista/product/widget/my_appbar_widget.dart';
 import 'package:jista/views/cargo/view_model/cargo_view_model.dart';
-
-import '../../../main.dart';
 
 class CargoEditView extends StatefulWidget {
   CargoEditView({super.key, @PathParam() this.addressModel});

@@ -8,11 +8,10 @@ import 'package:get/get.dart';
 import 'package:jista/core/enums/view_state.dart';
 import 'package:jista/core/router/auto_router/router.gr.dart';
 import 'package:jista/core/services/service/hive_service.dart';
+import 'package:jista/product/models/cart/cart_model.dart';
 import 'package:jista/product/models/person/person_model.dart';
 import 'package:jista/views/base/base_model.dart';
 import 'package:jista/views/cart/view_model/cart_view_model.dart';
-
-import '../../../product/models/cart/cart_model.dart';
 
 class CartView extends StatefulWidget {
   const CartView({super.key});
@@ -47,6 +46,9 @@ class _CartViewState extends State<CartView> {
   @override
   Widget build(BuildContext context) {
     getPerson();
+    print('*****************************************************');
+    print('cartview build etti');
+
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 238, 234, 234),
       appBar: AppBar(
@@ -62,12 +64,12 @@ class _CartViewState extends State<CartView> {
           ),
         ),
         systemOverlayStyle: SystemUiOverlayStyle.light,
-        backgroundColor: Color.fromARGB(255, 25, 72, 110),
+        backgroundColor: const Color.fromARGB(255, 25, 72, 110),
         centerTitle: true,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: FloatingActionButton(
-        onPressed: _buildShowModalBottomSheet,
+        onPressed: () async => await _buildShowModalBottomSheet(),
         elevation: 5,
         backgroundColor: const Color.fromARGB(255, 4, 80, 87),
         child: const Text(
@@ -271,7 +273,7 @@ class _CartViewState extends State<CartView> {
     );
   }
 
-  _buildShowModalBottomSheet() {
+  _buildShowModalBottomSheet() async {
     int _cartTotalPoint = _baseController.cartTotalPoint.value;
     int _personTotalPoint = _personModel?.totalPoint ?? 0;
     int _remainingPoints = (_personTotalPoint - _cartTotalPoint);
@@ -281,7 +283,7 @@ class _CartViewState extends State<CartView> {
 
     _cargoViewController.isCargoInfoAccept.value = false;
 
-    showModalBottomSheet(
+    await showModalBottomSheet(
       backgroundColor: Colors.transparent,
       isScrollControlled: true,
       elevation: 20,
@@ -310,7 +312,7 @@ class _CartViewState extends State<CartView> {
                       children: [
                         const Divider(color: Colors.white38, height: 25, thickness: 5, indent: 140, endIndent: 140),
                         Container(
-                          height: 300,
+                          height: MediaQuery.of(context).size.height * 0.38,
                           width: double.infinity,
                           margin: const EdgeInsets.all(10),
                           padding: const EdgeInsets.all(15),
