@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 
-class TrusteeView extends StatelessWidget {
+class TrusteeView extends StatefulWidget {
   TrusteeView({super.key});
+
+  @override
+  State<TrusteeView> createState() => _TrusteeViewState();
+}
+
+class _TrusteeViewState extends State<TrusteeView> {
+  DateTime? timeForTrustee = DateTime.now();
 
   TextStyle textStyle = const TextStyle(color: Colors.black);
 
@@ -10,29 +17,54 @@ class TrusteeView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: true,
+        title: const Text('Mutemet İşlemlerim'),
+        centerTitle: true,
+        leading: IconButton(
+            onPressed: () async {
+              Navigator.pop<bool>(context, false);
+            },
+            icon: const Icon(Icons.arrow_back_ios_new_outlined)),
       ),
       body: Container(
         padding: const EdgeInsets.all(10),
         alignment: Alignment.center,
-        child: Column(
-          children: <DataTable>[
-            DataTable(
-              columns: <DataColumn>[
-                DataColumn(label: Text('Mutemet Personel Pbik', style: textStyle)),
-                DataColumn(label: Text('Vekalet Bitiş Tarihi', style: textStyle))
-              ],
-              rows: [
-                DataRow(cells: <DataCell>[
-                  const DataCell(
-                    TextField(
-                      decoration: InputDecoration(hintText: 'Mutemet Pbik'),
-                    ),
-                  ),
-                  DataCell(Text('DateTime gelecek', style: textStyle))
-                ])
-              ],
-            )
-          ],
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 20),
+          child: Column(
+            children: [
+              TextFormField(
+                style: const TextStyle(color: Colors.black),
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Mutemet Personel PBİK',
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Chip(
+                  label: Text('${timeForTrustee!.day}/${timeForTrustee!.month}/${timeForTrustee!.year}'),
+                ),
+              ),
+              TextButton(
+                onPressed: () async {
+                  timeForTrustee = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime(2020),
+                      firstDate: DateTime(2020),
+                      lastDate: DateTime(2024));
+                  setState(() {});
+                  print(timeForTrustee!.day);
+                },
+                child: const Text('Vekalet Bitiş Tarihi  Seçiniz'),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
+                child: const Text('Kaydet'),
+              )
+            ],
+          ),
         ),
       ),
     );

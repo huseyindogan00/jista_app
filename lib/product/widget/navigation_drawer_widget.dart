@@ -129,8 +129,8 @@ class NavigationDrawer extends StatelessWidget {
                 'Mutemet İşlemlerim',
                 style: textStyle,
               ),
-              onTap: () {
-                Navigator.push(
+              onTap: () async {
+                await Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => TrusteeView(),
