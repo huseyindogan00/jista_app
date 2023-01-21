@@ -1,7 +1,9 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: unused_field
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
+
 import 'package:jista/core/init/app_init.dart';
 import 'package:jista/core/router/auto_router/router.gr.dart';
 import 'package:jista/core/services/service/firebase_store_service.dart';

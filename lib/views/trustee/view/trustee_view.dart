@@ -35,14 +35,9 @@ class _TrusteeViewState extends State<TrusteeView> {
               TextFormField(
                 style: const TextStyle(color: Colors.black),
                 decoration: const InputDecoration(
+                  label: Text('Personel PBİK'),
                   border: OutlineInputBorder(),
                   hintText: 'Mutemet Personel PBİK',
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Chip(
-                  label: Text('${timeForTrustee!.day}/${timeForTrustee!.month}/${timeForTrustee!.year}'),
                 ),
               ),
               TextButton(
@@ -53,7 +48,6 @@ class _TrusteeViewState extends State<TrusteeView> {
                       firstDate: DateTime(2020),
                       lastDate: DateTime(2024));
                   setState(() {});
-                  print(timeForTrustee!.day);
                 },
                 child: const Text('Vekalet Bitiş Tarihi  Seçiniz'),
               ),

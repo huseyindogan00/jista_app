@@ -34,6 +34,7 @@ class NavigationDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Drawer(
         child: Column(
+          mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             buildHeader(context, personModel!),
@@ -108,75 +109,79 @@ class NavigationDrawer extends StatelessWidget {
   Widget buildMenuItem(BuildContext context) {
     TextStyle? textStyle = Get.theme.textTheme.headline6;
     double iconSize = 38;
+
     return Expanded(
-      child: Container(
-        color: Get.theme.backgroundColor.withOpacity(0.3),
-        padding: const EdgeInsets.all(10),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            ListTile(
-              leading: Icon(Icons.square_foot_outlined, size: iconSize),
-              title: Text(
-                'Ölçü Bilgilerim',
-                style: textStyle,
+      child: SingleChildScrollView(
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          color: Get.theme.backgroundColor.withOpacity(0.3),
+          padding: const EdgeInsets.all(10),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              ListTile(
+                leading: Icon(Icons.square_foot_outlined, size: iconSize),
+                title: Text(
+                  'Ölçü Bilgilerim (EKLENECEK)',
+                  style: textStyle,
+                ),
+                onTap: () {},
               ),
-              onTap: () {},
-            ),
-            ListTile(
-              leading: Icon(Icons.supervised_user_circle, size: iconSize),
-              title: Text(
-                'Mutemet İşlemlerim',
-                style: textStyle,
-              ),
-              onTap: () async {
-                await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => TrusteeView(),
-                  ),
-                );
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.boy_outlined, size: iconSize),
-              title: Text(
-                'Beden Ölçüleri Tespit Broşürü',
-                style: textStyle,
-              ),
-              onTap: () {},
-            ),
-            ListTile(
-              leading: Icon(Icons.plagiarism, size: iconSize),
-              title: Text('İstihkak Kargo İhalesi Fiyat Cetveli', style: textStyle),
-              onTap: () {},
-            ),
-            const SizedBox(height: 20),
-            //selectThemeMode(theme),
-            const Divider(height: 11, color: Colors.grey),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Stack(
-                  alignment: AlignmentDirectional.centerStart,
-                  children: [
-                    SizedBox(
-                      width: 190,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          locator<HiveService>().deleteUserBoxPerson('personBox');
-                          context.router.replace(EntryRoute());
-                        },
-                        style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-                        child: const Text('Oturumu Kapat', textAlign: TextAlign.end),
-                      ),
+              ListTile(
+                leading: Icon(Icons.supervised_user_circle, size: iconSize),
+                title: Text(
+                  'Mutemet İşlemlerim (Ekleniyor...)',
+                  style: textStyle,
+                ),
+                onTap: () async {
+                  await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => TrusteeView(),
                     ),
-                    const Positioned(left: 10, child: Icon(Icons.exit_to_app)),
-                  ],
-                )
-              ],
-            ),
-          ],
+                  );
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.boy_outlined, size: iconSize),
+                title: Text(
+                  'Beden Ölçüleri Tespit Broşürü (EKLENECEK)',
+                  style: textStyle,
+                ),
+                onTap: () {},
+              ),
+              ListTile(
+                leading: Icon(Icons.plagiarism, size: iconSize),
+                title: Text('İstihkak Kargo İhalesi Fiyat Cetveli (EKLENECEK)', style: textStyle),
+                onTap: () {},
+              ),
+              const SizedBox(height: 5),
+              //selectThemeMode(theme),
+              const Divider(color: Colors.grey),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Stack(
+                    alignment: AlignmentDirectional.centerStart,
+                    children: [
+                      SizedBox(
+                        width: 190,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            locator<HiveService>().deleteUserBoxPerson('personBox');
+                            context.router.replace(EntryRoute());
+                          },
+                          style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                          child: const Text('Oturumu Kapat', textAlign: TextAlign.end),
+                        ),
+                      ),
+                      const Positioned(left: 10, child: Icon(Icons.exit_to_app)),
+                    ],
+                  )
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
