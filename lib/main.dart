@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:jista/core/init/app_init.dart';
+import 'package:jista/views/entry/view_model/entry_view_model.dart';
+import 'package:provider/provider.dart';
 import 'core/router/auto_router/router.gr.dart';
 
 // SİNGLE OBJECT OLUŞTURUCU
@@ -26,12 +28,15 @@ void main(List<String> args) async {
   final _appRouter = locator<AutoRouter>();
 
   runApp(
-    MaterialApp.router(
-      debugShowCheckedModeBanner: false,
-      builder: EasyLoading.init(),
-      title: 'JİSTA',
-      routerDelegate: _appRouter.delegate(),
-      routeInformationParser: _appRouter.defaultRouteParser(),
+    ChangeNotifierProvider<EntryViewModel>(
+      create: (context) => EntryViewModel(),
+      child: MaterialApp.router(
+        debugShowCheckedModeBanner: false,
+        builder: EasyLoading.init(),
+        title: 'JİSTA',
+        routerDelegate: _appRouter.delegate(),
+        routeInformationParser: _appRouter.defaultRouteParser(),
+      ),
     ),
   );
 }

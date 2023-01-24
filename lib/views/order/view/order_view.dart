@@ -1,5 +1,4 @@
 // ignore_for_file: must_be_immutable
-
 import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -14,20 +13,16 @@ import 'package:jista/product/widget/my_appbar_widget.dart';
 import 'package:jista/product/widget/navigation_drawer_widget.dart';
 
 class OrderView extends StatefulWidget {
-  OrderView({
-    @PathParam() required this.personModel,
-    super.key,
-  }) {
+  OrderView({@PathParam() required this.personModel, super.key}) {
     getPerson();
   }
 
-  PersonModel? personModel2;
+  PersonModel? personModel;
 
   getPerson() async {
-    personModel2 = await locator<HiveService>().getBoxPerson('person');
+    personModel = await locator<HiveService>().getBoxPerson('person');
   }
 
-  dynamic personModel;
   @override
   State<OrderView> createState() => _OrderViewState();
 }
@@ -38,7 +33,7 @@ class _OrderViewState extends State<OrderView> {
   @override
   void initState() {
     super.initState();
-    personModel = widget.personModel2;
+    personModel = widget.personModel;
     //personModel = widget.personModel as PersonModel;
   }
 
@@ -48,8 +43,7 @@ class _OrderViewState extends State<OrderView> {
       appBar: MyAppbarWiget.createAppbar(title: AppbarTitle.orderPageTitle).getAppBar(context),
       drawer: NavigationDrawer(),
       body: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-        stream:
-            FirebaseFirestore.instance.collection('person').doc('LwnDB3o7L7uGSWjiNkVF').collection('order').snapshots(),
+        stream: FirebaseFirestore.instance.collection('person').doc(personModel!.id).collection('order').snapshots(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: Text('Siparişler güncelleniyor..', style: TextStyle(color: Colors.black)));
@@ -57,8 +51,7 @@ class _OrderViewState extends State<OrderView> {
             return const Center(child: Text('sipariş verilmemiş..', style: TextStyle(color: Colors.black)));
           } else {
             List<OrderModel> orderList = [];
-            Map<String, List<OrderModel>> orderMap = {};
-
+            //Map<String, List<OrderModel>> orderMap = {};
             List<QueryDocumentSnapshot<Map<String, dynamic>>> data = snapshot.data!.docs;
 
             for (var order in data) {
