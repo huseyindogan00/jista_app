@@ -1,0 +1,29 @@
+1. MainView -> BaseView olacak
+2. BaseModel'den extends edilen modeller BaseView'ı kullanacak
+3. HomeView, CargoView gibi sayfalar BaseView'dan extends edilecek
+
+
+Bütün sayfaların isimlerini tanımlayacağım bir enuma at ENUM
+Baseview içinde tanımlanan ENUMları gözle
+Değişen enumlara göre body de sayfaları değiştir.
+
+appbar da sayfa isimlerini AutoRouteObserver ile gözleyip title yazdıracaz
+
+17 Ekim 2022 
+-cargoview ekranında kontroller gözden geçirilecek. Kargo Bilgilerinin güncellenmesi cargoview üzerinden ayrı bir ekranda yapılabilir
+-eğer personelin kargo adresi girilmemişse bottombarda uyarı verilecek. kırmızı ünlem şeklinde olabilir. 
+-Appbar titleları AutoRouteObserver ile gözlenip Appbarın titlenına yazılacak
+-Ölçü bilgileri ekranı yerine sipariş takibi gibi bir sayfa yapılabilir. Ölçü bilgilerini drawerı koy, bottomda sipariş die bir ekran ekle 
+ve o ekran üzerinden mevcutta bulanan siparişlerin takibi yapılsın
+
+19 Ekim 2022
+* appbar title değiştirme olmadı. Diğer işlere devam edilecek. Daha sonra appbartitle değiştirmeye bakılacak
+* 
+
+
+20 Ekim 2022 YAPILACAKLAR
+1. imageler firebase eklendikten sonra url leri sabitlerde tutulacak ve resimler o sabitler üzerinden network image ile çağrılacak.
+2. product ve productView ekranları son halini yap
+3. EKLE butonunu aktif et ve eklenilen ürünleri cartView ekranında göster
+4. sepetin onaylanmasından önce cargo ve mutemetlik verilerini kontrol et, eğer girilmemişse sırasıyla cargo ve mutemetlik ekranlarına yönlendir. Veriler girildikten sonra tekrar sepet ekranına döndür.
+5. 
